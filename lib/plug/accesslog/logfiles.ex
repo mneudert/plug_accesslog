@@ -27,16 +27,40 @@ defmodule Plug.AccessLog.Logfiles do
   def open(logfile) do
     case File.open(logfile, [ :write, :utf8 ]) do
       { :error, _ }   -> nil
-      { :ok, device } -> save_device(logfile, device)
+      { :ok, device } -> set(logfile, device)
     end
   end
 
+  @doc """
+  Replaces the io_device associated with a logfile.
 
-  defp get_device(logfile) do
-    Agent.get(__MODULE__, &Map.get(&1, logfile, nil))
+  The already registered (if any) io_device will be closed
+  using `File.close/1`.
+
+  The new io_device associated with the logfile will be returned.
+  """
+  @spec replace(logfile :: String.t, new_device :: File.io_device) :: File.io_device
+  def replace(logfile, new_device) do
+    case get_device(logfile) do
+      nil        -> nil
+      old_device -> File.close(old_device)
+    end
+
+    Agent.update(__MODULE__, &Map.put(&1, logfile, new_device))
+
+    new_device
   end
 
-  defp save_device(logfile, new_device) do
+  @doc """
+  Sets the io_device associated with a logfile.
+
+  If a logfile is already associated with an io_device the passed one
+  will be closed using `File.close/1`.
+
+  The new io_device associated with the logfile will be returned.
+  """
+  @spec set(logfile :: String.t, new_device :: File.io_device) :: File.io_device
+  def set(logfile, new_device) do
     Agent.update(__MODULE__, &Map.put_new(&1, logfile, new_device))
 
     case get_device(logfile) do
@@ -45,5 +69,12 @@ defmodule Plug.AccessLog.Logfiles do
         File.close(new_device)
         old_device
     end
+  end
+
+
+  # Internal utility methods
+
+  defp get_device(logfile) do
+    Agent.get(__MODULE__, &Map.get(&1, logfile, nil))
   end
 end

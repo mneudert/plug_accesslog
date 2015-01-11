@@ -24,4 +24,18 @@ defmodule Plug.AccessLog.LogfilesTest do
     assert log_device == new_device
     assert log_device == Logfiles.get(logfile)
   end
+
+  test "replacement of logfiles" do
+    logfile =
+         [ __DIR__, "../../logs/plug_accesslog_logfiles_replace.log" ]
+      |> Path.join()
+      |> Path.expand()
+
+    log_device = Logfiles.open(logfile)
+    new_device = Logfiles.replace(logfile, :stdio)
+
+    refute log_device == new_device
+    refute log_device == Logfiles.get(logfile)
+    assert new_device == Logfiles.get(logfile)
+  end
 end
