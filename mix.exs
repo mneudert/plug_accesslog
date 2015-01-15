@@ -1,10 +1,15 @@
 defmodule Plug.AccessLog.Mixfile do
   use Mix.Project
 
+  @url_docs "http://hexdocs.pm/plug_accesslog"
+  @url_github "https://github.com/mneudert/plug_accesslog"
+
   def project do
     [ app:           :plug_accesslog,
       name:          "Plug.AccessLog",
-      source_url:    "https://github.com/mneudert/plug_accesslog",
+      description:   "Plug for writing access logs",
+      source_url:    @url_github,
+      package:       package,
       version:       "0.0.1",
       elixir:        "~> 1.0",
       deps:          deps(Mix.env),
@@ -31,5 +36,12 @@ defmodule Plug.AccessLog.Mixfile do
   def deps(_) do
     [ { :cowboy, "~> 1.0", optional: true },
       { :plug,   "~> 0.9", optional: true } ]
+  end
+
+  def package do
+    %{ contributors: [ "Marc Neudert" ],
+       files:        [ "LICENSE", "mix.exs", "README.md", "lib" ],
+       licenses:     [ "Apache 2.0" ],
+       links:        %{ "Docs" => @url_docs, "Github" => @url_github }}
   end
 end
