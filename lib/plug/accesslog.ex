@@ -11,8 +11,13 @@ defmodule Plug.AccessLog do
 
   @behaviour Plug
 
-  def init(opts),       do: opts
-  def call(conn, opts), do: conn |> register_before_send( &log(&1, opts) )
+  def init(opts), do: opts
+
+  def call(conn, opts) do
+    conn
+    |> put_private(:plug_accesslog, :calendar.local_time())
+    |> register_before_send( &log(&1, opts) )
+  end
 
   @doc """
   Logs the request.

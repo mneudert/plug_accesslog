@@ -26,10 +26,11 @@ defmodule Plug.AccessLogTest do
   test "request writes log entry" do
     Logfiles.replace(Router.logfile, :stdio)
 
-    log = capture_io :stdio, fn ->
+    regex = ~r/127.0.0.1 - - \[.+\] "GET \/ HTTP\/1.1" 200 2/
+    log   = capture_io :stdio, fn ->
       conn(:get, "/") |> Router.call(@opts)
     end
 
-    assert ~s(127.0.0.1 "GET / HTTP/1.1" 200 2) == String.strip(log)
+    assert Regex.match?(regex, String.strip(log))
   end
 end

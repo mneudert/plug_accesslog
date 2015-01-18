@@ -4,6 +4,14 @@ defmodule Plug.AccessLog.FormatterTest do
 
   alias Plug.AccessLog.Formatter
 
+  test "no format means default format" do
+    datetime = :calendar.local_time()
+    conn     = conn(:get, "/") |> put_private(:plug_accesslog, datetime)
+
+    assert Formatter.format(nil, conn) == Formatter.format(:default, conn)
+  end
+
+
   test "%b" do
     conn = conn(:get, "/")
 
@@ -27,6 +35,10 @@ defmodule Plug.AccessLog.FormatterTest do
     assert "127.0.0.1" == Formatter.format("%h", conn)
   end
 
+  test "%l" do
+    assert "-" == Formatter.format("%l", nil)
+  end
+
   test "%r" do
     conn = conn(:get, "/plug/path")
 
@@ -38,5 +50,16 @@ defmodule Plug.AccessLog.FormatterTest do
     conn = %{ conn | status: 200 }
 
     assert "200" == Formatter.format("%>s", conn)
+  end
+
+  test "%t" do
+    datetime = {{ 2015, 01, 10 }, { 14, 46, 18 }}
+    conn     = conn(:get, "/") |> put_private(:plug_accesslog, datetime)
+
+    assert "[10/Jan/2015:14:46:18 +0100]" == Formatter.format("%t", conn)
+  end
+
+  test "%u" do
+    assert "-" == Formatter.format("%u", nil)
   end
 end

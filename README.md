@@ -51,16 +51,22 @@ end
 
 ## Log Format
 
-The default format is "%h \"%r\" %>s %b" and will gradually change
-to the full [Common Log Format](http://en.wikipedia.org/wiki/Common_Log_Format)
-once all required formatting options are supported.
+The default format is [CLF](http://en.wikipedia.org/wiki/Common_Log_Format):
+
+```
+"%h %l %u %t \"%r\" %>s %b"
+---
+```
 
 The following formatting directives are available:
 
 - `%b` - Size of response in bytes
 - `%h` - Remote hostname
+- `%l` - Remote logname
 - `%r` - First line of HTTP request
 - `%>s` - Response status code
+- `%t` - Time the request was received in the format `[10/Jan/2015:14:46:18 +0100]`.
+- `%u` - Remote user
 
 **Note for %b**: To determine the size of the response the "Content-Length"
 (exact case match required for now!) will be inspected and, if available,
@@ -69,8 +75,12 @@ inspected using `byte_size/1`.
 
 **Note for %h**: The hostname will always be the ip of the client.
 
+**Note for %l**: Always a dash ("-").
+
 **Note for %r**: For now the http version is always logged as "HTTP/1.1",
 regardless of the true http version.
+
+**Note for %u**: Currently not supported, defaults to a dash ("-").
 
 
 ## License

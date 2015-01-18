@@ -3,19 +3,24 @@ defmodule Plug.AccessLog.Formatter do
   Log message formatter.
   """
 
+  use Timex
+
   import Plug.Conn
 
   @doc """
   Formats a log message.
 
-  If no `format` is given a default will be used.
+  The `:default` format is `:clf`.
 
   The following formatting directives are available:
 
   - `%b` - Size of response in bytes
   - `%h` - Remote hostname
+  - `%l` - Remote logname
   - `%r` - First line of HTTP request
   - `%>s` - Response status code
+  - `%t` - Time the request was received in the format `[10/Jan/2015:14:46:18 +0100]`.
+  - `%u` - Remote user
 
   **Note for %b**: To determine the size of the response the "Content-Length"
   (exact case match required for now!) will be inspected and, if available,
@@ -24,14 +29,19 @@ defmodule Plug.AccessLog.Formatter do
 
   **Note for %h**: The hostname will always be the ip of the client.
 
+  **Note for %l**: Always a dash ("-").
+
   **Note for %r**: For now the http version is always logged as "HTTP/1.1",
   regardless of the true http version.
+
+  **Note for %u**: Currently not supported, defaults to a dash ("-").
   """
   @spec format(format :: atom | String.t, conn :: Plug.Conn.t) :: String.t
-  def format(nil, conn), do: format(:default, conn)
+  def format(nil,      conn), do: format(:clf, conn)
+  def format(:default, conn), do: format(:clf, conn)
 
-  def format(:default, conn) do
-    "%h \"%r\" %>s %b" |> format(conn)
+  def format(:clf, conn) do
+    "%h %l %u %t \"%r\" %>s %b" |> format(conn)
   end
 
   def format(format, conn) when is_binary(format) do
@@ -60,6 +70,10 @@ defmodule Plug.AccessLog.Formatter do
     format(rest, conn, message <> remote_ip)
   end
 
+  defp format(<< "%l", rest :: binary >>, conn, message) do
+    format(rest, conn, message <> "-")
+  end
+
   defp format(<< "%r", rest :: binary >>, conn, message) do
     request = conn.method <> " " <> full_path(conn) <> " HTTP/1.1"
 
@@ -70,6 +84,18 @@ defmodule Plug.AccessLog.Formatter do
     status = conn.status |> to_string()
 
     format(rest, conn, message <> status)
+  end
+
+  defp format(<< "%t", rest :: binary >>, conn, message) do
+    request_date  = conn.private[:plug_accesslog] |> Date.from(:local)
+    format_string = "[%d/%b/%Y:%H:%M:%S %z]"
+    request_time  = DateFormat.format!(request_date, format_string, :strftime)
+
+    format(rest, conn, message <> request_time)
+  end
+
+  defp format(<< "%u", rest :: binary >>, conn, message) do
+    format(rest, conn, message <> "-")
   end
 
   defp format(<< char, rest :: binary >>, conn, message) do
