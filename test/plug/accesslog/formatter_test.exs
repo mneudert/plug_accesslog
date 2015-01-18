@@ -1,6 +1,7 @@
 defmodule Plug.AccessLog.FormatterTest do
   use ExUnit.Case, async: true
   use Plug.Test
+  use Timex
 
   alias Plug.AccessLog.Formatter
 
@@ -53,10 +54,14 @@ defmodule Plug.AccessLog.FormatterTest do
   end
 
   test "%t" do
-    datetime = {{ 2015, 01, 10 }, { 14, 46, 18 }}
-    conn     = conn(:get, "/") |> put_private(:plug_accesslog, datetime)
+    datetime  = {{ 2015, 01, 10 }, { 14, 46, 18 }}
+    conn      = conn(:get, "/") |> put_private(:plug_accesslog, datetime)
+    formatted =
+         datetime
+      |> Date.from(:local)
+      |> DateFormat.format!("[%d/%b/%Y:%H:%M:%S %z]", :strftime)
 
-    assert "[10/Jan/2015:14:46:18 +0100]" == Formatter.format("%t", conn)
+    assert formatted == Formatter.format("%t", conn)
   end
 
   test "%u" do
