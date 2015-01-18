@@ -10,15 +10,22 @@ defmodule Plug.AccessLog.Formatter do
 
   If no `format` is given a default will be used.
 
-  The following format values are supported:
+  The following formatting directives are available:
 
   - `%b` - Size of response in bytes
-  - `%h` - Remote IP of the client
+  - `%h` - Remote hostname
   - `%r` - First line of HTTP request
   - `%>s` - Response status code
 
-  For now the http version written to the log message
-  will always be "HTTP/1.1", regardless of the true http version.
+  **Note for %b**: To determine the size of the response the "Content-Length"
+  (exact case match required for now!) will be inspected and, if available,
+  returned unverified. If the header is not present the response body will be
+  inspected using `byte_size/1`.
+
+  **Note for %h**: The hostname will always be the ip of the client.
+
+  **Note for %r**: For now the http version is always logged as "HTTP/1.1",
+  regardless of the true http version.
   """
   @spec format(format :: atom | String.t, conn :: Plug.Conn.t) :: String.t
   def format(nil, conn), do: format(:default, conn)
