@@ -24,7 +24,7 @@ defmodule Plug.AccessLog.FormatterTest do
   test "%h" do
     conn = conn(:get, "/")
 
-    assert "127.0.0.1", Formatter.format("%h", conn)
+    assert "127.0.0.1" == Formatter.format("%h", conn)
   end
 
   test "%r" do
