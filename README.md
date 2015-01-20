@@ -56,6 +56,7 @@ The default format is [CLF](http://en.wikipedia.org/wiki/Common_Log_Format):
 ```
 "%h %l %u %t \"%r\" %>s %b"
 ---
+127.0.0.1 - - [10/Jan/2015:14:46:18 +0100] \"GET / HTTP/1.1\" 200 31337
 ```
 
 The following formatting directives are available:
