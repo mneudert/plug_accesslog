@@ -33,8 +33,6 @@ defmodule Plug.AccessLog.Formatter do
 
   **Note for %r**: For now the http version is always logged as "HTTP/1.1",
   regardless of the true http version.
-
-  **Note for %u**: Currently not supported, defaults to a dash ("-").
   """
   @spec format(format :: atom | String.t, conn :: Plug.Conn.t) :: String.t
   def format(nil,      conn), do: format(:clf, conn)
@@ -95,7 +93,12 @@ defmodule Plug.AccessLog.Formatter do
   end
 
   defp format(<< "%u", rest :: binary >>, conn, message) do
-    format(rest, conn, message <> "-")
+    username = case get_req_header(conn, "Authorization") do
+      [<< "Basic ", credentials :: binary >>] -> get_user(credentials)
+      _ -> "-"
+    end
+
+    format(rest, conn, message <> username)
   end
 
   defp format(<< char, rest :: binary >>, conn, message) do
@@ -103,4 +106,24 @@ defmodule Plug.AccessLog.Formatter do
   end
 
   defp format("", _conn, message), do: message
+
+
+  # Internal helper methods
+
+  defp get_user(credentials) do
+    try do
+      case parse_credentials(credentials) do
+        [ user, _pass ] -> user
+        _               -> "-"
+      end
+    rescue
+      _ -> "-"
+    end
+  end
+
+  defp parse_credentials(credentials) do
+    credentials
+    |> Base.decode64!()
+    |> String.split(":")
+  end
 end

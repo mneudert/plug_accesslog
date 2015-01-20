@@ -2,6 +2,7 @@
 
 ## v0.3.0 (dev)
 
+- Logs username from basic authentication
 - Raises plug version requirement to "~> 0.10"
 
 ## v0.2.0

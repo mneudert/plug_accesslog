@@ -81,8 +81,6 @@ inspected using `byte_size/1`.
 **Note for %r**: For now the http version is always logged as "HTTP/1.1",
 regardless of the true http version.
 
-**Note for %u**: Currently not supported, defaults to a dash ("-").
-
 
 ## License
 
