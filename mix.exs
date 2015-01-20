@@ -36,8 +36,8 @@ defmodule Plug.AccessLog.Mixfile do
   def deps(_) do
     [ { :timex, "~> 0.13" },
 
-      { :cowboy, "~> 1.0", optional: true },
-      { :plug,   "~> 0.9", optional: true } ]
+      { :cowboy, "~> 1.0",  optional: true },
+      { :plug,   "~> 0.10", optional: true } ]
   end
 
   def package do
