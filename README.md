@@ -32,8 +32,8 @@ defmodule AppRouter do
   use Plug.Router
 
   plug Plug.AccessLog,
-    format: :default,
-    logfile: "/path/to/your/logs/access.log"
+    format: :clf,
+    file: "/path/to/your/logs/access.log"
 
   plug :match
   plug :dispatch
@@ -51,13 +51,23 @@ end
 
 ## Log Format
 
-The default format is [CLF](http://en.wikipedia.org/wiki/Common_Log_Format):
+The default format is [CLF](http://en.wikipedia.org/wiki/Common_Log_Format).
+
+### Available formats
+
+Besides a self defined format you can use one of the predefined aliases:
 
 ```
-"%h %l %u %t \"%r\" %>s %b"
----
-127.0.0.1 - - [10/Jan/2015:14:46:18 +0100] \"GET / HTTP/1.1\" 200 31337
+:clf
+> %h %l %u %t "%r" %>s %b
+> 127.0.0.1 - - [10/Jan/2015:14:46:18 +0100] "GET / HTTP/1.1" 200 31337
+
+:clf_vhost
+> %v %h %l %u %t "%r" %>s %b
+> www.example.com 127.0.0.1 - - [10/Jan/2015:14:46:18 +0100] "GET / HTTP/1.1" 200 31337
 ```
+
+### Formatting directives
 
 The following formatting directives are available:
 
