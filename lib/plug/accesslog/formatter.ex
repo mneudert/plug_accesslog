@@ -21,6 +21,7 @@ defmodule Plug.AccessLog.Formatter do
   - `%>s` - Response status code
   - `%t` - Time the request was received in the format `[10/Jan/2015:14:46:18 +0100]`.
   - `%u` - Remote user
+  - `%v` - Server name
 
   **Note for %b**: To determine the size of the response the "Content-Length"
   (exact case match required for now!) will be inspected and, if available,
@@ -40,6 +41,10 @@ defmodule Plug.AccessLog.Formatter do
 
   def format(:clf, conn) do
     "%h %l %u %t \"%r\" %>s %b" |> format(conn)
+  end
+
+  def format(:clf_vhost, conn) do
+    "%v %h %l %u %t \"%r\" %>s %b" |> format(conn)
   end
 
   def format(format, conn) when is_binary(format) do
@@ -99,6 +104,10 @@ defmodule Plug.AccessLog.Formatter do
     end
 
     format(rest, conn, message <> username)
+  end
+
+  defp format(<< "%v", rest :: binary >>, conn, message) do
+    format(rest, conn, message <> conn.host)
   end
 
   defp format(<< char, rest :: binary >>, conn, message) do

@@ -2,28 +2,46 @@ defmodule Plug.AccessLogTest do
   use ExUnit.Case, async: true
   use Plug.Test
 
+  defmodule Logfiles do
+    def logfile_clf do
+      [ __DIR__, "../logs/plug_accesslog_clf.log" ]
+      |> Path.join()
+      |> Path.expand()
+    end
+
+    def logfile_clf_vhost do
+      [ __DIR__, "../logs/plug_accesslog_clf_vhost.log" ]
+      |> Path.join()
+      |> Path.expand()
+    end
+  end
+
   defmodule Router do
     use Plug.Router
 
-    @logfile [ __DIR__, "../logs/plug_accesslog.log" ] |> Path.join() |> Path.expand()
-
-    plug Plug.AccessLog, file: @logfile
+    plug Plug.AccessLog, format: :clf, file: Logfiles.logfile_clf
+    plug Plug.AccessLog, format: :clf_vhost, file: Logfiles.logfile_clf_vhost
 
     plug :match
     plug :dispatch
 
     get "/", do: send_resp(conn, 200, "OK")
-
-    def logfile, do: @logfile
   end
 
   @opts Router.init([])
 
-  test "request writes log entry" do
+  test "request writes configured log entries" do
     conn(:get, "/") |> Router.call(@opts)
 
+    # format: :clf
     regex = ~r/127.0.0.1 - - \[.+\] "GET \/ HTTP\/1.1" 200 2/
-    log   = Router.logfile |> File.read! |> String.strip()
+    log   = Logfiles.logfile_clf |> File.read!() |> String.strip()
+
+    assert Regex.match?(regex, log)
+
+    # format: :clf_vhost
+    regex = ~r/www.example.com 127.0.0.1 - - \[.+\] "GET \/ HTTP\/1.1" 200 2/
+    log   = Logfiles.logfile_clf_vhost |> File.read!() |> String.strip()
 
     assert Regex.match?(regex, log)
   end

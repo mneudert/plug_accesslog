@@ -68,6 +68,7 @@ The following formatting directives are available:
 - `%>s` - Response status code
 - `%t` - Time the request was received in the format `[10/Jan/2015:14:46:18 +0100]`.
 - `%u` - Remote user
+- `%v` - Server name
 
 **Note for %b**: To determine the size of the response the "Content-Length"
 (exact case match required for now!) will be inspected and, if available,

@@ -78,4 +78,11 @@ defmodule Plug.AccessLog.FormatterTest do
     assert "-"  == Formatter.format("%u", incomplete)
     assert "-"  == Formatter.format("%u", garbage)
   end
+
+  test "%v" do
+    host = "plug.access.log"
+    conn = conn(:get, "/") |> Map.put(:host, host)
+
+    assert host == Formatter.format("%v", conn)
+  end
 end

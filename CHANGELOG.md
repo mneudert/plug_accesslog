@@ -3,6 +3,7 @@
 ## v0.3.0 (dev)
 
 - Logs username from basic authentication
+- Provides access to vhost (domain) for logging
 - Raises plug version requirement to "~> 0.10"
 
 ## v0.2.0
