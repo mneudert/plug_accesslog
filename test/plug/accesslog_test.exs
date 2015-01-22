@@ -1,10 +1,6 @@
 defmodule Plug.AccessLogTest do
-  use ExUnit.Case, async: false
+  use ExUnit.Case, async: true
   use Plug.Test
-
-  import ExUnit.CaptureIO
-
-  alias Plug.AccessLog.Logfiles
 
   defmodule Router do
     use Plug.Router
@@ -24,13 +20,11 @@ defmodule Plug.AccessLogTest do
   @opts Router.init([])
 
   test "request writes log entry" do
-    Logfiles.replace(Router.logfile, :stdio)
+    conn(:get, "/") |> Router.call(@opts)
 
     regex = ~r/127.0.0.1 - - \[.+\] "GET \/ HTTP\/1.1" 200 2/
-    log   = capture_io :stdio, fn ->
-      conn(:get, "/") |> Router.call(@opts)
-    end
+    log   = Router.logfile |> File.read! |> String.strip()
 
-    assert Regex.match?(regex, String.strip(log))
+    assert Regex.match?(regex, log)
   end
 end
