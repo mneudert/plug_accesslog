@@ -10,7 +10,7 @@ defmodule Plug.AccessLog.Mixfile do
       description:   "Plug for writing access logs",
       source_url:    @url_github,
       package:       package,
-      version:       "0.3.0",
+      version:       "0.4.0-dev",
       elixir:        "~> 1.0",
       deps:          deps(Mix.env),
       docs:          [ readme: "README.md", main: "README" ],
