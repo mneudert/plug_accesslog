@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.3.0 (dev)
+## v0.3.0
 
 - Logs username from basic authentication
 - Provides access to vhost (domain) for logging
