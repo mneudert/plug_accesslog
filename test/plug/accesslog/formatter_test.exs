@@ -36,6 +36,15 @@ defmodule Plug.AccessLog.FormatterTest do
     assert "127.0.0.1" == Formatter.format("%h", conn)
   end
 
+  test "%{VARNAME}i" do
+    header = "X-Test-Header"
+    value  = "test value for %i"
+    conn   = conn(:get, "/") |> put_req_header(header, value)
+
+    assert value == Formatter.format("%{#{ header }}i", conn)
+    assert "-"   == Formatter.format("%{X-Unknown-Header}i", conn)
+  end
+
   test "%l" do
     assert "-" == Formatter.format("%l", nil)
   end
@@ -84,5 +93,10 @@ defmodule Plug.AccessLog.FormatterTest do
     conn = conn(:get, "/") |> Map.put(:host, host)
 
     assert host == Formatter.format("%v", conn)
+  end
+
+
+  test "invalid configurable type" do
+    assert "-" == Formatter.format("%{ignored}_", nil)
   end
 end

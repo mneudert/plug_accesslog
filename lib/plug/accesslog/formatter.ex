@@ -16,10 +16,11 @@ defmodule Plug.AccessLog.Formatter do
 
   - `%b` - Size of response in bytes
   - `%h` - Remote hostname
+  - `%{VARNAME}i` - Header line sent by the client
   - `%l` - Remote logname
   - `%r` - First line of HTTP request
   - `%>s` - Response status code
-  - `%t` - Time the request was received in the format `[10/Jan/2015:14:46:18 +0100]`.
+  - `%t` - Time the request was received in the format `[10/Jan/2015:14:46:18 +0100]`
   - `%u` - Remote user
   - `%v` - Server name
 
@@ -108,6 +109,23 @@ defmodule Plug.AccessLog.Formatter do
 
   defp format(<< "%v", rest :: binary >>, conn, message) do
     format(rest, conn, message <> conn.host)
+  end
+
+  defp format(<< "%{", rest :: binary >>, conn, message) do
+    [ varname, rest ] = rest |> String.split("}", parts: 2)
+
+    << vartype :: binary-1, rest :: binary >> = rest
+
+    varvalue = case vartype do
+      "i" ->
+        case get_req_header(conn, varname) do
+          [ value ] -> value
+          _         -> "-"
+        end
+      _ -> "-"
+    end
+
+    format(rest, conn, message <> varvalue)
   end
 
   defp format(<< char, rest :: binary >>, conn, message) do

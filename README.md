@@ -73,10 +73,11 @@ The following formatting directives are available:
 
 - `%b` - Size of response in bytes
 - `%h` - Remote hostname
+- `%{VARNAME}i` - Header line sent by the client
 - `%l` - Remote logname
 - `%r` - First line of HTTP request
 - `%>s` - Response status code
-- `%t` - Time the request was received in the format `[10/Jan/2015:14:46:18 +0100]`.
+- `%t` - Time the request was received in the format `[10/Jan/2015:14:46:18 +0100]`
 - `%u` - Remote user
 - `%v` - Server name
 
