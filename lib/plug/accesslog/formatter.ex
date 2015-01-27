@@ -7,6 +7,11 @@ defmodule Plug.AccessLog.Formatter do
 
   import Plug.Conn
 
+  @format_clf "%h %l %u %t \"%r\" %>s %b"
+  @format_clf_vhost "%v " <> @format_clf
+  @format_combined "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\""
+  @format_combined_vhost "%v " <> @format_combined
+
   @doc """
   Formats a log message.
 
@@ -40,13 +45,10 @@ defmodule Plug.AccessLog.Formatter do
   def format(nil,      conn), do: format(:clf, conn)
   def format(:default, conn), do: format(:clf, conn)
 
-  def format(:clf, conn) do
-    "%h %l %u %t \"%r\" %>s %b" |> format(conn)
-  end
-
-  def format(:clf_vhost, conn) do
-    "%v %h %l %u %t \"%r\" %>s %b" |> format(conn)
-  end
+  def format(:clf,            conn), do: format(@format_clf, conn)
+  def format(:clf_vhost,      conn), do: format(@format_clf_vhost, conn)
+  def format(:combined,       conn), do: format(@format_combined, conn)
+  def format(:combined_vhost, conn), do: format(@format_combined_vhost, conn)
 
   def format(format, conn) when is_binary(format) do
     format(format, conn, "")

@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.4.0 (dev)
+
+- Provides "Combined Log Format" alias
+- Provides "Combined Log Format with VHost" alias
+
 ## v0.3.0
 
 - Logs username from basic authentication

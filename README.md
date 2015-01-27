@@ -65,6 +65,14 @@ Besides a self defined format you can use one of the predefined aliases:
 :clf_vhost
 > %v %h %l %u %t "%r" %>s %b
 > www.example.com 127.0.0.1 - - [10/Jan/2015:14:46:18 +0100] "GET / HTTP/1.1" 200 31337
+
+:combined
+> %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-Agent}i"
+> 127.0.0.1 - - [22/Jan/2015:19:33:58 +0100] "GET / HTTP/1.1" 200 2 "http://www.example.com/previous_page" "curl/7.35.0"
+
+:combined_vhost
+> %v %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-Agent}i"
+> www.example.com 127.0.0.1 - - [22/Jan/2015:19:33:58 +0100] "GET / HTTP/1.1" 200 2 "http://www.example.com/previous_page" "curl/7.35.0"
 ```
 
 ### Formatting directives
