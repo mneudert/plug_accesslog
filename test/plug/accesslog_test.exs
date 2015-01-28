@@ -32,6 +32,12 @@ defmodule Plug.AccessLogTest do
       |> Path.join()
       |> Path.expand()
     end
+
+    def logfile_referer do
+      [ __DIR__, "../logs/plug_accesslog_referer.log" ]
+      |> Path.join()
+      |> Path.expand()
+    end
   end
 
   defmodule Router do
@@ -42,6 +48,7 @@ defmodule Plug.AccessLogTest do
     plug Plug.AccessLog, format: :clf_vhost,      file: Logfiles.logfile_clf_vhost
     plug Plug.AccessLog, format: :combined,       file: Logfiles.logfile_combined
     plug Plug.AccessLog, format: :combined_vhost, file: Logfiles.logfile_combined_vhost
+    plug Plug.AccessLog, format: :referer,        file: Logfiles.logfile_referer
 
     plug :match
     plug :dispatch
@@ -94,5 +101,12 @@ defmodule Plug.AccessLogTest do
     log   = Logfiles.logfile_combined_vhost |> File.read!() |> String.strip()
 
     assert Regex.match?(regex, log)
+  end
+
+  test ":referer format" do
+    log = Logfiles.logfile_referer |> File.read!() |> String.strip()
+    res = "#{ @test_ref } -> /"
+
+    assert res == log
   end
 end

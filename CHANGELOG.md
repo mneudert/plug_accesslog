@@ -5,6 +5,7 @@
 - Provides "Agent Log Format" alias
 - Provides "Combined Log Format" alias
 - Provides "Combined Log Format with VHost" alias
+- Provides "Referer Log Format" alias
 
 ## v0.3.0
 

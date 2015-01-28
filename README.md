@@ -77,6 +77,10 @@ Besides a self defined format you can use one of the predefined aliases:
 :combined_vhost
 > %v %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-Agent}i"
 > www.example.com 127.0.0.1 - - [22/Jan/2015:19:33:58 +0100] "GET / HTTP/1.1" 200 2 "http://www.example.com/previous_page" "curl/7.35.0"
+
+:referer
+> %{Referer}i -> %U
+> http://www.example.com/previous_page -> /
 ```
 
 ### Formatting directives
@@ -91,6 +95,7 @@ The following formatting directives are available:
 - `%>s` - Response status code
 - `%t` - Time the request was received in the format `[10/Jan/2015:14:46:18 +0100]`
 - `%u` - Remote user
+- `%U` - URL path requested (without query string)
 - `%v` - Server name
 
 **Note for %b**: To determine the size of the response the "Content-Length"

@@ -12,6 +12,7 @@ defmodule Plug.AccessLog.Formatter do
   @format_clf_vhost "%v " <> @format_clf
   @format_combined "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\""
   @format_combined_vhost "%v " <> @format_combined
+  @format_referer "%{Referer}i -> %U"
 
   @doc """
   Formats a log message.
@@ -28,6 +29,7 @@ defmodule Plug.AccessLog.Formatter do
   - `%>s` - Response status code
   - `%t` - Time the request was received in the format `[10/Jan/2015:14:46:18 +0100]`
   - `%u` - Remote user
+  - `%U` - URL path requested (without query string)
   - `%v` - Server name
 
   **Note for %b**: To determine the size of the response the "Content-Length"
@@ -51,6 +53,7 @@ defmodule Plug.AccessLog.Formatter do
   def format(:clf_vhost,      conn), do: format(@format_clf_vhost, conn)
   def format(:combined,       conn), do: format(@format_combined, conn)
   def format(:combined_vhost, conn), do: format(@format_combined_vhost, conn)
+  def format(:referer,        conn), do: format(@format_referer, conn)
 
   def format(format, conn) when is_binary(format) do
     format(format, conn, "")
@@ -109,6 +112,10 @@ defmodule Plug.AccessLog.Formatter do
     end
 
     format(rest, conn, message <> username)
+  end
+
+  defp format(<< "%U", rest :: binary >>, conn, message) do
+    format(rest, conn, message <> full_path(conn))
   end
 
   defp format(<< "%v", rest :: binary >>, conn, message) do
