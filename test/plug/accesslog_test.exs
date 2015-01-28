@@ -53,36 +53,43 @@ defmodule Plug.AccessLogTest do
   @test_ref "http://www.example.com/previous_page"
   @test_ua  "curl/7.35.0"
 
-  test "request writes configured log entries" do
+
+  setup_all do
     conn(:get, "/")
     |> put_req_header("Referer", @test_ref)
     |> put_req_header("User-Agent", @test_ua)
     |> Router.call(@opts)
 
-    # format: :agent
-    log = Logfiles.logfile_agent |> File.read!() |> String.strip()
+    :ok
+  end
 
-    assert @test_ua == log
 
-    # format: :clf
+  test ":agent format" do
+    assert @test_ua == Logfiles.logfile_agent |> File.read!() |> String.strip()
+  end
+
+  test ":clf format" do
     regex = ~r/127.0.0.1 - - \[.+\] "GET \/ HTTP\/1.1" 200 2/
     log   = Logfiles.logfile_clf |> File.read!() |> String.strip()
 
     assert Regex.match?(regex, log)
+  end
 
-    # format: :clf_vhost
+  test ":clf_vhost format" do
     regex = ~r/www.example.com 127.0.0.1 - - \[.+\] "GET \/ HTTP\/1.1" 200 2/
     log   = Logfiles.logfile_clf_vhost |> File.read!() |> String.strip()
 
     assert Regex.match?(regex, log)
+  end
 
-    # format: :combined
+  test ":combined format" do
     regex = ~r/127.0.0.1 - - \[.+\] "GET \/ HTTP\/1.1" 200 2 "#{ @test_ref }" "#{ @test_ua }"/
     log   = Logfiles.logfile_combined |> File.read!() |> String.strip()
 
     assert Regex.match?(regex, log)
+  end
 
-    # format: :combined_vhost
+  test ":combined_vhost format" do
     regex = ~r/www.example.com 127.0.0.1 - - \[.+\] "GET \/ HTTP\/1.1" 200 2 "#{ @test_ref }" "#{ @test_ua }"/
     log   = Logfiles.logfile_combined_vhost |> File.read!() |> String.strip()
 
