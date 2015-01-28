@@ -3,6 +3,12 @@ defmodule Plug.AccessLogTest do
   use Plug.Test
 
   defmodule Logfiles do
+    def logfile_agent do
+      [ __DIR__, "../logs/plug_accesslog_agent.log" ]
+      |> Path.join()
+      |> Path.expand()
+    end
+
     def logfile_clf do
       [ __DIR__, "../logs/plug_accesslog_clf.log" ]
       |> Path.join()
@@ -31,6 +37,7 @@ defmodule Plug.AccessLogTest do
   defmodule Router do
     use Plug.Router
 
+    plug Plug.AccessLog, format: :agent,          file: Logfiles.logfile_agent
     plug Plug.AccessLog, format: :clf,            file: Logfiles.logfile_clf
     plug Plug.AccessLog, format: :clf_vhost,      file: Logfiles.logfile_clf_vhost
     plug Plug.AccessLog, format: :combined,       file: Logfiles.logfile_combined
@@ -51,6 +58,11 @@ defmodule Plug.AccessLogTest do
     |> put_req_header("Referer", @test_ref)
     |> put_req_header("User-Agent", @test_ua)
     |> Router.call(@opts)
+
+    # format: :agent
+    log = Logfiles.logfile_agent |> File.read!() |> String.strip()
+
+    assert @test_ua == log
 
     # format: :clf
     regex = ~r/127.0.0.1 - - \[.+\] "GET \/ HTTP\/1.1" 200 2/

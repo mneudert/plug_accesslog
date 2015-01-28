@@ -2,6 +2,7 @@
 
 ## v0.4.0 (dev)
 
+- Provides "Agent Log Format" alias
 - Provides "Combined Log Format" alias
 - Provides "Combined Log Format with VHost" alias
 

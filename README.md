@@ -58,6 +58,10 @@ The default format is [CLF](http://en.wikipedia.org/wiki/Common_Log_Format).
 Besides a self defined format you can use one of the predefined aliases:
 
 ```
+:agent
+> %{User-Agent}i
+> curl/7.35.0
+
 :clf
 > %h %l %u %t "%r" %>s %b
 > 127.0.0.1 - - [10/Jan/2015:14:46:18 +0100] "GET / HTTP/1.1" 200 31337

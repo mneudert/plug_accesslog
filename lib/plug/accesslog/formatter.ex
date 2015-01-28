@@ -7,6 +7,7 @@ defmodule Plug.AccessLog.Formatter do
 
   import Plug.Conn
 
+  @format_agent "%{User-Agent}i"
   @format_clf "%h %l %u %t \"%r\" %>s %b"
   @format_clf_vhost "%v " <> @format_clf
   @format_combined "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\""
@@ -45,6 +46,7 @@ defmodule Plug.AccessLog.Formatter do
   def format(nil,      conn), do: format(:clf, conn)
   def format(:default, conn), do: format(:clf, conn)
 
+  def format(:agent,          conn), do: format(@format_agent, conn)
   def format(:clf,            conn), do: format(@format_clf, conn)
   def format(:clf_vhost,      conn), do: format(@format_clf_vhost, conn)
   def format(:combined,       conn), do: format(@format_combined, conn)
