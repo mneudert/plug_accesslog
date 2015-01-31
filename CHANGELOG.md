@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.4.0 (dev)
+## v0.4.0
 
 - Provides "Agent Log Format" alias
 - Provides "Combined Log Format" alias
