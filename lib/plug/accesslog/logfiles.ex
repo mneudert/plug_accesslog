@@ -15,8 +15,20 @@ defmodule Plug.AccessLog.Logfiles do
   @spec get(logfile :: String.t) :: File.io_device | nil
   def get(logfile) do
     case get_device(logfile) do
-      nil    -> open(logfile)
-      device -> device
+      nil                        -> open(logfile)
+      device when is_pid(device) -> get_or_reopen(device, logfile)
+      other_device               -> other_device
+    end
+  end
+
+  defp get_or_reopen(device, logfile) do
+    case Process.alive?(device) do
+      true  -> device
+      false ->
+        case File.open(logfile, [ :append, :utf8 ]) do
+          { :error, _ }   -> nil
+          { :ok, device } -> replace(logfile, device)
+        end
     end
   end
 
@@ -25,7 +37,7 @@ defmodule Plug.AccessLog.Logfiles do
   """
   @spec open(logfile :: String.t) :: File.io_device | nil
   def open(logfile) do
-    case File.open(logfile, [ :write, :utf8 ]) do
+    case File.open(logfile, [ :append, :utf8 ]) do
       { :error, _ }   -> nil
       { :ok, device } -> set(logfile, device)
     end

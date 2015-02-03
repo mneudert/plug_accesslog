@@ -65,7 +65,7 @@ defmodule Plug.AccessLog.Formatter do
   defp format(<< "%b", rest :: binary >>, conn, message) do
     content_length = case get_resp_header(conn, "Content-Length") do
       [ length ] -> length
-      _          -> (conn.resp_body || "") |> byte_size()
+      _          -> (conn.resp_body || "") |> to_string() |> byte_size()
     end
 
     if 0 == content_length do

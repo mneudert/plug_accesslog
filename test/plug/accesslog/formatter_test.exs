@@ -19,8 +19,13 @@ defmodule Plug.AccessLog.FormatterTest do
     # no content length, no response body
     assert "-" == Formatter.format("%b", conn)
 
-    # response body
+    # binary response body
     conn = %{ conn | resp_body: "Hello, World!" }
+
+    assert "13" == Formatter.format("%b", conn)
+
+    # charlist response body
+    conn = %{ conn | resp_body: 'Hello, World!' }
 
     assert "13" == Formatter.format("%b", conn)
 

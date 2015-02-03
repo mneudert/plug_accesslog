@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.4.1
+
+- Properly handles charlist responses (@chvanikoff)
+- Reopens logfile IO device if pid is not alive anymore (@chvanikoff)
+
 ## v0.4.0
 
 - Provides "Agent Log Format" alias

@@ -104,7 +104,7 @@ defmodule Plug.AccessLogTest do
   end
 
   test ":referer format" do
-    log = Logfiles.logfile_referer |> File.read!() |> String.strip()
+    log = Logfiles.logfile_referer |> File.read!() |> String.split("\n") |> List.first
     res = "#{ @test_ref } -> /"
 
     assert res == log

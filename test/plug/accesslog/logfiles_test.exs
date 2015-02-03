@@ -38,4 +38,21 @@ defmodule Plug.AccessLog.LogfilesTest do
     refute log_device == Logfiles.get(logfile)
     assert new_device == Logfiles.get(logfile)
   end
+
+  test "logfile device automatically restored in case of crash" do
+    logfile =
+         [ __DIR__, "../../logs/plug_accesslog_logfiles_restore.log" ]
+      |> Path.join()
+      |> Path.expand()
+
+    old_pid = logfile |> Logfiles.get()
+
+    assert Process.exit(old_pid, :kill)
+    refute Process.alive?(old_pid)
+
+    new_pid = logfile |> Logfiles.get()
+
+    assert Process.alive?(new_pid)
+    refute old_pid == new_pid
+  end
 end
