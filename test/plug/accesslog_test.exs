@@ -54,7 +54,6 @@ defmodule Plug.AccessLogTest do
     plug :dispatch
 
     get "/", do: send_resp(conn, 200, "OK")
-    get "/charlist", do: send_resp(conn, 200, 'OK')
   end
 
   @opts     Router.init([])
@@ -63,19 +62,17 @@ defmodule Plug.AccessLogTest do
 
 
   setup_all do
-    Enum.each ["/", "/charlist"], fn(path) ->
-      conn(:get, path)
-      |> put_req_header("Referer", @test_ref)
-      |> put_req_header("User-Agent", @test_ua)
-      |> Router.call(@opts)
-    end
+    conn(:get, "/")
+    |> put_req_header("Referer", @test_ref)
+    |> put_req_header("User-Agent", @test_ua)
+    |> Router.call(@opts)
 
     :ok
   end
 
 
   test ":agent format" do
-    assert @test_ua == Logfiles.logfile_agent |> File.read!() |> String.split("\n") |> List.first
+    assert @test_ua == Logfiles.logfile_agent |> File.read!() |> String.strip()
   end
 
   test ":clf format" do
