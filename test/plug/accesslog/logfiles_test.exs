@@ -44,10 +44,15 @@ defmodule Plug.AccessLog.LogfilesTest do
          [ __DIR__, "../../logs/plug_accesslog_logfiles_restore.log" ]
       |> Path.join()
       |> Path.expand()
+
     old_pid = logfile |> Logfiles.get()
-    :erlang.exit(old_pid, :kill)
+
+    assert Process.exit(old_pid, :kill)
+    refute Process.alive?(old_pid)
+
     new_pid = logfile |> Logfiles.get()
-    assert is_pid(new_pid)
+
+    assert Process.alive?(new_pid)
     refute old_pid == new_pid
   end
 end
