@@ -10,7 +10,7 @@ defmodule Plug.AccessLog.Mixfile do
       description:   "Plug for writing access logs",
       source_url:    @url_github,
       package:       package,
-      version:       "0.4.0",
+      version:       "0.4.1",
       elixir:        "~> 1.0",
       deps:          deps(Mix.env),
       docs:          [ readme: "README.md", main: "README" ],
@@ -41,7 +41,7 @@ defmodule Plug.AccessLog.Mixfile do
   end
 
   def package do
-    %{ contributors: [ "Marc Neudert" ],
+    %{ contributors: [ "Marc Neudert", "Roman Chvanikoff" ],
        files:        [ "LICENSE", "mix.exs", "README.md", "lib" ],
        licenses:     [ "Apache 2.0" ],
        links:        %{ "Docs" => @url_docs, "Github" => @url_github }}
