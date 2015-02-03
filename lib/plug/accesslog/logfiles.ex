@@ -16,7 +16,16 @@ defmodule Plug.AccessLog.Logfiles do
   def get(logfile) do
     case get_device(logfile) do
       nil    -> open(logfile)
-      device -> device
+      device when is_pid(device) ->
+        case :erlang.is_process_alive(device) do
+          true  -> device
+          false ->
+            case File.open(logfile, [ :append, :utf8 ]) do
+              { :error, _ }   -> nil
+              { :ok, device } -> replace(logfile, device)
+            end
+        end
+      other_device -> other_device
     end
   end
 
