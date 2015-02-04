@@ -3,6 +3,7 @@
 ## v0.5.0 (dev)
 
 - Properly ignores unopenable logfiles (i.e. "..")
+- Recreates logfile if necessary (i.e. after moved by logrotate)
 
 ## v0.4.1
 

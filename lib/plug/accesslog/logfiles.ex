@@ -22,7 +22,7 @@ defmodule Plug.AccessLog.Logfiles do
   end
 
   defp get_or_reopen(device, logfile) do
-    case Process.alive?(device) do
+    case File.exists?(logfile) && Process.alive?(device) do
       true  -> device
       false ->
         case File.open(logfile, [ :append, :utf8 ]) do
