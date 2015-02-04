@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.5.0 (dev)
+
+- Properly ignores unopenable logfiles (i.e. "..")
+
 ## v0.4.1
 
 - Properly handles charlist responses (@chvanikoff)

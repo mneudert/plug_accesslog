@@ -30,8 +30,8 @@ defmodule Plug.AccessLog do
     opts[:file] |> Logfiles.get() |> maybe_log(conn, opts)
   end
 
-  defp maybe_log(nil,    _conn, _opts), do: nil
-  defp maybe_log(device,  conn,  opts)  do
+  defp maybe_log(nil,    conn, _opts), do: conn
+  defp maybe_log(device, conn,  opts)  do
     opts[:format]
     |> Formatter.format(conn)
     |> Writer.write(device)
