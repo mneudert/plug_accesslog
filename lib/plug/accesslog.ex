@@ -11,7 +11,7 @@ defmodule Plug.AccessLog do
 
   @behaviour Plug
 
-  def init(opts), do: opts
+  def init(opts), do: opts |> Enum.into(%{})
 
   def call(conn, opts) do
     conn
@@ -25,10 +25,19 @@ defmodule Plug.AccessLog do
   If the target logfile could not be openend the message
   will be silently ignored.
   """
-  @spec log(conn :: Plug.Conn.t, opts :: Keyword.t) :: :ok
-  def log(conn, opts) do
-    opts[:file] |> Logfiles.get() |> maybe_log(conn, opts)
+  @spec log(conn :: Plug.Conn.t, opts :: map) :: :ok
+  def log(conn, %{ fun: logfun } = opts) do
+    opts[:format]
+    |> Formatter.format(conn)
+    |> logfun.()
+
+    conn
   end
+
+  def log(conn, %{ file: logfile } = opts) do
+    logfile |> Logfiles.get() |> maybe_log(conn, opts)
+  end
+
 
   defp maybe_log(nil,    conn, _opts), do: conn
   defp maybe_log(device, conn,  opts)  do

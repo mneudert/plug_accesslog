@@ -2,6 +2,7 @@
 
 ## v0.5.0 (dev)
 
+- Allows logging to functions instead of files
 - Properly ignores unopenable logfiles (i.e. "..")
 - Recreates logfile if necessary (i.e. after moved by logrotate)
 
