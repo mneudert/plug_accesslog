@@ -13,6 +13,10 @@ defmodule Plug.AccessLog.FormatterTest do
   end
 
 
+  test "%%" do
+    assert "%" == Formatter.format("%%", nil)
+  end
+
   test "%b" do
     conn = conn(:get, "/")
 

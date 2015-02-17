@@ -21,6 +21,7 @@ defmodule Plug.AccessLog.Formatter do
 
   The following formatting directives are available:
 
+  - `%%` - Percentage sign
   - `%b` - Size of response in bytes
   - `%h` - Remote hostname
   - `%{VARNAME}i` - Header line sent by the client
@@ -61,6 +62,10 @@ defmodule Plug.AccessLog.Formatter do
 
 
   # Internal construction methods
+
+  defp format(<< "%%", rest :: binary >>, conn, message) do
+    format(rest, conn, message <> "%")
+  end
 
   defp format(<< "%b", rest :: binary >>, conn, message) do
     content_length = case get_resp_header(conn, "Content-Length") do

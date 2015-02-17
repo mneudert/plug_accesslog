@@ -87,6 +87,7 @@ Besides a self defined format you can use one of the predefined aliases:
 
 The following formatting directives are available:
 
+- `%%` - Percentage sign
 - `%b` - Size of response in bytes
 - `%h` - Remote hostname
 - `%{VARNAME}i` - Header line sent by the client

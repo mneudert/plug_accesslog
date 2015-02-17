@@ -6,6 +6,10 @@
 - Properly ignores unopenable logfiles (i.e. "..")
 - Recreates logfile if necessary (i.e. after moved by logrotate)
 
+Additional formatting directives:
+
+- `%%` - Percentage sign
+
 ## v0.4.1
 
 - Properly handles charlist responses (@chvanikoff)
