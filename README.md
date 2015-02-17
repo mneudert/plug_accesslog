@@ -88,7 +88,8 @@ Besides a self defined format you can use one of the predefined aliases:
 The following formatting directives are available:
 
 - `%%` - Percentage sign
-- `%b` - Size of response in bytes
+- `%B` - Size of response in bytes. Outputs "0" when no bytes are sent.
+- `%b` - Size of response in bytes. Outputs "-" when no bytes are sent.
 - `%h` - Remote hostname
 - `%{VARNAME}i` - Header line sent by the client
 - `%l` - Remote logname
@@ -99,7 +100,7 @@ The following formatting directives are available:
 - `%U` - URL path requested (without query string)
 - `%v` - Server name
 
-**Note for %b**: To determine the size of the response the "Content-Length"
+**Note for %B and %b**: To determine the size of the response the "Content-Length"
 (exact case match required for now!) will be inspected and, if available,
 returned unverified. If the header is not present the response body will be
 inspected using `byte_size/1`.

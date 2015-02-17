@@ -9,6 +9,7 @@
 Additional formatting directives:
 
 - `%%` - Percentage sign
+- `%B` - Size of response in bytes. Outputs "0" when no bytes are sent.
 
 ## v0.4.1
 

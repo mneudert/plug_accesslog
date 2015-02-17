@@ -7,6 +7,8 @@ defmodule Plug.AccessLog.Formatter do
 
   import Plug.Conn
 
+  alias Plug.AccessLog.Formatter
+
   @format_agent "%{User-Agent}i"
   @format_clf "%h %l %u %t \"%r\" %>s %b"
   @format_clf_vhost "%v " <> @format_clf
@@ -22,7 +24,8 @@ defmodule Plug.AccessLog.Formatter do
   The following formatting directives are available:
 
   - `%%` - Percentage sign
-  - `%b` - Size of response in bytes
+  - `%B` - Size of response in bytes. Outputs "0" when no bytes are sent.
+  - `%b` - Size of response in bytes. Outputs "-" when no bytes are sent.
   - `%h` - Remote hostname
   - `%{VARNAME}i` - Header line sent by the client
   - `%l` - Remote logname
@@ -33,7 +36,7 @@ defmodule Plug.AccessLog.Formatter do
   - `%U` - URL path requested (without query string)
   - `%v` - Server name
 
-  **Note for %b**: To determine the size of the response the "Content-Length"
+  **Note for %B and %b**: To determine the size of the response the "Content-Length"
   (exact case match required for now!) will be inspected and, if available,
   returned unverified. If the header is not present the response body will be
   inspected using `byte_size/1`.
@@ -67,17 +70,20 @@ defmodule Plug.AccessLog.Formatter do
     format(rest, conn, message <> "%")
   end
 
+  defp format(<< "%B", rest :: binary >>, conn, message) do
+    message =
+         message
+      |> Formatter.ResponseBytes.append(conn, "0")
+
+    format(rest, conn, message)
+  end
+
   defp format(<< "%b", rest :: binary >>, conn, message) do
-    content_length = case get_resp_header(conn, "Content-Length") do
-      [ length ] -> length
-      _          -> (conn.resp_body || "") |> to_string() |> byte_size()
-    end
+    message =
+         message
+      |> Formatter.ResponseBytes.append(conn, "-")
 
-    if 0 == content_length do
-      content_length = "-"
-    end
-
-    format(rest, conn, message <> to_string(content_length))
+    format(rest, conn, message)
   end
 
   defp format(<< "%h", rest :: binary >>, conn, message) do

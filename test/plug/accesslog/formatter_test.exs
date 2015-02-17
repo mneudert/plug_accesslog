@@ -17,6 +17,28 @@ defmodule Plug.AccessLog.FormatterTest do
     assert "%" == Formatter.format("%%", nil)
   end
 
+  test "%B" do
+    conn = conn(:get, "/")
+
+    # no content length, no response body
+    assert "0" == Formatter.format("%B", conn)
+
+    # binary response body
+    conn = %{ conn | resp_body: "Hello, World!" }
+
+    assert "13" == Formatter.format("%B", conn)
+
+    # charlist response body
+    conn = %{ conn | resp_body: 'Hello, World!' }
+
+    assert "13" == Formatter.format("%B", conn)
+
+    # content length header (binary)
+    conn = conn |> put_resp_header("Content-Length", "227")
+
+    assert "227" == Formatter.format("%B", conn)
+  end
+
   test "%b" do
     conn = conn(:get, "/")
 
