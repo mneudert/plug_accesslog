@@ -3,10 +3,6 @@ defmodule Plug.AccessLog.Formatter do
   Log message formatter.
   """
 
-  use Timex
-
-  import Plug.Conn
-
   alias Plug.AccessLog.Formatter
 
   @format_agent "%{User-Agent}i"
@@ -60,119 +56,91 @@ defmodule Plug.AccessLog.Formatter do
   def format(:referer,        conn), do: format(@format_referer, conn)
 
   def format(format, conn) when is_binary(format) do
-    format(format, conn, "")
+    log("", conn, format)
   end
 
 
   # Internal construction methods
 
-  defp format(<< "%%", rest :: binary >>, conn, message) do
-    format(rest, conn, message <> "%")
+  defp log(message, _conn, ""), do: message
+
+  defp log(message, conn, << "%%", rest :: binary >>) do
+    message <> "%"
+    |> log(conn, rest)
   end
 
-  defp format(<< "%B", rest :: binary >>, conn, message) do
-    message =
-         message
-      |> Formatter.ResponseBytes.append(conn, "0")
-
-    format(rest, conn, message)
+  defp log(message, conn, << "%B", rest :: binary >>) do
+    message
+    |> Formatter.ResponseBytes.append(conn, "0")
+    |> log(conn, rest)
   end
 
-  defp format(<< "%b", rest :: binary >>, conn, message) do
-    message =
-         message
-      |> Formatter.ResponseBytes.append(conn, "-")
-
-    format(rest, conn, message)
+  defp log(message, conn, << "%b", rest :: binary >>) do
+    message
+    |> Formatter.ResponseBytes.append(conn, "-")
+    |> log(conn, rest)
   end
 
-  defp format(<< "%h", rest :: binary >>, conn, message) do
-    remote_ip = conn.remote_ip |> :inet_parse.ntoa() |> to_string()
-
-    format(rest, conn, message <> remote_ip)
+  defp log(message, conn, << "%h", rest :: binary >>) do
+    message
+    |> Formatter.RemoteHostname.append(conn)
+    |> log(conn, rest)
   end
 
-  defp format(<< "%l", rest :: binary >>, conn, message) do
-    format(rest, conn, message <> "-")
+  defp log(message, conn, << "%l", rest :: binary >>) do
+    message <> "-"
+    |> log(conn, rest)
   end
 
-  defp format(<< "%r", rest :: binary >>, conn, message) do
-    request = conn.method <> " " <> full_path(conn) <> " HTTP/1.1"
-
-    format(rest, conn, message <> request)
+  defp log(message, conn, << "%r", rest :: binary >>) do
+    message
+    |> Formatter.RequestLine.append(conn)
+    |> log(conn, rest)
   end
 
-  defp format(<< "%>s", rest :: binary >>, conn, message) do
-    status = conn.status |> to_string()
-
-    format(rest, conn, message <> status)
+  defp log(message, conn, << "%>s", rest :: binary >>) do
+    message <> to_string(conn.status)
+    |> log(conn, rest)
   end
 
-  defp format(<< "%t", rest :: binary >>, conn, message) do
-    request_date  = conn.private[:plug_accesslog] |> Date.from(:local)
-    format_string = "[%d/%b/%Y:%H:%M:%S %z]"
-    request_time  = DateFormat.format!(request_date, format_string, :strftime)
-
-    format(rest, conn, message <> request_time)
+  defp log(message, conn, << "%t", rest :: binary >>) do
+    message
+    |> Formatter.RequestTime.append(conn)
+    |> log(conn, rest)
   end
 
-  defp format(<< "%u", rest :: binary >>, conn, message) do
-    username = case get_req_header(conn, "Authorization") do
-      [<< "Basic ", credentials :: binary >>] -> get_user(credentials)
-      _ -> "-"
-    end
-
-    format(rest, conn, message <> username)
+  defp log(message, conn, << "%u", rest :: binary >>) do
+    message
+    |> Formatter.RemoteUser.append(conn)
+    |> log(conn, rest)
   end
 
-  defp format(<< "%U", rest :: binary >>, conn, message) do
-    format(rest, conn, message <> full_path(conn))
+  defp log(message, conn, << "%U", rest :: binary >>) do
+    message
+    |> Formatter.RequestPath.append(conn)
+    |> log(conn, rest)
   end
 
-  defp format(<< "%v", rest :: binary >>, conn, message) do
-    format(rest, conn, message <> conn.host)
+  defp log(message, conn, << "%v", rest :: binary >>) do
+    message <> conn.host
+    |> log(conn, rest)
   end
 
-  defp format(<< "%{", rest :: binary >>, conn, message) do
+  defp log(message, conn, << "%{", rest :: binary >>) do
     [ varname, rest ] = rest |> String.split("}", parts: 2)
 
     << vartype :: binary-1, rest :: binary >> = rest
 
-    varvalue = case vartype do
-      "i" ->
-        case get_req_header(conn, varname) do
-          [ value ] -> value
-          _         -> "-"
-        end
-      _ -> "-"
+    message = case vartype do
+      "i" -> Formatter.RequestHeader.append(message, conn, varname)
+      _   -> message <> "-"
     end
 
-    format(rest, conn, message <> varvalue)
+    log(message, conn, rest)
   end
 
-  defp format(<< char, rest :: binary >>, conn, message) do
-    format(rest, conn, message <> << char >>)
-  end
-
-  defp format("", _conn, message), do: message
-
-
-  # Internal helper methods
-
-  defp get_user(credentials) do
-    try do
-      case parse_credentials(credentials) do
-        [ user, _pass ] -> user
-        _               -> "-"
-      end
-    rescue
-      _ -> "-"
-    end
-  end
-
-  defp parse_credentials(credentials) do
-    credentials
-    |> Base.decode64!()
-    |> String.split(":")
+  defp log(message, conn, << char, rest :: binary >>) do
+    message <> << char >>
+    |> log(conn, rest)
   end
 end
