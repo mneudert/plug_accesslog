@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.5.0 (dev)
+## v0.5.0
 
 - Allows logging to functions instead of files
 - Properly ignores unopenable logfiles (i.e. "..")
