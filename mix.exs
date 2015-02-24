@@ -8,12 +8,11 @@ defmodule Plug.AccessLog.Mixfile do
     [ app:           :plug_accesslog,
       name:          "Plug.AccessLog",
       description:   "Plug for writing access logs",
-      source_url:    @url_github,
       package:       package,
       version:       "0.5.0-dev",
       elixir:        "~> 1.0",
       deps:          deps(Mix.env),
-      docs:          [ readme: "README.md", main: "README" ],
+      docs:          docs,
       test_coverage: [ tool: ExCoveralls ]]
   end
 
@@ -38,6 +37,13 @@ defmodule Plug.AccessLog.Mixfile do
 
       { :cowboy, "~> 1.0",  optional: true },
       { :plug,   "~> 0.10", optional: true } ]
+  end
+
+  def docs do
+    [ main:       "README",
+      readme:     "README.md",
+      source_ref: "master",
+      source_url: @url_github ]
   end
 
   def package do
