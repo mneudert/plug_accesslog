@@ -25,6 +25,7 @@ defmodule Plug.AccessLog.Formatter do
   - `%h` - Remote hostname
   - `%{VARNAME}i` - Header line sent by the client
   - `%l` - Remote logname
+  - `%{VARNAME}o` - Header line sent by the server
   - `%r` - First line of HTTP request
   - `%>s` - Response status code
   - `%t` - Time the request was received in the format `[10/Jan/2015:14:46:18 +0100]`
@@ -133,6 +134,7 @@ defmodule Plug.AccessLog.Formatter do
 
     message = case vartype do
       "i" -> Formatter.RequestHeader.append(message, conn, varname)
+      "o" -> Formatter.ResponseHeader.append(message, conn, varname)
       _   -> message <> "-"
     end
 
