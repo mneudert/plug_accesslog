@@ -25,6 +25,7 @@ defmodule Plug.AccessLog.Formatter do
   - `%h` - Remote hostname
   - `%{VARNAME}i` - Header line sent by the client
   - `%l` - Remote logname
+  - `%m` - Request method
   - `%{VARNAME}o` - Header line sent by the server
   - `%r` - First line of HTTP request
   - `%>s` - Response status code
@@ -90,6 +91,11 @@ defmodule Plug.AccessLog.Formatter do
 
   defp log(message, conn, << "%l", rest :: binary >>) do
     message <> "-"
+    |> log(conn, rest)
+  end
+
+  defp log(message, conn, << "%m", rest :: binary >>) do
+    message <> conn.method
     |> log(conn, rest)
   end
 

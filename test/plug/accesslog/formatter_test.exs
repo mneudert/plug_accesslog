@@ -20,6 +20,16 @@ defmodule Plug.AccessLog.FormatterTest do
     assert "-" == Formatter.format("%l", nil)
   end
 
+  test "%m" do
+    get  = conn(:get, "/")
+    head = conn(:head, "/")
+    post = conn(:post, "/")
+
+    assert "GET"  == Formatter.format("%m", get)
+    assert "HEAD" == Formatter.format("%m", head)
+    assert "POST" == Formatter.format("%m", post)
+  end
+
   test "%>s" do
     conn = conn(:get, "/")
     conn = %{ conn | status: 200 }

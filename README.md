@@ -93,6 +93,7 @@ The following formatting directives are available:
 - `%h` - Remote hostname
 - `%{VARNAME}i` - Header line sent by the client
 - `%l` - Remote logname
+- `%m` - Request method
 - `%{VARNAME}o` - Header line sent by the server
 - `%r` - First line of HTTP request
 - `%>s` - Response status code
