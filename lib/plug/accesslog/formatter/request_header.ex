@@ -10,7 +10,7 @@ defmodule Plug.AccessLog.Formatter.RequestHeader do
   """
   @spec append(String.t, Plug.Conn.t, String.t) :: String.t
   def append(message, conn, header) do
-    case get_req_header(conn, header) do
+    case get_req_header(conn, header |> String.downcase) do
       [ value ] -> message <> value
       _         -> message <> "-"
     end

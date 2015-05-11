@@ -7,7 +7,9 @@ defmodule Plug.AccessLog.Formatter.RequestHeaderTest do
   test "%{VARNAME}i" do
     header = "X-Test-Header"
     value  = "test value for %i"
-    conn   = conn(:get, "/") |> put_req_header(header, value)
+    conn   =
+         conn(:get, "/")
+      |> put_req_header(header |> String.downcase, value)
 
     assert value == Formatter.format("%{#{ header }}i", conn)
     assert "-"   == Formatter.format("%{X-Unknown-Header}i", conn)

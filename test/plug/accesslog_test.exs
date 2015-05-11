@@ -63,8 +63,8 @@ defmodule Plug.AccessLogTest do
 
   setup_all do
     conn(:get, "/")
-    |> put_req_header("Referer", @test_ref)
-    |> put_req_header("User-Agent", @test_ua)
+    |> put_req_header("referer", @test_ref)
+    |> put_req_header("user-agent", @test_ua)
     |> Router.call(@opts)
 
     :ok

@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.5.1-dev
+
+- Properly accesses headers using lowercase (@c-rack)
+
 ## v0.5.0
 
 - Allows logging to functions instead of files
