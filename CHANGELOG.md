@@ -6,6 +6,11 @@
   - `%m` - Request method
   - `%{VARNAME}o` - Header line sent by the server
 
+## v0.5.1 (2015-05-11)
+
+- Bug fixes
+  - Properly accesses headers using lowercase (@c-rack)
+
 ## v0.5.0 (2015-02-24)
 
 - Enhancements

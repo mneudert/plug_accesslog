@@ -10,7 +10,7 @@ defmodule Plug.AccessLog.Formatter.ResponseBytes do
   """
   @spec append(String.t, Plug.Conn.t, String.t) :: String.t
   def append(message, conn, fallback) do
-    bytes = case get_resp_header(conn, "Content-Length") do
+    bytes = case get_resp_header(conn, "content-length") do
       [ length ] -> length
       _          -> conn.resp_body |> body_length() |> to_string()
     end

@@ -29,7 +29,7 @@ defmodule Plug.AccessLog.Formatter.RemoteUser do
   end
 
   defp remote_user(conn) do
-    case get_req_header(conn, "Authorization") do
+    case get_req_header(conn, "authorization") do
       [<< "Basic ", credentials :: binary >>] -> get_user(credentials)
       _ -> "-"
     end
