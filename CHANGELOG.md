@@ -2,6 +2,9 @@
 
 ## v0.6.0-dev
 
+- Bug fixes
+  - Request headers are now logged correctly.
+
 - Additional formatting directives
   - `%m` - Request method
   - `%{VARNAME}o` - Header line sent by the server
