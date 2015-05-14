@@ -22,6 +22,7 @@ defmodule Plug.AccessLog.Formatter do
   - `%%` - Percentage sign
   - `%B` - Size of response in bytes. Outputs "0" when no bytes are sent.
   - `%b` - Size of response in bytes. Outputs "-" when no bytes are sent.
+  - `%{VARNAME}C` - Cookie sent by the client
   - `%h` - Remote hostname
   - `%{VARNAME}i` - Header line sent by the client
   - `%l` - Remote logname
@@ -139,6 +140,7 @@ defmodule Plug.AccessLog.Formatter do
     << vartype :: binary-1, rest :: binary >> = rest
 
     message = case vartype do
+      "C" -> Formatter.RequestCookie.append(message, conn, varname)
       "i" -> Formatter.RequestHeader.append(message, conn, varname)
       "o" -> Formatter.ResponseHeader.append(message, conn, varname)
       _   -> message <> "-"

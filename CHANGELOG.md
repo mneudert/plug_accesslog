@@ -3,6 +3,7 @@
 ## v0.6.0-dev
 
 - Additional formatting directives
+  - `%{VARNAME}C` - Cookie sent by the client
   - `%m` - Request method
   - `%{VARNAME}o` - Header line sent by the server
 
