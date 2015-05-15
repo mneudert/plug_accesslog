@@ -2,6 +2,9 @@
 
 ## v0.6.0-dev
 
+- Enhancements
+  - Allows passing a dontlog-function to skip requests from logging
+
 - Additional formatting directives
   - `%{VARNAME}C` - Cookie sent by the client
   - `%m` - Request method

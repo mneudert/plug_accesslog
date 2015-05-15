@@ -26,6 +26,13 @@ defmodule Plug.AccessLog do
   will be silently ignored.
   """
   @spec log(conn :: Plug.Conn.t, opts :: map) :: Plug.Conn.t
+  def log(conn, %{ dontlog: dontlogfun } = opts) do
+    case dontlogfun.(conn) do
+      true  -> conn
+      false -> log(conn, Map.delete(opts, :dontlog))
+    end
+  end
+
   def log(conn, %{ fun: logfun } = opts) do
     opts[:format]
     |> Formatter.format(conn)
