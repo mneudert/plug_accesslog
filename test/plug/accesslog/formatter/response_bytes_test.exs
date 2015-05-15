@@ -4,28 +4,6 @@ defmodule Plug.AccessLog.Formatter.ResponseBytesTest do
 
   alias Plug.AccessLog.Formatter
 
-  test "%B" do
-    conn = conn(:get, "/")
-
-    # no content length, no response body
-    assert "0" == Formatter.format("%B", conn)
-
-    # binary response body
-    conn = %{ conn | resp_body: "Hello, World!" }
-
-    assert "13" == Formatter.format("%B", conn)
-
-    # charlist response body
-    conn = %{ conn | resp_body: 'Hello, World!' }
-
-    assert "13" == Formatter.format("%B", conn)
-
-    # content length header (binary)
-    conn = conn |> put_resp_header("content-length", "227")
-
-    assert "227" == Formatter.format("%B", conn)
-  end
-
   test "%b" do
     conn = conn(:get, "/")
 
@@ -46,5 +24,27 @@ defmodule Plug.AccessLog.Formatter.ResponseBytesTest do
     conn = conn |> put_resp_header("content-length", "227")
 
     assert "227" == Formatter.format("%b", conn)
+  end
+
+  test "%B" do
+    conn = conn(:get, "/")
+
+    # no content length, no response body
+    assert "0" == Formatter.format("%B", conn)
+
+    # binary response body
+    conn = %{ conn | resp_body: "Hello, World!" }
+
+    assert "13" == Formatter.format("%B", conn)
+
+    # charlist response body
+    conn = %{ conn | resp_body: 'Hello, World!' }
+
+    assert "13" == Formatter.format("%B", conn)
+
+    # content length header (binary)
+    conn = conn |> put_resp_header("content-length", "227")
+
+    assert "227" == Formatter.format("%B", conn)
   end
 end

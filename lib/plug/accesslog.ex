@@ -25,7 +25,7 @@ defmodule Plug.AccessLog do
   If the target logfile could not be openend the message
   will be silently ignored.
   """
-  @spec log(conn :: Plug.Conn.t, opts :: map) :: :ok
+  @spec log(conn :: Plug.Conn.t, opts :: map) :: Plug.Conn.t
   def log(conn, %{ fun: logfun } = opts) do
     opts[:format]
     |> Formatter.format(conn)
