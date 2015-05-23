@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.6.0-dev
+## v0.6.0 (2015-05-23)
 
 - Enhancements
   - Allows passing a dontlog-function to skip requests from logging
