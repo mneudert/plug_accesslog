@@ -4,6 +4,7 @@
 
 - Enhancements
   - Allows passing a dontlog-function to skip requests from logging
+  - Dependencies not used in production builds are marked as optional
 
 - Additional formatting directives
   - `%{VARNAME}C` - Cookie sent by the client
