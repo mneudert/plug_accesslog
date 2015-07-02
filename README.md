@@ -92,6 +92,7 @@ The following formatting directives are available:
 - `%b` - Size of response in bytes. Outputs "-" when no bytes are sent.
 - `%B` - Size of response in bytes. Outputs "0" when no bytes are sent.
 - `%{VARNAME}C` - Cookie sent by the client
+- `%D` - Time taken to serve the request (microseconds)
 - `%h` - Remote hostname
 - `%{VARNAME}i` - Header line sent by the client
 - `%l` - Remote logname

@@ -24,6 +24,7 @@ defmodule Plug.AccessLog.Formatter do
   - `%b` - Size of response in bytes. Outputs "-" when no bytes are sent.
   - `%B` - Size of response in bytes. Outputs "0" when no bytes are sent.
   - `%{VARNAME}C` - Cookie sent by the client
+  - `%D` - Time taken to serve the request (microseconds)
   - `%h` - Remote hostname
   - `%{VARNAME}i` - Header line sent by the client
   - `%l` - Remote logname
@@ -96,6 +97,12 @@ defmodule Plug.AccessLog.Formatter do
   defp log(message, conn, << "%B", rest :: binary >>) do
     message
     |> Formatter.ResponseBytes.append(conn, "0")
+    |> log(conn, rest)
+  end
+
+  defp log(message, conn, << "%D", rest :: binary >>) do
+    message
+    |> Formatter.RequestServingTime.append(conn, :usecs)
     |> log(conn, rest)
   end
 

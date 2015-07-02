@@ -6,6 +6,19 @@ defmodule Plug.AccessLog.Formatter.RequestServingTimeTest do
 
   alias Plug.AccessLog.Formatter
 
+  test "%D" do
+    timestamp = :os.timestamp()
+    conn      =
+         conn(:get, "/")
+      |> put_private(:plug_accesslog, %{ timestamp: timestamp })
+
+    # relying on microsecond testing precision is flaky.
+    # check done using "microseconds taken < 1 second"
+    { usecs, _ } = Formatter.format("%D", conn) |> Integer.parse()
+
+    assert usecs < 1000000
+  end
+
   test "%M" do
     timestamp = :os.timestamp()
     conn      =

@@ -8,7 +8,7 @@ defmodule Plug.AccessLog.Formatter.RequestServingTime do
   @doc """
   Appends to log output.
   """
-  @spec append(String.t, Plug.Conn.t, :secs | :msecs) :: String.t
+  @spec append(String.t, Plug.Conn.t, :secs | :msecs | :usecs) :: String.t
   def append(message, conn, format), do: message <> serving_time(conn, format)
 
   defp serving_time(conn, format) do
