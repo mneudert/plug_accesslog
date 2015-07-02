@@ -15,8 +15,14 @@ defmodule Plug.AccessLog do
 
   def call(conn, opts) do
     conn
-    |> put_private(:plug_accesslog, :calendar.local_time())
+    |> put_private(:plug_accesslog, private_data)
     |> register_before_send( &log(&1, opts) )
+  end
+
+
+  defp private_data do
+    %{ local_time: :calendar.local_time(),
+       timestamp:  :os.timestamp() }
   end
 
   @doc """

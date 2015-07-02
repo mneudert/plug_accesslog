@@ -32,6 +32,7 @@ defmodule Plug.AccessLog.Formatter do
   - `%r` - First line of HTTP request
   - `%>s` - Response status code
   - `%t` - Time the request was received in the format `[10/Jan/2015:14:46:18 +0100]`
+  - `%T` - Time taken to serve the request (full seconds)
   - `%u` - Remote user
   - `%U` - URL path requested (without query string)
   - `%v` - Server name
@@ -47,6 +48,8 @@ defmodule Plug.AccessLog.Formatter do
 
   **Note for %r**: For now the http version is always logged as "HTTP/1.1",
   regardless of the true http version.
+
+  **Note for %T**: Rounding happens, so "0.6 seconds" will be reported as "1 second".
   """
   @spec format(format :: atom | String.t, conn :: Plug.Conn.t) :: String.t
   def format(nil,      conn), do: format(:clf, conn)
@@ -121,6 +124,12 @@ defmodule Plug.AccessLog.Formatter do
   defp log(message, conn, << "%t", rest :: binary >>) do
     message
     |> Formatter.RequestTime.append(conn)
+    |> log(conn, rest)
+  end
+
+  defp log(message, conn, << "%T", rest :: binary >>) do
+    message
+    |> Formatter.RequestServingTime.append(conn)
     |> log(conn, rest)
   end
 

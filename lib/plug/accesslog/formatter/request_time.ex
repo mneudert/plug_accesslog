@@ -12,8 +12,11 @@ defmodule Plug.AccessLog.Formatter.RequestTime do
   def append(message, conn), do: message <> request_time(conn)
 
   defp request_time(conn) do
-    request_date  = conn.private[:plug_accesslog] |> Date.from(:local)
     format_string = "[%d/%b/%Y:%H:%M:%S %z]"
+    request_date  =
+         conn.private[:plug_accesslog]
+      |> Map.get(:local_time)
+      |> Date.from(:local)
 
     DateFormat.format!(request_date, format_string, :strftime)
   end

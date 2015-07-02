@@ -100,6 +100,7 @@ The following formatting directives are available:
 - `%r` - First line of HTTP request
 - `%>s` - Response status code
 - `%t` - Time the request was received in the format `[10/Jan/2015:14:46:18 +0100]`
+- `%T` - Time taken to serve the request (full seconds)
 - `%u` - Remote user
 - `%U` - URL path requested (without query string)
 - `%v` - Server name
@@ -116,6 +117,7 @@ inspected using `byte_size/1`.
 **Note for %r**: For now the http version is always logged as "HTTP/1.1",
 regardless of the true http version.
 
+**Note for %T**: Rounding happens, so "0.6 seconds" will be reported as "1 second".
 
 ## License
 

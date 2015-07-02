@@ -7,7 +7,10 @@ defmodule Plug.AccessLog.Formatter.RequestTimeTest do
 
   test "%t" do
     datetime  = {{ 2015, 01, 10 }, { 14, 46, 18 }}
-    conn      = conn(:get, "/") |> put_private(:plug_accesslog, datetime)
+    conn      =
+         conn(:get, "/")
+      |> put_private(:plug_accesslog, %{ local_time: datetime })
+
     formatted =
          datetime
       |> Date.from(:local)
