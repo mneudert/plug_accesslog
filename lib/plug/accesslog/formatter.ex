@@ -28,6 +28,7 @@ defmodule Plug.AccessLog.Formatter do
   - `%{VARNAME}i` - Header line sent by the client
   - `%l` - Remote logname
   - `%m` - Request method
+  - `%M` - Time taken to serve the request (milliseconds)
   - `%{VARNAME}o` - Header line sent by the server
   - `%q` - Query string (prepended with "?" or empty string)
   - `%r` - First line of HTTP request
@@ -114,6 +115,12 @@ defmodule Plug.AccessLog.Formatter do
     |> log(conn, rest)
   end
 
+  defp log(message, conn, << "%M", rest :: binary >>) do
+    message
+    |> Formatter.RequestServingTime.append(conn, :msecs)
+    |> log(conn, rest)
+  end
+
   defp log(message, conn, << "%q", rest :: binary >>) do
     message
     |> Formatter.QueryString.append(conn)
@@ -139,7 +146,7 @@ defmodule Plug.AccessLog.Formatter do
 
   defp log(message, conn, << "%T", rest :: binary >>) do
     message
-    |> Formatter.RequestServingTime.append(conn)
+    |> Formatter.RequestServingTime.append(conn, :secs)
     |> log(conn, rest)
   end
 

@@ -96,6 +96,7 @@ The following formatting directives are available:
 - `%{VARNAME}i` - Header line sent by the client
 - `%l` - Remote logname
 - `%m` - Request method
+- `%M` - Time taken to serve the request (milliseconds)
 - `%{VARNAME}o` - Header line sent by the server
 - `%q` - Query string (prepended with "?" or empty string)
 - `%r` - First line of HTTP request

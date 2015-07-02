@@ -4,6 +4,7 @@
 
 - Additional formatting directives
   - `%a` - Remote IP-address
+  - `%M` - Time taken to serve the request (milliseconds)
   - `%q` - Query string (prepended with "?" or empty string)
   - `%T` - Time taken to serve the request (full seconds)
   - `%V` - Server name (canonical)
