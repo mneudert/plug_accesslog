@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.7.0-dev
+
+- Additional formatting directives
+  - `%a` - Remote IP-address
+
 ## v0.6.0 (2015-05-23)
 
 - Enhancements

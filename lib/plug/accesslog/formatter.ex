@@ -20,6 +20,7 @@ defmodule Plug.AccessLog.Formatter do
   The following formatting directives are available:
 
   - `%%` - Percentage sign
+  - `%a` - Remote IP-address
   - `%b` - Size of response in bytes. Outputs "-" when no bytes are sent.
   - `%B` - Size of response in bytes. Outputs "0" when no bytes are sent.
   - `%{VARNAME}C` - Cookie sent by the client
@@ -40,7 +41,7 @@ defmodule Plug.AccessLog.Formatter do
   unverified. If the header is not present the response body will be
   inspected using `byte_size/1`.
 
-  **Note for %h**: The hostname will always be the ip of the client.
+  **Note for %h**: The hostname will always be the ip of the client (same as `%a`).
 
   **Note for %l**: Always a dash ("-").
 
@@ -72,6 +73,12 @@ defmodule Plug.AccessLog.Formatter do
     |> log(conn, rest)
   end
 
+  defp log(message, conn, << "%a", rest :: binary >>) do
+    message
+    |> Formatter.RemoteIPAddress.append(conn)
+    |> log(conn, rest)
+  end
+
   defp log(message, conn, << "%b", rest :: binary >>) do
     message
     |> Formatter.ResponseBytes.append(conn, "-")
@@ -86,7 +93,7 @@ defmodule Plug.AccessLog.Formatter do
 
   defp log(message, conn, << "%h", rest :: binary >>) do
     message
-    |> Formatter.RemoteHostname.append(conn)
+    |> Formatter.RemoteIPAddress.append(conn)
     |> log(conn, rest)
   end
 

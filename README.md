@@ -88,6 +88,7 @@ Besides a self defined format you can use one of the predefined aliases:
 The following formatting directives are available:
 
 - `%%` - Percentage sign
+- `%a` - Remote IP-address
 - `%b` - Size of response in bytes. Outputs "-" when no bytes are sent.
 - `%B` - Size of response in bytes. Outputs "0" when no bytes are sent.
 - `%{VARNAME}C` - Cookie sent by the client
@@ -108,7 +109,7 @@ The following formatting directives are available:
 unverified. If the header is not present the response body will be
 inspected using `byte_size/1`.
 
-**Note for %h**: The hostname will always be the ip of the client.
+**Note for %h**: The hostname will always be the ip of the client (same as `%a`).
 
 **Note for %l**: Always a dash ("-").
 
