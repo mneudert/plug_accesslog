@@ -97,6 +97,7 @@ The following formatting directives are available:
 - `%l` - Remote logname
 - `%m` - Request method
 - `%{VARNAME}o` - Header line sent by the server
+- `%q` - Query string (prepended with "?" or empty string)
 - `%r` - First line of HTTP request
 - `%>s` - Response status code
 - `%t` - Time the request was received in the format `[10/Jan/2015:14:46:18 +0100]`

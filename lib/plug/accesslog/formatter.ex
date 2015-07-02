@@ -29,6 +29,7 @@ defmodule Plug.AccessLog.Formatter do
   - `%l` - Remote logname
   - `%m` - Request method
   - `%{VARNAME}o` - Header line sent by the server
+  - `%q` - Query string (prepended with "?" or empty string)
   - `%r` - First line of HTTP request
   - `%>s` - Response status code
   - `%t` - Time the request was received in the format `[10/Jan/2015:14:46:18 +0100]`
@@ -110,6 +111,12 @@ defmodule Plug.AccessLog.Formatter do
 
   defp log(message, conn, << "%m", rest :: binary >>) do
     message <> conn.method
+    |> log(conn, rest)
+  end
+
+  defp log(message, conn, << "%q", rest :: binary >>) do
+    message
+    |> Formatter.QueryString.append(conn)
     |> log(conn, rest)
   end
 
