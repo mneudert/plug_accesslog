@@ -46,6 +46,13 @@ defmodule Plug.AccessLog.FormatterTest do
     assert host == Formatter.format("%v", conn)
   end
 
+  test "%V" do
+    host = "plug.log.access"
+    conn = conn(:get, "/") |> Map.put(:host, host)
+
+    assert host == Formatter.format("%V", conn)
+  end
+
 
   test "invalid configurable type" do
     assert "-" == Formatter.format("%{ignored}_", nil)

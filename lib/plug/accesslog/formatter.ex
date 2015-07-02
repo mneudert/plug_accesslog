@@ -36,6 +36,7 @@ defmodule Plug.AccessLog.Formatter do
   - `%u` - Remote user
   - `%U` - URL path requested (without query string)
   - `%v` - Server name
+  - `%V` - Server name (canonical)
 
   **Note for %b and %B**: To determine the size of the response the
   "Content-Length" will be inspected and, if available, returned
@@ -50,6 +51,8 @@ defmodule Plug.AccessLog.Formatter do
   regardless of the true http version.
 
   **Note for %T**: Rounding happens, so "0.6 seconds" will be reported as "1 second".
+
+  **Note for %V**: Alias for `%v`.
   """
   @spec format(format :: atom | String.t, conn :: Plug.Conn.t) :: String.t
   def format(nil,      conn), do: format(:clf, conn)
@@ -146,6 +149,11 @@ defmodule Plug.AccessLog.Formatter do
   end
 
   defp log(message, conn, << "%v", rest :: binary >>) do
+    message <> conn.host
+    |> log(conn, rest)
+  end
+
+  defp log(message, conn, << "%V", rest :: binary >>) do
     message <> conn.host
     |> log(conn, rest)
   end

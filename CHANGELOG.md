@@ -5,6 +5,7 @@
 - Additional formatting directives
   - `%a` - Remote IP-address
   - `%T` - Time taken to serve the request (full seconds)
+  - `%V` - Server name (canonical)
 
 ## v0.6.0 (2015-05-23)
 

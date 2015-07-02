@@ -104,6 +104,7 @@ The following formatting directives are available:
 - `%u` - Remote user
 - `%U` - URL path requested (without query string)
 - `%v` - Server name
+- `%V` - Server name (canonical)
 
 **Note for %b and %B**: To determine the size of the response the
 "Content-Length" will be inspected and, if available, returned
@@ -118,6 +119,8 @@ inspected using `byte_size/1`.
 regardless of the true http version.
 
 **Note for %T**: Rounding happens, so "0.6 seconds" will be reported as "1 second".
+
+**Note for %V**: Alias for `%v`.
 
 ## License
 
