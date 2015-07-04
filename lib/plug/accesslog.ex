@@ -6,7 +6,6 @@ defmodule Plug.AccessLog do
   import Plug.Conn
 
   alias Plug.AccessLog.Formatter
-  alias Plug.AccessLog.Logfiles
   alias Plug.AccessLog.Writer
 
   @behaviour Plug
@@ -48,15 +47,9 @@ defmodule Plug.AccessLog do
   end
 
   def log(conn, %{ file: logfile } = opts) do
-    logfile |> Logfiles.get() |> maybe_log(conn, opts)
-  end
-
-
-  defp maybe_log(nil,    conn, _opts), do: conn
-  defp maybe_log(device, conn,  opts)  do
     opts[:format]
     |> Formatter.format(conn)
-    |> Writer.write(device)
+    |> Writer.notify(logfile)
 
     conn
   end

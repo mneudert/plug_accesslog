@@ -3,9 +3,33 @@ defmodule Plug.AccessLog.Writer do
   Log message writer.
   """
 
+  use GenEvent
+
+  alias Plug.AccessLog.Logfiles
+
+
   @doc """
-  Writes a log message.
+  Notifies the writer to write a log message.
   """
-  @spec write(message :: String.t, logfile :: File.io_device) :: :ok
-  def write(message, logfile), do: IO.write(logfile, message <> "\n")
+  @spec notify(message :: String.t, logfile :: String.t) :: :ok
+  def notify(message, logfile) do
+    GenEvent.notify(__MODULE__, { :log, message, logfile })
+  end
+
+
+  # GenEvent callbacks
+
+  def handle_event({ :log, message, logfile }, state) do
+    { write(message, logfile), state }
+  end
+
+
+  # Utility methods
+
+  defp write(message, logfile) do
+    case Logfiles.get(logfile) do
+      nil -> :ok
+      io  -> IO.write(io, message <> "\n")
+    end
+  end
 end

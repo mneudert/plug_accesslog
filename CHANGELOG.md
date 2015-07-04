@@ -2,6 +2,9 @@
 
 ## v0.7.0-dev
 
+- Enhancements
+  - Log writing is now handled by a GenEvent handler to avoid crashing
+
 - Additional formatting directives
   - `%a` - Remote IP-address
   - `%D` - Time taken to serve the request (microseconds)
