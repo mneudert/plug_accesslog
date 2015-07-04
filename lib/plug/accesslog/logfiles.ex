@@ -15,20 +15,12 @@ defmodule Plug.AccessLog.Logfiles do
   @spec get(logfile :: String.t) :: File.io_device | nil
   def get(logfile) do
     case get_device(logfile) do
-      nil                        -> open(logfile)
-      device when is_pid(device) -> get_or_reopen(device, logfile)
-      other_device               -> other_device
-    end
-  end
+      { nil, nil } -> open(logfile)
 
-  defp get_or_reopen(device, logfile) do
-    case File.exists?(logfile) && Process.alive?(device) do
-      true  -> device
-      false ->
-        case File.open(logfile, [ :append, :utf8 ]) do
-          { :error, _ }   -> nil
-          { :ok, device } -> replace(logfile, device)
-        end
+      { device, inode } when is_pid(device) ->
+        get_or_reopen({ device, inode }, logfile)
+
+      { other_device, _ } -> other_device
     end
   end
 
@@ -58,7 +50,9 @@ defmodule Plug.AccessLog.Logfiles do
       old_device -> File.close(old_device)
     end
 
-    Agent.update(__MODULE__, &Map.put(&1, logfile, new_device))
+    logstate = { new_device, inode(logfile) }
+
+    Agent.update(__MODULE__, &Map.put(&1, logfile, logstate))
 
     new_device
   end
@@ -73,11 +67,13 @@ defmodule Plug.AccessLog.Logfiles do
   """
   @spec set(logfile :: String.t, new_device :: File.io_device) :: File.io_device
   def set(logfile, new_device) do
-    Agent.update(__MODULE__, &Map.put_new(&1, logfile, new_device))
+    logstate = { new_device, inode(logfile) }
+
+    Agent.update(__MODULE__, &Map.put_new(&1, logfile, logstate))
 
     case get_device(logfile) do
-      ^new_device -> new_device
-      old_device  ->
+      { ^new_device, _ } -> new_device
+      { old_device,  _ } ->
         File.close(new_device)
         old_device
     end
@@ -87,6 +83,24 @@ defmodule Plug.AccessLog.Logfiles do
   # Internal utility methods
 
   defp get_device(logfile) do
-    Agent.get(__MODULE__, &Map.get(&1, logfile, nil))
+    Agent.get(__MODULE__, &Map.get(&1, logfile, { nil, nil }))
+  end
+
+  defp get_or_reopen({ device, inode }, logfile) do
+    case Process.alive?(device) && inode == inode(logfile) do
+      true  -> device
+      false ->
+        case File.open(logfile, [ :append, :utf8 ]) do
+          { :error, _ }   -> { nil, nil }
+          { :ok, device } -> replace(logfile, device)
+        end
+    end
+  end
+
+  defp inode(logpath) do
+    case File.stat(logpath) do
+      { :ok, stat } -> stat.inode
+      _             -> nil
+    end
   end
 end
