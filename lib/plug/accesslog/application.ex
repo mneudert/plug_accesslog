@@ -17,12 +17,10 @@ defmodule Plug.AccessLog.Application do
     options  = [ strategy: :one_for_one, name: __MODULE__.Supervisor ]
     children = [
       worker(Logfiles, []),
-      worker(GenEvent, [[ name: Writer ]])
+      worker(GenEvent, [[ name: Writer ]]),
+      worker(Writer.Watcher, [ Writer ])
     ]
 
-    sup = Supervisor.start_link(children, options)
-    :ok = GenEvent.add_handler(Writer, Writer, [])
-
-    sup
+    Supervisor.start_link(children, options)
   end
 end
