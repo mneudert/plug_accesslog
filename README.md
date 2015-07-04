@@ -48,6 +48,51 @@ defmodule AppRouter do
 end
 ```
 
+### Do Not Log Filter
+
+To filter the requests before logging you can configure a "do not log" filter
+function:
+
+```elixir
+defmodule LogFilter do
+  def dontlog?(conn), do: "/favicon.ico" == full_path(conn)
+end
+
+defmodule Router do
+  use Plug.Router
+
+  plug Plug.AccessLog,
+    dontlog: &LogFilter.dontlog?/1,
+    format: :clf,
+    file: "/path/to/your/logs/access.log"
+end
+```
+
+If the function you pass to the plug returns `true` the request will not be
+logged.
+
+### Logging Functions
+
+To have the parsed log message sent to a logging function instead of writing
+it to a file you can configure a logging function:
+
+```elixir
+defmodule InfoLogger do
+  def log(msg), do: Logger.log(:info, msg)
+end
+
+defmodule Router do
+  use Plug.Router
+
+  plug Plug.AccessLog,
+    format: :clf,
+    fun: &InfoLogger.log/1
+end
+```
+
+If a logging function is configured the configured file (if any) will be
+ignored.
+
 
 ## Log Format
 
