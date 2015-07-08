@@ -1,4 +1,4 @@
-defmodule Plug.AccessLog.Formatter.ResponseBytes do
+defmodule Plug.AccessLog.DefaultFormatter.ResponseBytes do
   @moduledoc """
   Calculates response size in bytes.
   """

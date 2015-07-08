@@ -1,6 +1,6 @@
-defmodule Plug.AccessLog.Formatter.RequestHeader do
+defmodule Plug.AccessLog.DefaultFormatter.ResponseHeader do
   @moduledoc """
-  Fetches a request header for logging.
+  Fetches a response header for logging.
   """
 
   import Plug.Conn
@@ -10,7 +10,7 @@ defmodule Plug.AccessLog.Formatter.RequestHeader do
   """
   @spec append(String.t, Plug.Conn.t, String.t) :: String.t
   def append(message, conn, header) do
-    case get_req_header(conn, header |> String.downcase) do
+    case get_resp_header(conn, header |> String.downcase) do
       [ value ] -> message <> value
       _         -> message <> "-"
     end

@@ -1,10 +1,10 @@
-defmodule Plug.AccessLog.Formatter.RequestServingTimeTest do
+defmodule Plug.AccessLog.DefaultFormatter.RequestServingTimeTest do
   use ExUnit.Case, async: true
   use Plug.Test
 
   use Timex
 
-  alias Plug.AccessLog.Formatter
+  alias Plug.AccessLog.DefaultFormatter
 
   test "%D" do
     timestamp = :os.timestamp()
@@ -14,7 +14,7 @@ defmodule Plug.AccessLog.Formatter.RequestServingTimeTest do
 
     # relying on microsecond testing precision is flaky.
     # check done using "microseconds taken < 1 second"
-    { usecs, _ } = Formatter.format("%D", conn) |> Integer.parse()
+    { usecs, _ } = DefaultFormatter.format("%D", conn) |> Integer.parse()
 
     assert usecs < 1000000
   end
@@ -27,7 +27,7 @@ defmodule Plug.AccessLog.Formatter.RequestServingTimeTest do
 
     # relying on millisecond testing precision is flaky.
     # check done using "milliseconds taken < 1 second"
-    { msecs, _ } = Formatter.format("%M", conn) |> Integer.parse()
+    { msecs, _ } = DefaultFormatter.format("%M", conn) |> Integer.parse()
 
     assert msecs < 1000
   end
@@ -38,7 +38,7 @@ defmodule Plug.AccessLog.Formatter.RequestServingTimeTest do
          conn(:get, "/")
       |> put_private(:plug_accesslog, %{ timestamp: timestamp })
 
-    assert "0" == Formatter.format("%T", conn)
+    assert "0" == DefaultFormatter.format("%T", conn)
   end
 
   test "%T rounding" do
@@ -47,6 +47,6 @@ defmodule Plug.AccessLog.Formatter.RequestServingTimeTest do
          conn(:get, "/")
       |> put_private(:plug_accesslog, %{ timestamp: timestamp })
 
-    assert "1" == Formatter.format("%T", conn)
+    assert "1" == DefaultFormatter.format("%T", conn)
   end
 end

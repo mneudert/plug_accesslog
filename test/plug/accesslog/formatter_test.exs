@@ -12,49 +12,4 @@ defmodule Plug.AccessLog.FormatterTest do
 
     assert Formatter.format(nil, conn) == Formatter.format(:default, conn)
   end
-
-
-  test "%%" do
-    assert "%" == Formatter.format("%%", nil)
-  end
-
-  test "%l" do
-    assert "-" == Formatter.format("%l", nil)
-  end
-
-  test "%m" do
-    get  = conn(:get, "/")
-    head = conn(:head, "/")
-    post = conn(:post, "/")
-
-    assert "GET"  == Formatter.format("%m", get)
-    assert "HEAD" == Formatter.format("%m", head)
-    assert "POST" == Formatter.format("%m", post)
-  end
-
-  test "%>s" do
-    conn = conn(:get, "/")
-    conn = %{ conn | status: 200 }
-
-    assert "200" == Formatter.format("%>s", conn)
-  end
-
-  test "%v" do
-    host = "plug.access.log"
-    conn = conn(:get, "/") |> Map.put(:host, host)
-
-    assert host == Formatter.format("%v", conn)
-  end
-
-  test "%V" do
-    host = "plug.log.access"
-    conn = conn(:get, "/") |> Map.put(:host, host)
-
-    assert host == Formatter.format("%V", conn)
-  end
-
-
-  test "invalid configurable type" do
-    assert "-" == Formatter.format("%{ignored}_", nil)
-  end
 end

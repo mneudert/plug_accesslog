@@ -1,4 +1,4 @@
-defmodule Plug.AccessLog.Formatter.RequestPath do
+defmodule Plug.AccessLog.DefaultFormatter.RequestPath do
   @moduledoc """
   Logs request path without query string.
   """

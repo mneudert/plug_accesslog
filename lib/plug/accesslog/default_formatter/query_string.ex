@@ -1,4 +1,4 @@
-defmodule Plug.AccessLog.Formatter.QueryString do
+defmodule Plug.AccessLog.DefaultFormatter.QueryString do
   @moduledoc """
   Logs the query string.
   """

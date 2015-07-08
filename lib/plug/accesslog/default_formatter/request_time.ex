@@ -1,4 +1,4 @@
-defmodule Plug.AccessLog.Formatter.RequestTime do
+defmodule Plug.AccessLog.DefaultFormatter.RequestTime do
   @moduledoc """
   Creates a formatted request time string.
   """

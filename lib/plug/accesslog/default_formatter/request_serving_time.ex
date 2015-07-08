@@ -1,4 +1,4 @@
-defmodule Plug.AccessLog.Formatter.RequestServingTime do
+defmodule Plug.AccessLog.DefaultFormatter.RequestServingTime do
   @moduledoc """
   Calculates the seconds (or milliseconds) taken to serve the request.
   """

@@ -13,6 +13,9 @@
   - `%T` - Time taken to serve the request (full seconds)
   - `%V` - Server name (canonical)
 
+- Backwards incompatible changes
+  - `Plug.AccessLog.Formatter` has been renamed to `Plug.AccessLog.DefaultFormatter`
+
 ## v0.6.0 (2015-05-23)
 
 - Enhancements

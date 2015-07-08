@@ -1,4 +1,4 @@
-defmodule Plug.AccessLog.Formatter.RemoteIPAddress do
+defmodule Plug.AccessLog.DefaultFormatter.RemoteIPAddress do
   @moduledoc """
   Determines remote ip address.
   """

@@ -1,4 +1,4 @@
-defmodule Plug.AccessLog.Formatter.RequestCookie do
+defmodule Plug.AccessLog.DefaultFormatter.RequestCookie do
   @moduledoc """
   Fetches a cookie sent by the client for logging.
   """

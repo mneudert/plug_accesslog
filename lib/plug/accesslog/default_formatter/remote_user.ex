@@ -1,4 +1,4 @@
-defmodule Plug.AccessLog.Formatter.RemoteUser do
+defmodule Plug.AccessLog.DefaultFormatter.RemoteUser do
   @moduledoc """
   Determines remote user.
   """

@@ -1,4 +1,4 @@
-defmodule Plug.AccessLog.Formatter.RequestLine do
+defmodule Plug.AccessLog.DefaultFormatter.RequestLine do
   @moduledoc """
   Recreates the first line of the original HTTP request.
   """
