@@ -6,19 +6,24 @@ defmodule Plug.AccessLog.Writer.Watcher do
   use GenServer
 
 
+  # GenServer lifecycle
+
+  @doc """
+  Starts the watcher process.
+  """
+  @spec start_link(module) :: GenServer.on_start
   def start_link(manager) do
     GenServer.start_link(__MODULE__, manager, [])
   end
 
   def init(manager) do
-    start_handler(manager)
+    :ok = start_handler(manager)
 
-    {:ok, manager}
+    { :ok, manager }
   end
 
-  def start_handler(manager) do
-    :ok = GenEvent.add_mon_handler(manager, Plug.AccessLog.Writer, self)
-  end
+
+  # GenServer callbacks
 
   def handle_info({ :gen_event_EXIT, _handler, reason }, manager)
       when reason in [ :normal, :shutdown ]
@@ -27,8 +32,15 @@ defmodule Plug.AccessLog.Writer.Watcher do
   end
 
   def handle_info({ :gen_event_EXIT, _handler, _reason }, manager) do
-    start_handler(manager)
+    :ok = start_handler(manager)
 
     { :noreply, manager }
+  end
+
+
+  # Internal methods
+
+  defp start_handler(manager) do
+    GenEvent.add_mon_handler(manager, Plug.AccessLog.Writer, self)
   end
 end
