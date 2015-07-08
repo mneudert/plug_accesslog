@@ -48,6 +48,11 @@ defmodule AppRouter do
 end
 ```
 
+__Note__: The usage examples apply to a usecase where your are using `plug`
+directly without any framework. Using the `plug Plug.AccessLog` line in a
+framework based on `plug` should be no problem. Please refer to your frameworks
+individual documentation or source to find a suitable place.
+
 ### Custom Formatters
 
 If you want to extend the formatting capabilities or replace existing ones
