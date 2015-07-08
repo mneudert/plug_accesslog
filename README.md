@@ -48,6 +48,36 @@ defmodule AppRouter do
 end
 ```
 
+### Custom Formatters
+
+If you want to extend the formatting capabilities or replace existing ones
+you can define a custom formatter pipeline to use:
+
+```elixir
+defmodule CustomFormatter do
+  @behaviour Plug.AccessLog.Formatter
+
+  def format(format, conn) do
+    # manipulate to your liking
+    format
+  end
+end
+
+defmodule Router do
+  use Plug.Router
+
+  plug Plug.AccessLog,
+    format: :clf,
+    formatters: [ CustomFormatter, Plug.AccessLog.DefaultFormatter ],
+    file: "/path/to/your/logs/access.log"
+end
+```
+
+If you do not configure a list of formatters only the `DefaultFormatter` will
+be used. If you define an empty list then no formatting will take place.
+
+All formatters are called in the order they are defined in.
+
 ### Do Not Log Filter
 
 To filter the requests before logging you can configure a "do not log" filter

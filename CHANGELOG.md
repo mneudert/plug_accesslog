@@ -3,6 +3,7 @@
 ## v0.7.0-dev
 
 - Enhancements
+  - Allows passing custom formatters
   - Log writing is now handled by a GenEvent handler to avoid crashing
 
 - Additional formatting directives

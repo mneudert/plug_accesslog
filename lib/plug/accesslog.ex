@@ -40,7 +40,7 @@ defmodule Plug.AccessLog do
 
   def log(conn, %{ fun: logfun } = opts) do
     opts[:format]
-    |> Formatter.format(conn)
+    |> Formatter.format(conn, opts[:formatters])
     |> logfun.()
 
     conn
@@ -48,7 +48,7 @@ defmodule Plug.AccessLog do
 
   def log(conn, %{ file: logfile } = opts) do
     opts[:format]
-    |> Formatter.format(conn)
+    |> Formatter.format(conn, opts[:formatters])
     |> Writer.notify(logfile)
 
     conn

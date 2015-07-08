@@ -5,6 +5,8 @@ defmodule Plug.AccessLog.Formatter do
 
   use Behaviour
 
+  alias Plug.AccessLog.DefaultFormatter
+
 
   # Pipeline interface
 
@@ -22,16 +24,23 @@ defmodule Plug.AccessLog.Formatter do
 
   The `:default` format is `:clf`.
   """
-  @spec format(atom | String.t, Plug.Conn.t) :: String.t
-  def format(nil,      conn), do: format(:clf, conn)
-  def format(:default, conn), do: format(:clf, conn)
+  @spec format(atom | String.t, Plug.Conn.t, list) :: String.t
+  def format(nil,      conn, formatters), do: format(:clf, conn, formatters)
+  def format(:default, conn, formatters), do: format(:clf, conn, formatters)
 
-  def format(format, conn) when is_atom(format) do
-    format(@formats[format], conn)
+  def format(format, conn, formatters) when is_atom(format) do
+    format(@formats[format], conn, formatters)
   end
 
-  def format(format, conn) when is_binary(format) do
-    Plug.AccessLog.DefaultFormatter.format(format, conn)
+
+  def format(msg, conn, nil), do: format(msg, conn, [ DefaultFormatter ])
+
+
+  def format(msg, _,    []),                        do: msg
+  def format(msg, conn, [ formatter | formatters ]) do
+    msg
+    |> formatter.format(conn)
+    |> format(conn, formatters)
   end
 
 
