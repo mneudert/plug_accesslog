@@ -46,8 +46,8 @@ defmodule Plug.AccessLog.Logfiles do
   @spec replace(logfile :: String.t, new_device :: File.io_device) :: File.io_device
   def replace(logfile, new_device) do
     case get_device(logfile) do
-      nil        -> nil
-      old_device -> File.close(old_device)
+      { nil, nil }      -> nil
+      { old_device, _ } -> File.close(old_device)
     end
 
     logstate = { new_device, inode(logfile) }
