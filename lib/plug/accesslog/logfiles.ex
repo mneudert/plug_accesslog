@@ -3,6 +3,9 @@ defmodule Plug.AccessLog.Logfiles do
   Logfile agent.
   """
 
+  require Logger
+
+
   @doc """
   Starts the logfile agent.
   """
@@ -30,8 +33,10 @@ defmodule Plug.AccessLog.Logfiles do
   @spec open(logfile :: String.t) :: File.io_device | nil
   def open(logfile) do
     case File.open(logfile, [ :append, :utf8 ]) do
-      { :error, _ }   -> nil
-      { :ok, device } -> set(logfile, device)
+      { :ok, device }   -> set(logfile, device)
+      { :error, error } ->
+        log_open_error(logfile, error)
+        nil
     end
   end
 
@@ -91,8 +96,10 @@ defmodule Plug.AccessLog.Logfiles do
       true  -> device
       false ->
         case File.open(logfile, [ :append, :utf8 ]) do
-          { :error, _ }   -> { nil, nil }
-          { :ok, device } -> replace(logfile, device)
+          { :ok, device }   -> replace(logfile, device)
+          { :error, error } ->
+            log_open_error(logfile, error)
+            nil
         end
     end
   end
@@ -102,5 +109,9 @@ defmodule Plug.AccessLog.Logfiles do
       { :ok, stat } -> stat.inode
       _             -> nil
     end
+  end
+
+  defp log_open_error(logfile, error) do
+    Logger.error "Failed to open logfile #{ inspect logfile } for writing: #{ inspect error }"
   end
 end

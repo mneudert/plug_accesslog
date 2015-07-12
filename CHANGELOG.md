@@ -4,6 +4,7 @@
 
 - Enhancements
   - Allows passing custom formatters
+  - Errors when open logfiles are logged as errors using Logger
   - Log writing is now handled by a GenEvent handler to avoid crashing
 
 - Additional formatting directives

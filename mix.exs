@@ -17,7 +17,8 @@ defmodule Plug.AccessLog.Mixfile do
   end
 
   def application do
-    [ mod: { Plug.AccessLog.Application, [] } ]
+    [ applications: [ :logger ],
+      mod:          { Plug.AccessLog.Application, [] } ]
   end
 
   def deps(:docs) do
