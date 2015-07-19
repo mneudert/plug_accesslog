@@ -10,7 +10,7 @@ as a dependency:
 
 ```elixir
 defp deps do
-  [ { :plug_accesslog, "~> 0.6" } ]
+  [ { :plug_accesslog, "~> 0.7" } ]
 end
 ```
 

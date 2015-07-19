@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.7.0-dev
+## v0.7.0 (2015-07-19)
 
 - Enhancements
   - Allows passing custom formatters
