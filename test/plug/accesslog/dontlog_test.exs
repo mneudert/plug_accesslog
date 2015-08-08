@@ -8,7 +8,7 @@ defmodule Plug.AccessLog.DontlogTest do
   defmodule DontLog do
     def log(msg), do: Logger.log(:info, msg)
 
-    def maybe_skip(conn), do: "/dontlog" == full_path(conn)
+    def maybe_skip(conn), do: "/dontlog" == conn.request_path
   end
 
   defmodule Router do

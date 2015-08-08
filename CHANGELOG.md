@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.8.0-dev
+
+- Backwards incompatible changes
+  - Minimum required version of :plug raised to "~> 0.14"
+
 ## v0.7.0 (2015-07-19)
 
 - Enhancements
