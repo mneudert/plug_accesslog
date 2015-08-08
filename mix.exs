@@ -9,7 +9,7 @@ defmodule Plug.AccessLog.Mixfile do
       name:          "Plug.AccessLog",
       description:   "Plug for writing access logs",
       package:       package,
-      version:       "0.8.0-dev",
+      version:       "0.8.0",
       elixir:        "~> 1.0",
       deps:          deps(Mix.env),
       docs:          docs,
@@ -43,7 +43,7 @@ defmodule Plug.AccessLog.Mixfile do
   def docs do
     [ main:       "readme",
       readme:     "README.md",
-      source_ref: "master",
+      source_ref: "v0.8.0",
       source_url: @url_github ]
   end
 
