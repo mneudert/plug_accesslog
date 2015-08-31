@@ -184,6 +184,7 @@ The following formatting directives are available:
 - `%>s` - Response status code
 - `%t` - Time the request was received in the format `[10/Jan/2015:14:46:18 +0100]`
 - `%T` - Time taken to serve the request (full seconds)
+- `%{UNIT}T` - Time taken to serve the request in the given UNIT
 - `%u` - Remote user
 - `%U` - URL path requested (without query string)
 - `%v` - Server name
@@ -202,6 +203,9 @@ inspected using `byte_size/1`.
 regardless of the true http version.
 
 **Note for %T**: Rounding happens, so "0.6 seconds" will be reported as "1 second".
+
+**Note for %{UNIT}T**: Available units are `s` for seconds (same as `%T`),
+`ms` for milliseconds (same as `M`) and `us` for microseconds (same as `%D`).
 
 **Note for %V**: Alias for `%v`.
 

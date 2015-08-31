@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.10.0-dev
+
+- Additional formatting directives
+  - `%{UNIT}T` - Time taken to serve the request in the given UNIT
+
 ## v0.9.0 (2015-08-15)
 
 - Backwards incompatible changes

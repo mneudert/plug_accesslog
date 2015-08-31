@@ -29,6 +29,7 @@ defmodule Plug.AccessLog.DefaultFormatter do
   - `%>s` - Response status code
   - `%t` - Time the request was received in the format `[10/Jan/2015:14:46:18 +0100]`
   - `%T` - Time taken to serve the request (full seconds)
+  - `%{UNIT}T` - Time taken to serve the request in the given UNIT
   - `%u` - Remote user
   - `%U` - URL path requested (without query string)
   - `%v` - Server name
@@ -47,6 +48,9 @@ defmodule Plug.AccessLog.DefaultFormatter do
   regardless of the true http version.
 
   **Note for %T**: Rounding happens, so "0.6 seconds" will be reported as "1 second".
+
+  **Note for %{UNIT}T**: Available units are `s` for seconds (same as `%T`),
+  `ms` for milliseconds (same as `M`) and `us` for microseconds (same as `%D`).
 
   **Note for %V**: Alias for `%v`.
   """
@@ -160,14 +164,15 @@ defmodule Plug.AccessLog.DefaultFormatter do
   end
 
   defp log(message, conn, << "%{", rest :: binary >>) do
-    [ varname, rest ] = rest |> String.split("}", parts: 2)
+    [ var, rest ] = rest |> String.split("}", parts: 2)
 
     << vartype :: binary-1, rest :: binary >> = rest
 
     message = case vartype do
-      "C" -> DefaultFormatter.RequestCookie.append(message, conn, varname)
-      "i" -> DefaultFormatter.RequestHeader.append(message, conn, varname)
-      "o" -> DefaultFormatter.ResponseHeader.append(message, conn, varname)
+      "C" -> DefaultFormatter.RequestCookie.append(message, conn, var)
+      "i" -> DefaultFormatter.RequestHeader.append(message, conn, var)
+      "o" -> DefaultFormatter.ResponseHeader.append(message, conn, var)
+      "T" -> DefaultFormatter.RequestServingTime.append(message, conn, var)
       _   -> message <> "-"
     end
 
