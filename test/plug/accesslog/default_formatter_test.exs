@@ -23,6 +23,12 @@ defmodule Plug.AccessLog.DefaultFormatterTest do
     assert "POST" == DefaultFormatter.format("%m", post)
   end
 
+  test "%P" do
+    conn = conn(:get, "/")
+
+    assert inspect(conn.owner) == DefaultFormatter.format("%P", conn)
+  end
+
   test "%>s" do
     conn = conn(:get, "/")
     conn = %{ conn | status: 200 }

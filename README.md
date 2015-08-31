@@ -179,6 +179,7 @@ The following formatting directives are available:
 - `%m` - Request method
 - `%M` - Time taken to serve the request (milliseconds)
 - `%{VARNAME}o` - Header line sent by the server
+- `%P` - The process ID that serviced the request
 - `%q` - Query string (prepended with "?" or empty string)
 - `%r` - First line of HTTP request
 - `%>s` - Response status code

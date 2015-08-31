@@ -24,6 +24,7 @@ defmodule Plug.AccessLog.DefaultFormatter do
   - `%m` - Request method
   - `%M` - Time taken to serve the request (milliseconds)
   - `%{VARNAME}o` - Header line sent by the server
+  - `%P` - The process ID that serviced the request
   - `%q` - Query string (prepended with "?" or empty string)
   - `%r` - First line of HTTP request
   - `%>s` - Response status code
@@ -109,6 +110,11 @@ defmodule Plug.AccessLog.DefaultFormatter do
   defp log(message, conn, << "%M", rest :: binary >>) do
     message
     |> DefaultFormatter.RequestServingTime.append(conn, :msecs)
+    |> log(conn, rest)
+  end
+
+  defp log(message, conn, << "%P", rest :: binary >>) do
+    message <> inspect(conn.owner)
     |> log(conn, rest)
   end
 

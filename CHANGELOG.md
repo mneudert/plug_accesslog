@@ -3,6 +3,7 @@
 ## v0.10.0-dev
 
 - Additional formatting directives
+  - `%P` - The process ID that serviced the request
   - `%{UNIT}T` - Time taken to serve the request in the given UNIT
 
 ## v0.9.0 (2015-08-15)
