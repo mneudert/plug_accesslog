@@ -3,8 +3,6 @@ defmodule Plug.AccessLog.Formatter do
   Formatting pipeline.
   """
 
-  use Behaviour
-
   alias Plug.AccessLog.DefaultFormatter
 
 
@@ -49,5 +47,5 @@ defmodule Plug.AccessLog.Formatter do
   @doc """
   Formats a log message.
   """
-  defcallback format(format :: String.t, conn :: Plug.Conn.t) :: String.t
+  @callback format(format :: String.t, conn :: Plug.Conn.t) :: String.t
 end
