@@ -210,6 +210,25 @@ regardless of the true http version.
 
 **Note for %V**: Alias for `%v`.
 
+
+## "Benchmarking"
+
+A small utility script is provided to check how long it might take to process
+requests and write the log messages to your disk:
+
+```shell
+mix run utils/bench.exs
+```
+
+This call will send of a total of 10k requests and wait for them to be written
+to the disk.
+
+Looking at the data written to `utils/bench.log` might give a hint at what
+overhead the log writing is introducing. As with all "benchmarks" of any kind:
+take the measurements with a pinch of salt and run them in dozens of different
+conditions yourself.
+
+
 ## License
 
 [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
