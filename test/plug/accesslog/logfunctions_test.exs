@@ -6,6 +6,8 @@ defmodule Plug.AccessLog.LogfunctionsTest do
 
 
   defmodule LogProxy do
+    require Logger
+
     def log(msg), do: Logger.log(:info, msg)
   end
 

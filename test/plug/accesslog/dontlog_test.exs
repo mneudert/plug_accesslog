@@ -6,6 +6,8 @@ defmodule Plug.AccessLog.DontlogTest do
 
 
   defmodule DontLog do
+    require Logger
+
     def log(msg), do: Logger.log(:info, msg)
 
     def maybe_skip(conn), do: "/dontlog" == conn.request_path
