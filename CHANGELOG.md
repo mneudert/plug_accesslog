@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.9.1-dev
+## v0.9.1 (2015-09-29)
 
 - Enhancements
   - Application :tzdata (for recent :timex/:tzdata versions) is started automatically
