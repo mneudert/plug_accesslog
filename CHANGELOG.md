@@ -6,6 +6,15 @@
   - `%P` - The process ID that serviced the request
   - `%{UNIT}T` - Time taken to serve the request in the given UNIT
 
+## v0.9.1 (2015-09-29)
+
+- Enhancements
+  - Application :tzdata (for recent :timex/:tzdata versions) is started automatically
+
+- Backwards incompatible changes
+  - Minimum required version of :timex raised to "~> 0.19"
+  - Minimum required version of :tzdata raised to "=> 0.5.1"
+
 ## v0.9.0 (2015-08-15)
 
 - Backwards incompatible changes
