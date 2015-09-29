@@ -49,9 +49,9 @@ defmodule Plug.AccessLog.Mixfile do
   end
 
   def package do
-    %{ contributors: [ "Constantin Rack", "Marc Neudert", "Roman Chvanikoff" ],
-       files:        [ "CHANGELOG.md", "LICENSE", "mix.exs", "README.md", "lib" ],
-       licenses:     [ "Apache 2.0" ],
-       links:        %{ "Docs" => @url_docs, "Github" => @url_github }}
+    %{ files:       [ "CHANGELOG.md", "LICENSE", "mix.exs", "README.md", "lib" ],
+       licenses:    [ "Apache 2.0" ],
+       links:       %{ "Docs" => @url_docs, "GitHub" => @url_github },
+       maintainers: [ "Marc Neudert" ]}
   end
 end
