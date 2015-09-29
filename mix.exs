@@ -17,14 +17,14 @@ defmodule Plug.AccessLog.Mixfile do
   end
 
   def application do
-    [ applications: [ :logger ],
+    [ applications: [ :logger, :tzdata ],
       mod:          { Plug.AccessLog.Application, [] } ]
   end
 
   def deps(:docs) do
     deps(:prod) ++
-      [ { :earmark, "~> 0.1", optional: true },
-        { :ex_doc,  "~> 0.8", optional: true } ]
+      [ { :earmark, "~> 0.1",  optional: true },
+        { :ex_doc,  "~> 0.10", optional: true } ]
   end
 
   def deps(:test) do
@@ -34,15 +34,16 @@ defmodule Plug.AccessLog.Mixfile do
   end
 
   def deps(_) do
-    [ { :timex, "~> 0.13" },
+    [ { :timex,  "~> 0.19" },
+      { :tzdata, ">= 0.5.1" },
 
       { :cowboy, "~> 1.0", optional: true },
       { :plug,   "~> 1.0", optional: true } ]
   end
 
   def docs do
-    [ main:       "readme",
-      readme:     "README.md",
+    [ extras:     [ "CHANGELOG.md", "README.md" ],
+      main:       "extra-readme",
       source_ref: "v0.9",
       source_url: @url_github ]
   end
