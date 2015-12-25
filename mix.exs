@@ -24,13 +24,13 @@ defmodule Plug.AccessLog.Mixfile do
   def deps(:docs) do
     deps(:prod) ++
       [ { :earmark, "~> 0.1",  optional: true },
-        { :ex_doc,  "~> 0.10", optional: true } ]
+        { :ex_doc,  "~> 0.11", optional: true } ]
   end
 
   def deps(:test) do
     deps(:prod) ++
       [ { :dialyze,     "~> 0.2", optional: true },
-        { :excoveralls, "~> 0.3", optional: true } ]
+        { :excoveralls, "~> 0.4", optional: true } ]
   end
 
   def deps(_) do
@@ -43,7 +43,7 @@ defmodule Plug.AccessLog.Mixfile do
 
   def docs do
     [ extras:     [ "CHANGELOG.md", "README.md" ],
-      main:       "extra-readme",
+      main:       "readme",
       source_ref: "master",
       source_url: @url_github ]
   end
