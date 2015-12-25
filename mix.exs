@@ -17,7 +17,7 @@ defmodule Plug.AccessLog.Mixfile do
   end
 
   def application do
-    [ applications: [ :logger, :tzdata ],
+    [ applications: [ :logger, :timex, :tzdata ],
       mod:          { Plug.AccessLog.Application, [] } ]
   end
 
