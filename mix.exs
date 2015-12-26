@@ -1,7 +1,6 @@
 defmodule Plug.AccessLog.Mixfile do
   use Mix.Project
 
-  @url_docs "http://hexdocs.pm/plug_accesslog"
   @url_github "https://github.com/mneudert/plug_accesslog"
 
   def project do
@@ -51,7 +50,7 @@ defmodule Plug.AccessLog.Mixfile do
   def package do
     %{ files:       [ "CHANGELOG.md", "LICENSE", "mix.exs", "README.md", "lib" ],
        licenses:    [ "Apache 2.0" ],
-       links:       %{ "Docs" => @url_docs, "GitHub" => @url_github },
+       links:       %{ "GitHub" => @url_github },
        maintainers: [ "Marc Neudert" ]}
   end
 end
