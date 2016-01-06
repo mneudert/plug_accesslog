@@ -11,7 +11,7 @@ defmodule Plug.AccessLog.Writer do
   @doc """
   Notifies the writer to write a log message.
   """
-  @spec notify(message :: String.t, logfile :: String.t) :: :ok
+  @spec notify(String.t, String.t) :: :ok
   def notify(message, logfile) do
     GenEvent.notify(__MODULE__, { :log, message, logfile })
   end

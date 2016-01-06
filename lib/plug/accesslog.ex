@@ -18,11 +18,11 @@ defmodule Plug.AccessLog do
     |> register_before_send( &log(&1, opts) )
   end
 
-
   defp private_data do
     %{ local_time: :calendar.local_time(),
        timestamp:  :os.timestamp() }
   end
+
 
   @doc """
   Logs the request.
@@ -30,7 +30,7 @@ defmodule Plug.AccessLog do
   If the target logfile could not be openend the message
   will be silently ignored.
   """
-  @spec log(conn :: Plug.Conn.t, opts :: map) :: Plug.Conn.t
+  @spec log(Plug.Conn.t, map) :: Plug.Conn.t
   def log(conn, %{ dontlog: dontlogfun } = opts) do
     case dontlogfun.(conn) do
       true  -> conn
