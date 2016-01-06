@@ -6,6 +6,9 @@
   - `%P` - The process ID that serviced the request
   - `%{UNIT}T` - Time taken to serve the request in the given UNIT
 
+- Backwards incompatible changes
+  - Minimum required version of :timex raised to "~> 1.0"
+
 ## v0.9.1 (2015-09-29)
 
 - Enhancements

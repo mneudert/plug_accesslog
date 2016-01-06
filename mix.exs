@@ -22,7 +22,7 @@ defmodule Plug.AccessLog.Mixfile do
 
   def deps(:docs) do
     deps(:prod) ++
-      [ { :earmark, "~> 0.1",  optional: true },
+      [ { :earmark, "~> 0.2",  optional: true },
         { :ex_doc,  "~> 0.11", optional: true } ]
   end
 
@@ -33,7 +33,7 @@ defmodule Plug.AccessLog.Mixfile do
   end
 
   def deps(_) do
-    [ { :timex,  "~> 0.19" },
+    [ { :timex,  "~> 1.0" },
       { :tzdata, ">= 0.5.1" },
 
       { :cowboy, "~> 1.0", optional: true },
