@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.10.0-dev
+## v0.10.0 (2016-01-06)
 
 - Additional formatting directives
   - `%P` - The process ID that serviced the request
