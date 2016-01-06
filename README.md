@@ -211,7 +211,7 @@ regardless of the true http version.
 **Note for %V**: Alias for `%v`.
 
 
-## "Benchmarking"
+## &quot;Benchmarking&quot;
 
 A small utility script is provided to check how long it might take to process
 requests and write the log messages to your disk:
