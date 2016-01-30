@@ -13,6 +13,14 @@ defmodule Plug.AccessLog.Mixfile do
       build_embedded:  Mix.env == :prod,
       start_permanent: Mix.env == :prod,
 
+      preferred_cli_env: [
+        coveralls:          :test,
+        'coveralls.travis': :test,
+        dialyze:            :test,
+        docs:               :docs,
+        'hex.docs':         :docs
+      ],
+
       description:   "Plug for writing access logs",
       docs:          docs,
       package:       package,
