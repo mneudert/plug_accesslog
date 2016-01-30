@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.11.0-dev
+
+- Enhancements
+    - Logs are written in batches to the output file (every `100ms`)
+
 ## v0.10.0 (2016-01-06)
 
 - Additional formatting directives

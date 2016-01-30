@@ -6,11 +6,21 @@ defmodule Plug.AccessLog do
   import Plug.Conn
 
   alias Plug.AccessLog.Formatter
+  alias Plug.AccessLog.WAL
   alias Plug.AccessLog.Writer
 
   @behaviour Plug
 
-  def init(opts), do: opts |> Enum.into(%{})
+  def init(opts) do
+    opts = opts |> Enum.into(%{})
+
+    :ok = case opts[:file] do
+      nil     -> :ok
+      logfile -> Writer.register_file(logfile)
+    end
+
+    opts
+  end
 
   def call(conn, opts) do
     conn
@@ -49,7 +59,7 @@ defmodule Plug.AccessLog do
   def log(conn, %{ file: logfile } = opts) do
     opts[:format]
     |> Formatter.format(conn, opts[:formatters])
-    |> Writer.notify(logfile)
+    |> WAL.log(logfile)
 
     conn
   end

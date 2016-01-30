@@ -67,7 +67,7 @@ defmodule Plug.AccessLogTest do
     |> put_req_header("user-agent", @test_ua)
     |> Router.call(@opts)
 
-    :timer.sleep(100)
+    :timer.sleep(250)
     :ok
   end
 

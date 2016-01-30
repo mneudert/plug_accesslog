@@ -8,6 +8,7 @@ defmodule Plug.AccessLog.Application do
   use Application
 
   alias Plug.AccessLog.Logfiles
+  alias Plug.AccessLog.WAL
   alias Plug.AccessLog.Writer
 
 
@@ -17,8 +18,8 @@ defmodule Plug.AccessLog.Application do
     options  = [ strategy: :one_for_one, name: __MODULE__.Supervisor ]
     children = [
       worker(Logfiles, []),
-      worker(GenEvent, [[ name: Writer ]]),
-      worker(Writer.Watcher, [ Writer ])
+      worker(Writer, []),
+      worker(WAL, []),
     ]
 
     Supervisor.start_link(children, options)

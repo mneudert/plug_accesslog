@@ -1,18 +1,6 @@
 defmodule Plug.AccessLog.Bench do
   @moduledoc false
 
-  defmodule Counter do
-    use GenEvent
-
-    def init(count) do
-      { :ok, count }
-    end
-
-    def handle_call(:count, count), do: { :ok, count, count }
-
-    def handle_event({ :log, _, _ }, count), do: { :ok, count + 1 }
-  end
-
   defmodule Logfile do
     def path do
       [ __DIR__, "bench.log" ]
@@ -61,19 +49,20 @@ defmodule Plug.AccessLog.Bench do
 
   defp prepare() do
     _ = File.rm Logfile.path
-    _ = GenEvent.add_handler(Plug.AccessLog.Writer, Counter, 0)
   end
 
   defp wait(), do: wait(0)
 
-  defp wait(10000), do: :ok
+  defp wait(count) when count >= 10000, do: :ok
   defp wait(count)  do
     IO.puts "Processed events: #{ count }"
 
-    :timer.sleep(500)
+    :timer.sleep(1000)
 
-    Plug.AccessLog.Writer
-    |> GenEvent.call(Counter, :count)
+    Logfile.path
+    |> File.read!
+    |> String.split("\n")
+    |> Enum.count()
     |> wait()
   end
 end

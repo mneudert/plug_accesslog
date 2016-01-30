@@ -26,7 +26,7 @@ defmodule Plug.FileHandling.RecreationTest do
   test "log recreation" do
     # first request
     conn(:get, "/first") |> Router.call([])
-    :timer.sleep(100)
+    :timer.sleep(250)
 
     assert Logfile.path |> File.exists?
     assert Logfile.path |> File.read! |> String.contains?("first")
@@ -38,7 +38,7 @@ defmodule Plug.FileHandling.RecreationTest do
 
     # second request
     conn(:get, "/second") |> Router.call([])
-    :timer.sleep(100)
+    :timer.sleep(250)
 
     refute Logfile.path |> File.read! |> String.contains?("first")
     assert Logfile.path |> File.read! |> String.contains?("second")

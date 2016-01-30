@@ -30,7 +30,7 @@ defmodule Plug.FileHandling.RotationTest do
 
     # initial request
     conn(:get, "/") |> Router.call([])
-    :timer.sleep(100)
+    :timer.sleep(250)
 
     assert File.exists?(Logfiles.original)
 
@@ -42,7 +42,7 @@ defmodule Plug.FileHandling.RotationTest do
 
     # second request
     conn(:get, "/") |> Router.call([])
-    :timer.sleep(100)
+    :timer.sleep(250)
 
     assert File.exists?(Logfiles.original)
     assert File.exists?(Logfiles.rotated)

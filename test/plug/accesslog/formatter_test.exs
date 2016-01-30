@@ -72,7 +72,7 @@ defmodule Plug.AccessLog.FormatterTest do
   test "formatter pipeline" do
     conn(:get, "/format_me") |> Router.call([])
 
-    :timer.sleep(100)
+    :timer.sleep(250)
 
     assert "/format_me" == Logfiles.formatter_default |> File.read!() |> String.strip()
     assert "%U" == Logfiles.formatter_nil |> File.read!() |> String.strip()
