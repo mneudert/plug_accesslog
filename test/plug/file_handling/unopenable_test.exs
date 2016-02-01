@@ -21,10 +21,10 @@ defmodule Plug.FileHandling.UnopenableTest do
 
   test "unopenable files are ignored" do
     log = capture_io :user, fn ->
-      conn = conn(:get, "/") |> Router.call([])
+      conn(:get, "/") |> Router.call([])
+      :timer.sleep(250)
 
       assert nil == Logfiles.get("..")
-      assert 200 == conn.status
 
       Logger.flush()
     end
