@@ -14,9 +14,10 @@ defmodule Plug.AccessLog.WAL do
   """
   @spec flush(String.t) :: list
   def flush(logfile) do
-    Agent.get_and_update __MODULE__, fn messages ->
+    Agent.get_and_update(__MODULE__, fn messages ->
       { messages[logfile] || [], Map.put(messages, logfile, []) }
-    end
+    end)
+    |> Enum.reverse()
   end
 
   @doc """
