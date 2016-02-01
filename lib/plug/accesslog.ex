@@ -7,20 +7,10 @@ defmodule Plug.AccessLog do
 
   alias Plug.AccessLog.Formatter
   alias Plug.AccessLog.WAL
-  alias Plug.AccessLog.Writer
 
   @behaviour Plug
 
-  def init(opts) do
-    opts = opts |> Enum.into(%{})
-
-    :ok = case opts[:file] do
-      nil     -> :ok
-      logfile -> Writer.register_file(logfile)
-    end
-
-    opts
-  end
+  def init(opts), do: opts |> Enum.into(%{})
 
   def call(conn, opts) do
     conn

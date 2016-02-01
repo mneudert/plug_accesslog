@@ -29,4 +29,12 @@ defmodule Plug.AccessLog.WAL do
       Map.put(messages, logfile, [ message | messages[logfile] || [] ])
     end
   end
+
+  @doc """
+  Returns the list of logfiles with entries.
+  """
+  @spec logfiles() :: list
+  def logfiles() do
+    Agent.get __MODULE__, &Map.keys/1
+  end
 end

@@ -28,27 +28,11 @@ defmodule Plug.AccessLog.Writer do
 
   # GenServer callbacks
 
-  def handle_call({ :register_file, logfile }, _, state) do
-    { :reply, :ok, Enum.uniq([ logfile | state ]) }
-  end
-
   def handle_info(:trigger, state) do
-    Enum.each state, &write/1
-
+    Enum.each(WAL.logfiles, &write/1)
     Process.send_after(self, :trigger, 100)
 
     { :noreply, state }
-  end
-
-
-  # Convenience methods
-
-  @doc """
-  Registers a logfile for writing.
-  """
-  @spec register_file(String.t) :: :ok
-  def register_file(logfile) do
-    GenServer.call(__MODULE__, { :register_file, logfile }, :infinity)
   end
 
 
