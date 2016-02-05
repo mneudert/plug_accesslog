@@ -1,10 +1,10 @@
-defmodule Plug.FileHandling.RecreationTest do
+defmodule Plug.AccessLog.FileHandling.RecreationTest do
   use ExUnit.Case, async: true
   use Plug.Test
 
   defmodule Logfile do
     def path do
-      [ __DIR__, "../../logs/plug_filehandling_recreation.log" ]
+      [ __DIR__, "../../../logs/plug_filehandling_recreation.log" ]
       |> Path.join()
       |> Path.expand()
     end

@@ -1,4 +1,4 @@
-defmodule Plug.FileHandling.UnopenableTest do
+defmodule Plug.AccessLog.FileHandling.UnopenableTest do
   use ExUnit.Case, async: false
   use Plug.Test
 
@@ -34,7 +34,7 @@ defmodule Plug.FileHandling.UnopenableTest do
 
   test "replacement with unopenable logfile" do
     logfile =
-         [ __DIR__, "../../logs/logfiles_replacement/error.log" ]
+         [ __DIR__, "../../../logs/logfiles_replacement/error.log" ]
       |> Path.join()
       |> Path.expand()
 

@@ -1,10 +1,10 @@
-defmodule Plug.FileHandling.RotationTest do
+defmodule Plug.AccessLog.FileHandling.RotationTest do
   use ExUnit.Case, async: true
   use Plug.Test
 
   defmodule Logfiles do
     def original do
-      [ __DIR__, "../../logs/plug_filehandling_rotation.log" ]
+      [ __DIR__, "../../../logs/plug_filehandling_rotation.log" ]
       |> Path.join()
       |> Path.expand()
     end
