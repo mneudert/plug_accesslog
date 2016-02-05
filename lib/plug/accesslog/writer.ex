@@ -15,14 +15,19 @@ defmodule Plug.AccessLog.Writer do
   Starts the message writer.
   """
   @spec start_link(list) :: GenServer.on_start
-  def start_link(default \\ []) do
+  def start_link(default \\ %{}) do
     GenServer.start_link(__MODULE__, default, name: __MODULE__)
   end
 
-  def init(state) do
-    Process.send_after(self, :trigger, 100)
+  def init(%{}) do
+    flush_interval =
+      :plug_accesslog
+      |> Application.get_env(:wal, [])
+      |> Keyword.get(:flush_interval, 100)
 
-    { :ok, state }
+    Process.send_after(self, :trigger, flush_interval)
+
+    { :ok, %{ flush_interval: flush_interval } }
   end
 
 
@@ -30,7 +35,7 @@ defmodule Plug.AccessLog.Writer do
 
   def handle_info(:trigger, state) do
     Enum.each(WAL.logfiles, &write/1)
-    Process.send_after(self, :trigger, 100)
+    Process.send_after(self, :trigger, state.flush_interval)
 
     { :noreply, state }
   end

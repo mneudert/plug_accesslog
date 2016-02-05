@@ -3,7 +3,7 @@
 ## v0.11.0-dev
 
 - Enhancements
-    - Logs are written in batches to the output file (every `100ms`)
+    - Logs are written in batches to the output file (configurable, default `100ms`)
 
 ## v0.10.0 (2016-01-06)
 

@@ -53,6 +53,21 @@ directly without any framework. Using the `plug Plug.AccessLog` line in a
 framework based on `plug` should be no problem. Please refer to your frameworks
 individual documentation or source to find a suitable place.
 
+### WAL Configuration
+
+All log messages that will be written to a file are collected in a WAL process
+before actual writing. The messages will be fetched in a configurable interval
+to be written to the logfiles:
+
+```elixir
+config :plug_accesslog,
+  :wal,
+    flush_interval: 100
+```
+
+The time is configured as "milliseconds between writing and flushing".
+The default value is `100` milliseconds.
+
 ### Custom Formatters
 
 If you want to extend the formatting capabilities or replace existing ones
