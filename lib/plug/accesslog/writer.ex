@@ -14,9 +14,9 @@ defmodule Plug.AccessLog.Writer do
   @doc """
   Starts the message writer.
   """
-  @spec start_link(list) :: GenServer.on_start
-  def start_link(default \\ %{}) do
-    GenServer.start_link(__MODULE__, default, name: __MODULE__)
+  @spec start_link() :: GenServer.on_start
+  def start_link() do
+    GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
   end
 
   def init(%{}) do
