@@ -15,6 +15,7 @@ defmodule Plug.AccessLog.Mixfile do
 
       preferred_cli_env: [
         coveralls:          :test,
+        'coveralls.detail': :test,
         'coveralls.travis': :test,
         dialyze:            :test,
         docs:               :docs,
