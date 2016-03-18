@@ -3,6 +3,7 @@
 ## v0.11.0-dev
 
 - Enhancements
+    - Logfiles can be configured using system environment variables
     - Logs are written in batches to the output file (configurable, default `100ms`)
 
 ## v0.10.0 (2016-01-06)

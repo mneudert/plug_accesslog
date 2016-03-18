@@ -98,6 +98,20 @@ be used. If you define an empty list then no formatting will take place.
 
 All formatters are called in the order they are defined in.
 
+
+### File Configuration
+
+There are two ways to define the file you want log entries to be written to:
+
+```elixir
+defmodule Router do
+  use Plug.Router
+
+  plug Plug.AccessLog, file: "/static/configuration.log"
+  plug Plug.AccessLog, file: { :system, "SYS_ENV_VAR_WITH_FILE_PATH" }
+end
+```
+
 ### Do Not Log Filter
 
 To filter the requests before logging you can configure a "do not log" filter
