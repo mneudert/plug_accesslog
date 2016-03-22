@@ -16,8 +16,8 @@ defmodule Plug.AccessLog.DefaultFormatter.RequestTime do
     request_date  =
          conn.private[:plug_accesslog]
       |> Map.get(:local_time)
-      |> Date.from(:local)
+      |> Date.from
 
-    DateFormat.format!(request_date, format_string, :strftime)
+    Timex.format!(request_date, format_string, :strftime)
   end
 end
