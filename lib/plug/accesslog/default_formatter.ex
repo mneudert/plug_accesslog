@@ -87,7 +87,7 @@ defmodule Plug.AccessLog.DefaultFormatter do
 
   defp log(message, conn, << "%D", rest :: binary >>) do
     message
-    |> DefaultFormatter.RequestServingTime.append(conn, :usecs)
+    |> DefaultFormatter.RequestServingTime.append(conn, :microseconds)
     |> log(conn, rest)
   end
 
@@ -109,7 +109,7 @@ defmodule Plug.AccessLog.DefaultFormatter do
 
   defp log(message, conn, << "%M", rest :: binary >>) do
     message
-    |> DefaultFormatter.RequestServingTime.append(conn, :msecs)
+    |> DefaultFormatter.RequestServingTime.append(conn, :milliseconds)
     |> log(conn, rest)
   end
 
@@ -143,7 +143,7 @@ defmodule Plug.AccessLog.DefaultFormatter do
 
   defp log(message, conn, << "%T", rest :: binary >>) do
     message
-    |> DefaultFormatter.RequestServingTime.append(conn, :secs)
+    |> DefaultFormatter.RequestServingTime.append(conn, :seconds)
     |> log(conn, rest)
   end
 

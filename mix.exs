@@ -40,7 +40,7 @@ defmodule Plug.AccessLog.Mixfile do
       { :dialyze,     "~> 0.2", only: :test },
       { :excoveralls, "~> 0.5", only: :test },
 
-      { :timex,  "~> 1.0" },
+      { :timex,  "~> 2.0" },
       { :tzdata, "~> 0.5" },
 
       { :cowboy, "~> 1.0", optional: true },
