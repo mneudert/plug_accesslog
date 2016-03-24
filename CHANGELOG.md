@@ -6,6 +6,9 @@
     - Logfiles can be configured using system environment variables
     - Logs are written in batches to the output file (configurable, default `100ms`)
 
+- Backwards incompatible changes
+    - Minimum required version of :timex raised to "~> 2.0" ([#12](https://github.com/mneudert/plug_accesslog/pull/12))
+
 ## v0.10.0 (2016-01-06)
 
 - Additional formatting directives
