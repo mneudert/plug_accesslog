@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.11.0-dev
+## v0.11.0 (2016-03-25)
 
 - Enhancements
     - Logfiles can be configured using system environment variables
