@@ -6,7 +6,7 @@ defmodule Plug.AccessLog.Mixfile do
   def project do
     [ app:     :plug_accesslog,
       name:    "Plug.AccessLog",
-      version: "0.11.0",
+      version: "0.12.0-dev",
       elixir:  "~> 1.0",
       deps:    deps,
 
@@ -50,7 +50,7 @@ defmodule Plug.AccessLog.Mixfile do
   defp docs do
     [ extras:     [ "CHANGELOG.md", "README.md" ],
       main:       "readme",
-      source_ref: "v0.11.0",
+      source_ref: "master",
       source_url: @url_github ]
   end
 
