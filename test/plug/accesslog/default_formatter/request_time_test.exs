@@ -13,7 +13,7 @@ defmodule Plug.AccessLog.DefaultFormatter.RequestTimeTest do
 
     formatted =
          datetime
-      |> Date.from
+      |> DateTime.from()
       |> Timex.format!("[%d/%b/%Y:%H:%M:%S %z]", :strftime)
 
     assert formatted == DefaultFormatter.format("%t", conn)
