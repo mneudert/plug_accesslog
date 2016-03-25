@@ -13,11 +13,9 @@ defmodule Plug.AccessLog.DefaultFormatter.RequestTime do
 
   defp request_time(conn) do
     format_string = "[%d/%b/%Y:%H:%M:%S %z]"
-    request_date  =
-         conn.private[:plug_accesslog]
-      |> Map.get(:local_time)
-      |> DateTime.from()
 
-    Timex.format!(request_date, format_string, :strftime)
+    conn.private[:plug_accesslog]
+    |> Map.get(:local_time)
+    |> Timex.format!(format_string, :strftime)
   end
 end

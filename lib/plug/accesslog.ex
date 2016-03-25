@@ -3,6 +3,8 @@ defmodule Plug.AccessLog do
   AccessLog Plug
   """
 
+  use Timex
+
   import Plug.Conn
 
   alias Plug.AccessLog.Formatter
@@ -27,7 +29,7 @@ defmodule Plug.AccessLog do
   end
 
   defp private_data do
-    %{ local_time: :calendar.local_time(),
+    %{ local_time: DateTime.local(),
        timestamp:  :os.timestamp() }
   end
 

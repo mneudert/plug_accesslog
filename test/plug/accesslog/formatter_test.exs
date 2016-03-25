@@ -1,6 +1,7 @@
 defmodule Plug.AccessLog.FormatterTest do
   use ExUnit.Case, async: true
   use Plug.Test
+  use Timex
 
   alias Plug.AccessLog.DefaultFormatter
   alias Plug.AccessLog.Formatter
@@ -58,7 +59,7 @@ defmodule Plug.AccessLog.FormatterTest do
 
 
   test "no format means default format" do
-    datetime = :calendar.local_time()
+    datetime = DateTime.local()
     conn     =
          conn(:get, "/")
       |> put_private(:plug_accesslog, %{ local_time: datetime })
