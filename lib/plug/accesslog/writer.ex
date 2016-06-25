@@ -25,7 +25,7 @@ defmodule Plug.AccessLog.Writer do
       |> Application.get_env(:wal, [])
       |> Keyword.get(:flush_interval, 100)
 
-    timer = Process.send_after(self, :trigger, interval)
+    timer = Process.send_after(self(), :trigger, interval)
     state = %{ flush_interval: interval,
                flush_timer:    timer }
 
@@ -44,7 +44,7 @@ defmodule Plug.AccessLog.Writer do
   def handle_info(:trigger, state) do
     Enum.each(WAL.logfiles, &write/1)
 
-    timer = Process.send_after(self, :trigger, state.flush_interval)
+    timer = Process.send_after(self(), :trigger, state.flush_interval)
     state = %{ state | flush_timer: timer }
 
     { :noreply, state }

@@ -24,7 +24,7 @@ defmodule Plug.AccessLog do
 
   def call(conn, opts) do
     conn
-    |> put_private(:plug_accesslog, private_data)
+    |> put_private(:plug_accesslog, private_data())
     |> register_before_send( &log(&1, opts) )
   end
 

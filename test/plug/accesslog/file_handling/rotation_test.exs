@@ -9,13 +9,13 @@ defmodule Plug.AccessLog.FileHandling.RotationTest do
       |> Path.expand()
     end
 
-    def rotated, do: original <> ".rotated.log"
+    def rotated, do: original() <> ".rotated.log"
   end
 
   defmodule Router do
     use Plug.Router
 
-    plug Plug.AccessLog, file: Logfiles.original
+    plug Plug.AccessLog, file: Logfiles.original()
 
     plug :match
     plug :dispatch
@@ -25,26 +25,29 @@ defmodule Plug.AccessLog.FileHandling.RotationTest do
 
 
   test "log rotation" do
-    refute File.exists?(Logfiles.original)
-    refute File.exists?(Logfiles.rotated)
+    original = Logfiles.original()
+    rotated  = Logfiles.rotated()
+
+    refute File.exists?(original)
+    refute File.exists?(rotated)
 
     # initial request
     conn(:get, "/") |> Router.call([])
     :timer.sleep(50)
 
-    assert File.exists?(Logfiles.original)
+    assert File.exists?(original)
 
     # rotate logfile
-    :file.rename(Logfiles.original, Logfiles.rotated)
+    :file.rename(original, rotated)
 
-    refute File.exists?(Logfiles.original)
-    assert File.exists?(Logfiles.rotated)
+    refute File.exists?(original)
+    assert File.exists?(rotated)
 
     # second request
     conn(:get, "/") |> Router.call([])
     :timer.sleep(50)
 
-    assert File.exists?(Logfiles.original)
-    assert File.exists?(Logfiles.rotated)
+    assert File.exists?(original)
+    assert File.exists?(rotated)
   end
 end

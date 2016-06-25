@@ -42,7 +42,7 @@ defmodule Plug.AccessLog.FileHandling.UnopenableTest do
     logfile |> Path.dirname |> File.mkdir!
     logfile |> File.touch!
 
-    assert self == Logfiles.set(logfile, self)
+    assert self() == Logfiles.set(logfile, self())
 
     logfile |> Path.dirname |> File.rm_rf!
 
