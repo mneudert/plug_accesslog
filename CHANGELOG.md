@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.12.0-dev
+## v0.12.0 (2016-06-25)
 
 - Backwards incompatible changes
     - Minimum required elixir version is now "~> 1.2"
