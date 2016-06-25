@@ -7,7 +7,7 @@ defmodule Plug.AccessLog.Mixfile do
     [ app:     :plug_accesslog,
       name:    "Plug.AccessLog",
       version: "0.12.0-dev",
-      elixir:  "~> 1.0",
+      elixir:  "~> 1.2",
       deps:    deps(),
 
       build_embedded:  Mix.env == :prod,

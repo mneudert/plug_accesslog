@@ -22,11 +22,6 @@ def application do
 end
 ```
 
-__Note__: The minimum version of timex requires elixir "~> 1.1". This is one
-minor version above the requirement of this library. For the time being this
-warning can be ignored, but please conduct your own tests if you are still
-using an elixir 1.0.x release.
-
 
 ## Usage
 
