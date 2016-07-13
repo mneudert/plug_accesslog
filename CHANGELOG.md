@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.13.0-dev
+
+- Backwards incompatible changes
+    - Minimum required elixir version is now "~> 1.3"
+    - Minimum required version of :timex raised to "~> 3.0"
+
 ## v0.12.0 (2016-06-25)
 
 - Backwards incompatible changes

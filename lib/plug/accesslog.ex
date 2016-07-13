@@ -29,7 +29,7 @@ defmodule Plug.AccessLog do
   end
 
   defp private_data do
-    %{ local_time: DateTime.local(),
+    %{ local_time: Timex.local(),
        timestamp:  :os.timestamp() }
   end
 

@@ -7,7 +7,7 @@ defmodule Plug.AccessLog.Mixfile do
     [ app:     :plug_accesslog,
       name:    "Plug.AccessLog",
       version: "0.13.0-dev",
-      elixir:  "~> 1.2",
+      elixir:  "~> 1.3",
       deps:    deps(),
 
       build_embedded:  Mix.env == :prod,
@@ -29,7 +29,7 @@ defmodule Plug.AccessLog.Mixfile do
   end
 
   def application do
-    [ applications: [ :logger, :timex, :tzdata ],
+    [ applications: [ :logger, :timex ],
       mod:          { Plug.AccessLog.Application, [] } ]
   end
 
@@ -39,8 +39,7 @@ defmodule Plug.AccessLog.Mixfile do
       { :dialyze,     "~> 0.2", only: :test },
       { :excoveralls, "~> 0.5", only: :test },
 
-      { :timex,  "~> 2.0" },
-      { :tzdata, "~> 0.5" },
+      { :timex,  "~> 3.0" },
 
       { :cowboy, "~> 1.0", optional: true },
       { :plug,   "~> 1.0", optional: true } ]

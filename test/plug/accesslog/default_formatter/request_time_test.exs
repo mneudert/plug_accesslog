@@ -7,7 +7,7 @@ defmodule Plug.AccessLog.DefaultFormatter.RequestTimeTest do
 
   test "%t" do
     timezone = Timex.timezone("America/Chicago", { 2015, 01, 10 })
-    datetime = Timex.datetime({{ 2015, 01, 10 }, { 14, 46, 18 }}, timezone)
+    datetime = Timex.to_datetime({{ 2015, 01, 10 }, { 14, 46, 18 }}, timezone)
     conn     =
          conn(:get, "/")
       |> put_private(:plug_accesslog, %{ local_time: datetime })

@@ -18,9 +18,9 @@ defmodule Plug.AccessLog.DefaultFormatter.RequestServingTime do
   defp serving_time(conn, format) do
     conn.private[:plug_accesslog]
     |> Map.get(:timestamp)
-    |> Time.sub(:os.timestamp())
-    |> Time.invert()
-    |> Time.convert(format)
+    |> Duration.from_erl()
+    |> Duration.diff(Duration.now(), format)
+    |> Kernel.*(-1)
     |> round()
     |> to_string()
   end

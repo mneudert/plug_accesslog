@@ -47,7 +47,8 @@ defmodule Plug.AccessLog.DefaultFormatter.RequestServingTimeTest do
   end
 
   test "%T rounding" do
-    timestamp = :os.timestamp() |> Time.sub({ 0, 0, 750000 })
+    subtract  = Duration.from_seconds(1)
+    timestamp = Duration.now() |> Duration.diff(subtract) |> Duration.to_erl()
     conn      =
          conn(:get, "/")
       |> put_private(:plug_accesslog, %{ timestamp: timestamp })
