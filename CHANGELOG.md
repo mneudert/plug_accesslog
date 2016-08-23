@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.14.0-dev
+
+- Additional formatting directives
+    - `%{VARNAME}e` - Environment variable contents
+
 ## v0.13.0 (2016-07-13)
 
 - Backwards incompatible changes

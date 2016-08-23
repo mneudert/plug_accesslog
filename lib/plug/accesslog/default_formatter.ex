@@ -18,6 +18,7 @@ defmodule Plug.AccessLog.DefaultFormatter do
   - `%B` - Size of response in bytes. Outputs "0" when no bytes are sent.
   - `%{VARNAME}C` - Cookie sent by the client
   - `%D` - Time taken to serve the request (microseconds)
+  - `%{VARNAME}e` - Environment variable contents
   - `%h` - Remote hostname
   - `%{VARNAME}i` - Header line sent by the client
   - `%l` - Remote logname
@@ -176,6 +177,7 @@ defmodule Plug.AccessLog.DefaultFormatter do
 
     message = case vartype do
       "C" -> DefaultFormatter.RequestCookie.append(message, conn, var)
+      "e" -> DefaultFormatter.Environment.append(message, conn, var)
       "i" -> DefaultFormatter.RequestHeader.append(message, conn, var)
       "o" -> DefaultFormatter.ResponseHeader.append(message, conn, var)
       "T" -> DefaultFormatter.RequestServingTime.append(message, conn, var)
