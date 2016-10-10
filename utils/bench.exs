@@ -33,7 +33,7 @@ defmodule Plug.AccessLog.Bench do
 
     { runtime, :ok } = :timer.tc &wait/0
 
-    IO.puts "==> Time taken: #{ runtime } ms <=="
+    IO.puts "==> Time taken: #{ div(runtime, 1_000) / 1_000 }s <=="
     :ok
   end
 
