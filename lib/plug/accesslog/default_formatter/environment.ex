@@ -4,8 +4,8 @@ defmodule Plug.AccessLog.DefaultFormatter.Environment do
   """
 
   @doc """
-  Appends to log output.
+  Formats the log output.
   """
-  @spec append(String.t, Plug.Conn.t, String.t) :: String.t
-  def append(message, _conn, var), do: message <> (System.get_env(var) || "")
+  @spec format(Plug.Conn.t, String.t) :: iodata
+  def format(_conn, var), do: System.get_env(var) || ""
 end

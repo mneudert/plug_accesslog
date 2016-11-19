@@ -6,13 +6,13 @@ defmodule Plug.AccessLog.DefaultFormatter.ResponseHeader do
   import Plug.Conn
 
   @doc """
-  Appends to log output.
+  Formats the log output.
   """
-  @spec append(String.t, Plug.Conn.t, String.t) :: String.t
-  def append(message, conn, header) do
+  @spec format(Plug.Conn.t, String.t) :: iodata
+  def format(conn, header) do
     case get_resp_header(conn, header |> String.downcase) do
-      [ value ] -> message <> value
-      _         -> message <> "-"
+      [ value ] -> value
+      _         -> "-"
     end
   end
 end

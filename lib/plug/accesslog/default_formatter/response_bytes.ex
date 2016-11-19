@@ -6,18 +6,18 @@ defmodule Plug.AccessLog.DefaultFormatter.ResponseBytes do
   import Plug.Conn
 
   @doc """
-  Appends to log output.
+  Formats the log output.
   """
-  @spec append(String.t, Plug.Conn.t, String.t) :: String.t
-  def append(message, conn, fallback) do
+  @spec format(Plug.Conn.t, String.t) :: iodata
+  def format(conn, fallback) do
     bytes = case get_resp_header(conn, "content-length") do
       [ length ] -> length
       _          -> conn.resp_body |> body_length() |> to_string()
     end
 
     case bytes do
-      "0"   -> message <> fallback
-      bytes -> message <> to_string(bytes)
+      "0"   -> fallback
+      bytes -> to_string(bytes)
     end
   end
 

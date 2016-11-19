@@ -4,13 +4,13 @@ defmodule Plug.AccessLog.DefaultFormatter.QueryString do
   """
 
   @doc """
-  Appends to log output.
+  Formats the log output.
   """
-  @spec append(String.t, Plug.Conn.t) :: String.t
-  def append(message, conn) do
+  @spec format(Plug.Conn.t) :: iodata
+  def format(conn) do
     case conn.query_string do
-      ""    -> message
-      query -> message <> "?" <> query
+      ""    -> ""
+      query -> [ "?", query ]
     end
   end
 end

@@ -6,12 +6,10 @@ defmodule Plug.AccessLog.DefaultFormatter.RequestTime do
   use Timex
 
   @doc """
-  Appends to log output.
+  Formats the log output.
   """
-  @spec append(String.t, Plug.Conn.t) :: String.t
-  def append(message, conn), do: message <> request_time(conn)
-
-  defp request_time(conn) do
+  @spec format(Plug.Conn.t) :: iodata
+  def format(conn) do
     format_string = "[%d/%b/%Y:%H:%M:%S %z]"
 
     conn.private[:plug_accesslog]

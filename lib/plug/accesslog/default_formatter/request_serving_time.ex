@@ -6,16 +6,14 @@ defmodule Plug.AccessLog.DefaultFormatter.RequestServingTime do
   use Timex
 
   @doc """
-  Appends to log output.
+  Formats the log output.
   """
-  @spec append(String.t, Plug.Conn.t, String.t | :seconds | :milliseconds | :microseconds) :: String.t
-  def append(message, conn, "s"),  do: append(message, conn, :seconds)
-  def append(message, conn, "ms"), do: append(message, conn, :milliseconds)
-  def append(message, conn, "us"), do: append(message, conn, :microseconds)
+  @spec format(Plug.Conn.t, String.t | :seconds | :milliseconds | :microseconds) :: iodata
+  def format(conn, "s"),  do: format(conn, :seconds)
+  def format(conn, "ms"), do: format(conn, :milliseconds)
+  def format(conn, "us"), do: format(conn, :microseconds)
 
-  def append(message, conn, format), do: message <> serving_time(conn, format)
-
-  defp serving_time(conn, format) do
+  def format(conn, format) do
     conn.private[:plug_accesslog]
     |> Map.get(:timestamp)
     |> Duration.from_erl()

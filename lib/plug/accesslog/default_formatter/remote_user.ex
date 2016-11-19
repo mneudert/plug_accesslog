@@ -6,10 +6,16 @@ defmodule Plug.AccessLog.DefaultFormatter.RemoteUser do
   import Plug.Conn
 
   @doc """
-  Appends to log output.
+  Formats the log output.
   """
-  @spec append(String.t, Plug.Conn.t) :: String.t
-  def append(message, conn), do: message <> remote_user(conn)
+  @spec format(Plug.Conn.t) :: iodata
+  def format(conn) do
+    case get_req_header(conn, "authorization") do
+      [<< "Basic ", credentials :: binary >>] -> get_user(credentials)
+      _ -> "-"
+    end
+  end
+
 
   defp get_user(credentials) do
     try do
@@ -26,12 +32,5 @@ defmodule Plug.AccessLog.DefaultFormatter.RemoteUser do
     credentials
     |> Base.decode64!()
     |> String.split(":")
-  end
-
-  defp remote_user(conn) do
-    case get_req_header(conn, "authorization") do
-      [<< "Basic ", credentials :: binary >>] -> get_user(credentials)
-      _ -> "-"
-    end
   end
 end

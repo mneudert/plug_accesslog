@@ -5,6 +5,11 @@
 - Additional formatting directives
     - `%{VARNAME}e` - Environment variable contents
 
+- Backwards incompatible changes
+    - All modules of the `DefaultFormatter` have been changed to not append to
+      a passed message anymore but return `iodata`. The public method has been
+      renamed from `append` to `format` to reflect this change.
+
 ## v0.13.0 (2016-07-13)
 
 - Backwards incompatible changes

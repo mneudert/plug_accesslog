@@ -6,15 +6,15 @@ defmodule Plug.AccessLog.DefaultFormatter.RequestCookie do
   import Plug.Conn
 
   @doc """
-  Appends to log output.
+  Formats the log output.
   """
-  @spec append(String.t, Plug.Conn.t, String.t) :: String.t
-  def append(message, conn, cookie) do
+  @spec format(Plug.Conn.t, String.t) :: iodata
+  def format(conn, cookie) do
     conn = conn |> fetch_cookies()
 
     case Map.get(conn.cookies, cookie) do
-      nil   -> message <> "-"
-      value -> message <> value
+      nil   -> "-"
+      value -> value
     end
   end
 end

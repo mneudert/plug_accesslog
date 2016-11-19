@@ -4,8 +4,8 @@ defmodule Plug.AccessLog.DefaultFormatter.RequestPath do
   """
 
   @doc """
-  Appends to log output.
+  Formats the log output.
   """
-  @spec append(String.t, Plug.Conn.t) :: String.t
-  def append(message, conn), do: message <> conn.request_path
+  @spec format(Plug.Conn.t) :: iodata
+  def format(conn), do: conn.request_path
 end

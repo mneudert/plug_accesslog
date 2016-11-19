@@ -69,27 +69,27 @@ defmodule Plug.AccessLog.DefaultFormatter do
   end
 
   defp log(message, conn, << "%a", rest :: binary >>) do
-    [ DefaultFormatter.RemoteIPAddress.append("", conn) | message ]
+    [ DefaultFormatter.RemoteIPAddress.format(conn) | message ]
     |> log(conn, rest)
   end
 
   defp log(message, conn, << "%b", rest :: binary >>) do
-    [ DefaultFormatter.ResponseBytes.append("", conn, "-") | message ]
+    [ DefaultFormatter.ResponseBytes.format(conn, "-") | message ]
     |> log(conn, rest)
   end
 
   defp log(message, conn, << "%B", rest :: binary >>) do
-    [ DefaultFormatter.ResponseBytes.append("", conn, "0") | message ]
+    [ DefaultFormatter.ResponseBytes.format(conn, "0") | message ]
     |> log(conn, rest)
   end
 
   defp log(message, conn, << "%D", rest :: binary >>) do
-    [ DefaultFormatter.RequestServingTime.append("", conn, :microseconds) | message ]
+    [ DefaultFormatter.RequestServingTime.format(conn, :microseconds) | message ]
     |> log(conn, rest)
   end
 
   defp log(message, conn, << "%h", rest :: binary >>) do
-    [ DefaultFormatter.RemoteIPAddress.append("", conn) | message ]
+    [ DefaultFormatter.RemoteIPAddress.format(conn) | message ]
     |> log(conn, rest)
   end
 
@@ -104,7 +104,7 @@ defmodule Plug.AccessLog.DefaultFormatter do
   end
 
   defp log(message, conn, << "%M", rest :: binary >>) do
-    [ DefaultFormatter.RequestServingTime.append("", conn, :milliseconds) | message ]
+    [ DefaultFormatter.RequestServingTime.format(conn, :milliseconds) | message ]
     |> log(conn, rest)
   end
 
@@ -114,12 +114,12 @@ defmodule Plug.AccessLog.DefaultFormatter do
   end
 
   defp log(message, conn, << "%q", rest :: binary >>) do
-    [ DefaultFormatter.QueryString.append("", conn) | message ]
+    [ DefaultFormatter.QueryString.format(conn) | message ]
     |> log(conn, rest)
   end
 
   defp log(message, conn, << "%r", rest :: binary >>) do
-    [ DefaultFormatter.RequestLine.append("", conn) | message ]
+    [ DefaultFormatter.RequestLine.format(conn) | message ]
     |> log(conn, rest)
   end
 
@@ -129,22 +129,22 @@ defmodule Plug.AccessLog.DefaultFormatter do
   end
 
   defp log(message, conn, << "%t", rest :: binary >>) do
-    [ DefaultFormatter.RequestTime.append("", conn) | message ]
+    [ DefaultFormatter.RequestTime.format(conn) | message ]
     |> log(conn, rest)
   end
 
   defp log(message, conn, << "%T", rest :: binary >>) do
-    [ DefaultFormatter.RequestServingTime.append("", conn, :seconds) | message ]
+    [ DefaultFormatter.RequestServingTime.format(conn, :seconds) | message ]
     |> log(conn, rest)
   end
 
   defp log(message, conn, << "%u", rest :: binary >>) do
-    [ DefaultFormatter.RemoteUser.append("", conn) | message ]
+    [ DefaultFormatter.RemoteUser.format(conn) | message ]
     |> log(conn, rest)
   end
 
   defp log(message, conn, << "%U", rest :: binary >>) do
-    [ DefaultFormatter.RequestPath.append("", conn) | message ]
+    [ DefaultFormatter.RequestPath.format(conn) | message ]
     |> log(conn, rest)
   end
 
@@ -164,11 +164,11 @@ defmodule Plug.AccessLog.DefaultFormatter do
     << vartype :: binary-1, rest :: binary >> = rest
 
     append = case vartype do
-      "C" -> DefaultFormatter.RequestCookie.append("", conn, var)
-      "e" -> DefaultFormatter.Environment.append("", conn, var)
-      "i" -> DefaultFormatter.RequestHeader.append("", conn, var)
-      "o" -> DefaultFormatter.ResponseHeader.append("", conn, var)
-      "T" -> DefaultFormatter.RequestServingTime.append("", conn, var)
+      "C" -> DefaultFormatter.RequestCookie.format(conn, var)
+      "e" -> DefaultFormatter.Environment.format(conn, var)
+      "i" -> DefaultFormatter.RequestHeader.format(conn, var)
+      "o" -> DefaultFormatter.ResponseHeader.format(conn, var)
+      "T" -> DefaultFormatter.RequestServingTime.format(conn, var)
       _   -> "-"
     end
 
