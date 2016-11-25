@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.14.0-dev
+## v0.14.0 (2016-11-25)
 
 - Additional formatting directives
     - `%{VARNAME}e` - Environment variable contents
