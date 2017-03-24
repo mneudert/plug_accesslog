@@ -31,9 +31,8 @@ defmodule Plug.AccessLog.Mixfile do
   end
 
   defp deps do
-    [ { :ex_doc, ">= 0.0.0", only: :dev },
-
-      { :excoveralls, "~> 0.6", only: :test },
+    [ { :ex_doc,      ">= 0.0.0", only: :dev },
+      { :excoveralls, "~> 0.6",   only: :test },
 
       { :timex,  "~> 3.0" },
 
