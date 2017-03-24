@@ -23,7 +23,8 @@ defmodule Plug.AccessLog.Bench do
 
   use Plug.Test
 
-  @opts Router.init([])
+  @entry_size  byte_size(~s(127.0.0.1 - - [13/Mar/2017:14:57:57 +0100] "GET / HTTP/1.1" 200 2\n))
+  @router_opts Router.init([])
 
 
   @doc false
@@ -40,8 +41,8 @@ defmodule Plug.AccessLog.Bench do
   def execute() do
     for _ <- 1..10 do
       Task.start fn ->
-        for _ <- 1..1000 do
-          conn(:get, "/") |> Router.call(@opts)
+        for _ <- 1..1_000 do
+          conn(:get, "/") |> Router.call(@router_opts)
         end
       end
     end
@@ -51,18 +52,21 @@ defmodule Plug.AccessLog.Bench do
     _ = File.rm Logfile.path
   end
 
-  defp wait(), do: wait(0)
+  defp wait() do
+    :timer.sleep(250)
+    wait(0)
+  end
 
-  defp wait(count) when count >= 10000, do: :ok
-  defp wait(count)  do
+  defp wait(count) when count >= 10_000, do: :ok
+  defp wait(count) do
     IO.puts "Processed events: #{ count }"
 
-    :timer.sleep(1000)
+    :timer.sleep(100)
 
     Logfile.path
-    |> File.read!
-    |> String.split("\n")
-    |> Enum.count()
+    |> File.stat!
+    |> Map.get(:size)
+    |> Kernel.div(@entry_size)
     |> wait()
   end
 end
