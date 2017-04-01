@@ -64,7 +64,7 @@ defmodule Plug.AccessLog.Writer do
   defp write_log(msg, file) do
     case Logfiles.get(file) do
       nil -> :ok
-      io  -> IO.write(io, msg <> "\n")
+      io  -> IO.puts(io, msg)
     end
   end
 end
