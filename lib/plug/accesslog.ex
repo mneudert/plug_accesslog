@@ -13,13 +13,18 @@ defmodule Plug.AccessLog do
   @behaviour Plug
 
   def init(opts) do
-    opts = opts |> Enum.into(%{})
-
-    case opts[:file] do
-      { :system, var } -> %{ opts | file: System.get_env(var) }
-      _                -> opts
-    end
+    opts |> Enum.into(%{}) |> init_file()
   end
+
+  defp init_file(%{ file: { :system, var, default }} = opts) do
+    %{ opts | file: System.get_env(var) || default }
+  end
+
+  defp init_file(%{ file: { :system, var }} = opts) do
+    %{ opts | file: System.get_env(var) }
+  end
+
+  defp init_file(opts), do: opts
 
 
   def call(conn, opts) do

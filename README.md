@@ -109,6 +109,7 @@ defmodule Router do
 
   plug Plug.AccessLog, file: "/static/configuration.log"
   plug Plug.AccessLog, file: { :system, "SYS_ENV_VAR_WITH_FILE_PATH" }
+  plug Plug.AccessLog, file: { :system, "SYS_ENV_VAR", "/path/to/default.log" }
 end
 ```
 

@@ -36,4 +36,27 @@ defmodule Plug.AccessLog.FileHandling.SystemEnvTest do
 
     assert File.exists?(Logfiles.path)
   end
+
+  test "logfile system environment configuration (with default)" do
+    System.delete_env(Logfiles.var)
+
+    # compilation done here to ensure system variable is set!
+    defmodule RouterDefaults do
+      use Plug.Router
+
+      plug Plug.AccessLog, file: { :system, Logfiles.var, Logfiles.path }
+
+      plug :match
+      plug :dispatch
+
+      get "/", do: send_resp(conn, 200, "OK")
+    end
+
+    # actual test
+    conn(:get, "/") |> RouterDefaults.call([])
+
+    :timer.sleep(50)
+
+    assert File.exists?(Logfiles.path)
+  end
 end

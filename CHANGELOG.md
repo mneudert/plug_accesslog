@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.15.0-dev
+
+- Enhancements
+    - System environment configuration can set an optional default value
+      to be used if the environment variable is unset
+
 ## v0.14.0 (2016-11-25)
 
 - Additional formatting directives
