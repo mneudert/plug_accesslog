@@ -73,33 +73,33 @@ defmodule Plug.AccessLogTest do
 
 
   test ":agent format" do
-    assert @test_ua == Logfiles.logfile_agent |> File.read!() |> String.strip()
+    assert @test_ua == Logfiles.logfile_agent |> File.read!() |> String.trim()
   end
 
   test ":clf format" do
     regex = ~r/127.0.0.1 - - \[.+\] "GET \/ HTTP\/1.1" 200 2/
-    log   = Logfiles.logfile_clf |> File.read!() |> String.strip()
+    log   = Logfiles.logfile_clf |> File.read!() |> String.trim()
 
     assert Regex.match?(regex, log)
   end
 
   test ":clf_vhost format" do
     regex = ~r/www.example.com 127.0.0.1 - - \[.+\] "GET \/ HTTP\/1.1" 200 2/
-    log   = Logfiles.logfile_clf_vhost |> File.read!() |> String.strip()
+    log   = Logfiles.logfile_clf_vhost |> File.read!() |> String.trim()
 
     assert Regex.match?(regex, log)
   end
 
   test ":combined format" do
     regex = ~r/127.0.0.1 - - \[.+\] "GET \/ HTTP\/1.1" 200 2 "#{ @test_ref }" "#{ @test_ua }"/
-    log   = Logfiles.logfile_combined |> File.read!() |> String.strip()
+    log   = Logfiles.logfile_combined |> File.read!() |> String.trim()
 
     assert Regex.match?(regex, log)
   end
 
   test ":combined_vhost format" do
     regex = ~r/www.example.com 127.0.0.1 - - \[.+\] "GET \/ HTTP\/1.1" 200 2 "#{ @test_ref }" "#{ @test_ua }"/
-    log   = Logfiles.logfile_combined_vhost |> File.read!() |> String.strip()
+    log   = Logfiles.logfile_combined_vhost |> File.read!() |> String.trim()
 
     assert Regex.match?(regex, log)
   end

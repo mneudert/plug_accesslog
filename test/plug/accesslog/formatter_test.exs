@@ -75,8 +75,8 @@ defmodule Plug.AccessLog.FormatterTest do
 
     :timer.sleep(50)
 
-    assert "/format_me" == Logfiles.formatter_default |> File.read!() |> String.strip()
-    assert "%U" == Logfiles.formatter_nil |> File.read!() |> String.strip()
-    assert "custom" == Logfiles.formatter_override |> File.read!() |> String.strip()
+    assert "/format_me" == Logfiles.formatter_default |> File.read!() |> String.trim()
+    assert "%U" == Logfiles.formatter_nil |> File.read!() |> String.trim()
+    assert "custom" == Logfiles.formatter_override |> File.read!() |> String.trim()
   end
 end
