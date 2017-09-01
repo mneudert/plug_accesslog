@@ -104,8 +104,8 @@
 
 - Enhancements
     - Allows logging to functions instead of files
-    - Properly ignores unopenable logfiles (i.e. "..")
-    - Recreates logfile if necessary (i.e. after moved by logrotate)
+    - Properly ignores unopenable logfiles (e.g. "..")
+    - Recreates logfile if necessary (e.g. after moved by logrotate)
 
 - Additional formatting directives
     - `%%` - Percentage sign
