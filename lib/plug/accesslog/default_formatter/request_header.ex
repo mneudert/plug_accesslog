@@ -8,11 +8,11 @@ defmodule Plug.AccessLog.DefaultFormatter.RequestHeader do
   @doc """
   Formats the log output.
   """
-  @spec format(Plug.Conn.t, String.t) :: iodata
+  @spec format(Plug.Conn.t(), String.t()) :: iodata
   def format(conn, header) do
-    case get_req_header(conn, header |> String.downcase) do
-      [ value ] -> value
-      _         -> "-"
+    case get_req_header(conn, header |> String.downcase()) do
+      [value] -> value
+      _ -> "-"
     end
   end
 end

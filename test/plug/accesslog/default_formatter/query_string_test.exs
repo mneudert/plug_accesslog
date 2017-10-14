@@ -11,7 +11,7 @@ defmodule Plug.AccessLog.DefaultFormatter.QueryStringTest do
   end
 
   test "%q empty" do
-    conn= conn(:get, "/no_query")
+    conn = conn(:get, "/no_query")
 
     assert "" == DefaultFormatter.format("%q", conn)
   end

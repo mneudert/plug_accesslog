@@ -8,12 +8,12 @@ defmodule Plug.AccessLog.DefaultFormatter.RequestCookie do
   @doc """
   Formats the log output.
   """
-  @spec format(Plug.Conn.t, String.t) :: iodata
+  @spec format(Plug.Conn.t(), String.t()) :: iodata
   def format(conn, cookie) do
     conn = conn |> fetch_cookies()
 
     case Map.get(conn.cookies, cookie) do
-      nil   -> "-"
+      nil -> "-"
       value -> value
     end
   end

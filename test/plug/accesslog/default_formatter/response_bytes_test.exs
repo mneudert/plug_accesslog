@@ -11,12 +11,12 @@ defmodule Plug.AccessLog.DefaultFormatter.ResponseBytesTest do
     assert "-" == DefaultFormatter.format("%b", conn)
 
     # binary response body
-    conn = %{ conn | resp_body: "Hello, World!" }
+    conn = %{conn | resp_body: "Hello, World!"}
 
     assert "13" == DefaultFormatter.format("%b", conn)
 
     # charlist response body
-    conn = %{ conn | resp_body: 'Hello, World!' }
+    conn = %{conn | resp_body: 'Hello, World!'}
 
     assert "13" == DefaultFormatter.format("%b", conn)
 
@@ -33,12 +33,12 @@ defmodule Plug.AccessLog.DefaultFormatter.ResponseBytesTest do
     assert "0" == DefaultFormatter.format("%B", conn)
 
     # binary response body
-    conn = %{ conn | resp_body: "Hello, World!" }
+    conn = %{conn | resp_body: "Hello, World!"}
 
     assert "13" == DefaultFormatter.format("%B", conn)
 
     # charlist response body
-    conn = %{ conn | resp_body: 'Hello, World!' }
+    conn = %{conn | resp_body: 'Hello, World!'}
 
     assert "13" == DefaultFormatter.format("%B", conn)
 

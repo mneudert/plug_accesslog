@@ -58,126 +58,126 @@ defmodule Plug.AccessLog.DefaultFormatter do
   """
   def format(format, conn), do: log([], conn, format)
 
-
   # Internal construction methods
 
   defp log(message, _conn, ""), do: message |> Enum.reverse() |> IO.iodata_to_binary()
 
-  defp log(message, conn, << "%%", rest :: binary >>) do
-    [ "%" | message ]
+  defp log(message, conn, <<"%%", rest::binary>>) do
+    ["%" | message]
     |> log(conn, rest)
   end
 
-  defp log(message, conn, << "%a", rest :: binary >>) do
-    [ DefaultFormatter.RemoteIPAddress.format(conn) | message ]
+  defp log(message, conn, <<"%a", rest::binary>>) do
+    [DefaultFormatter.RemoteIPAddress.format(conn) | message]
     |> log(conn, rest)
   end
 
-  defp log(message, conn, << "%b", rest :: binary >>) do
-    [ DefaultFormatter.ResponseBytes.format(conn, "-") | message ]
+  defp log(message, conn, <<"%b", rest::binary>>) do
+    [DefaultFormatter.ResponseBytes.format(conn, "-") | message]
     |> log(conn, rest)
   end
 
-  defp log(message, conn, << "%B", rest :: binary >>) do
-    [ DefaultFormatter.ResponseBytes.format(conn, "0") | message ]
+  defp log(message, conn, <<"%B", rest::binary>>) do
+    [DefaultFormatter.ResponseBytes.format(conn, "0") | message]
     |> log(conn, rest)
   end
 
-  defp log(message, conn, << "%D", rest :: binary >>) do
-    [ DefaultFormatter.RequestServingTime.format(conn, :microseconds) | message ]
+  defp log(message, conn, <<"%D", rest::binary>>) do
+    [DefaultFormatter.RequestServingTime.format(conn, :microseconds) | message]
     |> log(conn, rest)
   end
 
-  defp log(message, conn, << "%h", rest :: binary >>) do
-    [ DefaultFormatter.RemoteIPAddress.format(conn) | message ]
+  defp log(message, conn, <<"%h", rest::binary>>) do
+    [DefaultFormatter.RemoteIPAddress.format(conn) | message]
     |> log(conn, rest)
   end
 
-  defp log(message, conn, << "%l", rest :: binary >>) do
-    [ "-" | message ]
+  defp log(message, conn, <<"%l", rest::binary>>) do
+    ["-" | message]
     |> log(conn, rest)
   end
 
-  defp log(message, conn, << "%m", rest :: binary >>) do
-    [ conn.method | message ]
+  defp log(message, conn, <<"%m", rest::binary>>) do
+    [conn.method | message]
     |> log(conn, rest)
   end
 
-  defp log(message, conn, << "%M", rest :: binary >>) do
-    [ DefaultFormatter.RequestServingTime.format(conn, :milliseconds) | message ]
+  defp log(message, conn, <<"%M", rest::binary>>) do
+    [DefaultFormatter.RequestServingTime.format(conn, :milliseconds) | message]
     |> log(conn, rest)
   end
 
-  defp log(message, conn, << "%P", rest :: binary >>) do
-    [ inspect(conn.owner) | message ]
+  defp log(message, conn, <<"%P", rest::binary>>) do
+    [inspect(conn.owner) | message]
     |> log(conn, rest)
   end
 
-  defp log(message, conn, << "%q", rest :: binary >>) do
-    [ DefaultFormatter.QueryString.format(conn) | message ]
+  defp log(message, conn, <<"%q", rest::binary>>) do
+    [DefaultFormatter.QueryString.format(conn) | message]
     |> log(conn, rest)
   end
 
-  defp log(message, conn, << "%r", rest :: binary >>) do
-    [ DefaultFormatter.RequestLine.format(conn) | message ]
+  defp log(message, conn, <<"%r", rest::binary>>) do
+    [DefaultFormatter.RequestLine.format(conn) | message]
     |> log(conn, rest)
   end
 
-  defp log(message, conn, << "%>s", rest :: binary >>) do
-    [ to_string(conn.status) | message ]
+  defp log(message, conn, <<"%>s", rest::binary>>) do
+    [to_string(conn.status) | message]
     |> log(conn, rest)
   end
 
-  defp log(message, conn, << "%t", rest :: binary >>) do
-    [ DefaultFormatter.RequestTime.format(conn) | message ]
+  defp log(message, conn, <<"%t", rest::binary>>) do
+    [DefaultFormatter.RequestTime.format(conn) | message]
     |> log(conn, rest)
   end
 
-  defp log(message, conn, << "%T", rest :: binary >>) do
-    [ DefaultFormatter.RequestServingTime.format(conn, :seconds) | message ]
+  defp log(message, conn, <<"%T", rest::binary>>) do
+    [DefaultFormatter.RequestServingTime.format(conn, :seconds) | message]
     |> log(conn, rest)
   end
 
-  defp log(message, conn, << "%u", rest :: binary >>) do
-    [ DefaultFormatter.RemoteUser.format(conn) | message ]
+  defp log(message, conn, <<"%u", rest::binary>>) do
+    [DefaultFormatter.RemoteUser.format(conn) | message]
     |> log(conn, rest)
   end
 
-  defp log(message, conn, << "%U", rest :: binary >>) do
-    [ DefaultFormatter.RequestPath.format(conn) | message ]
+  defp log(message, conn, <<"%U", rest::binary>>) do
+    [DefaultFormatter.RequestPath.format(conn) | message]
     |> log(conn, rest)
   end
 
-  defp log(message, conn, << "%v", rest :: binary >>) do
-    [ conn.host | message ]
+  defp log(message, conn, <<"%v", rest::binary>>) do
+    [conn.host | message]
     |> log(conn, rest)
   end
 
-  defp log(message, conn, << "%V", rest :: binary >>) do
-    [ conn.host | message ]
+  defp log(message, conn, <<"%V", rest::binary>>) do
+    [conn.host | message]
     |> log(conn, rest)
   end
 
-  defp log(message, conn, << "%{", rest :: binary >>) do
-    [ var, rest ] = rest |> String.split("}", parts: 2)
+  defp log(message, conn, <<"%{", rest::binary>>) do
+    [var, rest] = rest |> String.split("}", parts: 2)
 
-    << vartype :: binary-1, rest :: binary >> = rest
+    <<vartype::binary-1, rest::binary>> = rest
 
-    append = case vartype do
-      "C" -> DefaultFormatter.RequestCookie.format(conn, var)
-      "e" -> DefaultFormatter.Environment.format(conn, var)
-      "i" -> DefaultFormatter.RequestHeader.format(conn, var)
-      "o" -> DefaultFormatter.ResponseHeader.format(conn, var)
-      "T" -> DefaultFormatter.RequestServingTime.format(conn, var)
-      _   -> "-"
-    end
+    append =
+      case vartype do
+        "C" -> DefaultFormatter.RequestCookie.format(conn, var)
+        "e" -> DefaultFormatter.Environment.format(conn, var)
+        "i" -> DefaultFormatter.RequestHeader.format(conn, var)
+        "o" -> DefaultFormatter.ResponseHeader.format(conn, var)
+        "T" -> DefaultFormatter.RequestServingTime.format(conn, var)
+        _ -> "-"
+      end
 
-    [ append | message ]
+    [append | message]
     |> log(conn, rest)
   end
 
-  defp log(message, conn, << char, rest :: binary >>) do
-    [ << char >> | message ]
+  defp log(message, conn, <<char, rest::binary>>) do
+    [<<char>> | message]
     |> log(conn, rest)
   end
 end

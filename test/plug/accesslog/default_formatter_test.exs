@@ -4,7 +4,6 @@ defmodule Plug.AccessLog.DefaultFormatterTest do
 
   alias Plug.AccessLog.DefaultFormatter
 
-
   test "%%" do
     assert "%" == DefaultFormatter.format("%%", nil)
   end
@@ -14,11 +13,11 @@ defmodule Plug.AccessLog.DefaultFormatterTest do
   end
 
   test "%m" do
-    get  = conn(:get, "/")
+    get = conn(:get, "/")
     head = conn(:head, "/")
     post = conn(:post, "/")
 
-    assert "GET"  == DefaultFormatter.format("%m", get)
+    assert "GET" == DefaultFormatter.format("%m", get)
     assert "HEAD" == DefaultFormatter.format("%m", head)
     assert "POST" == DefaultFormatter.format("%m", post)
   end
@@ -31,7 +30,7 @@ defmodule Plug.AccessLog.DefaultFormatterTest do
 
   test "%>s" do
     conn = conn(:get, "/")
-    conn = %{ conn | status: 200 }
+    conn = %{conn | status: 200}
 
     assert "200" == DefaultFormatter.format("%>s", conn)
   end
@@ -49,7 +48,6 @@ defmodule Plug.AccessLog.DefaultFormatterTest do
 
     assert host == DefaultFormatter.format("%V", conn)
   end
-
 
   test "invalid configurable type" do
     assert "-" == DefaultFormatter.format("%{ignored}_", nil)

@@ -4,7 +4,7 @@ defmodule Plug.AccessLog.FileHandling.RotationTest do
 
   defmodule Logfiles do
     def original do
-      [ __DIR__, "../../../logs/plug_filehandling_rotation.log" ]
+      [__DIR__, "../../../logs/plug_filehandling_rotation.log"]
       |> Path.join()
       |> Path.expand()
     end
@@ -15,18 +15,17 @@ defmodule Plug.AccessLog.FileHandling.RotationTest do
   defmodule Router do
     use Plug.Router
 
-    plug Plug.AccessLog, file: Logfiles.original()
+    plug(Plug.AccessLog, file: Logfiles.original())
 
-    plug :match
-    plug :dispatch
+    plug(:match)
+    plug(:dispatch)
 
-    get "/", do: send_resp(conn, 200, "OK")
+    get("/", do: send_resp(conn, 200, "OK"))
   end
-
 
   test "log rotation" do
     original = Logfiles.original()
-    rotated  = Logfiles.rotated()
+    rotated = Logfiles.rotated()
 
     refute File.exists?(original)
     refute File.exists?(rotated)

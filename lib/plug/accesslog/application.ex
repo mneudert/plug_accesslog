@@ -11,15 +11,15 @@ defmodule Plug.AccessLog.Application do
   alias Plug.AccessLog.WAL
   alias Plug.AccessLog.Writer
 
-
   def start(_type, _args) do
     import Supervisor.Spec
 
-    options  = [ strategy: :one_for_one, name: __MODULE__.Supervisor ]
+    options = [strategy: :one_for_one, name: __MODULE__.Supervisor]
+
     children = [
       worker(Logfiles, []),
       worker(Writer, []),
-      worker(WAL, []),
+      worker(WAL, [])
     ]
 
     Supervisor.start_link(children, options)

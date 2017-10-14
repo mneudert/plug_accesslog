@@ -6,16 +6,16 @@ defmodule Plug.AccessLog.WAL do
   @doc """
   Starts the agent.
   """
-  @spec start_link() :: Agent.on_start
+  @spec start_link() :: Agent.on_start()
   def start_link(), do: Agent.start_link(fn -> %{} end, name: __MODULE__)
 
   @doc """
   Flushes (returns and clears) all log messages.
   """
-  @spec flush(String.t) :: list
+  @spec flush(String.t()) :: list
   def flush(logfile) do
     Agent.get_and_update(__MODULE__, fn messages ->
-      { messages[logfile] || [], Map.put(messages, logfile, []) }
+      {messages[logfile] || [], Map.put(messages, logfile, [])}
     end)
     |> Enum.reverse()
   end
@@ -23,11 +23,11 @@ defmodule Plug.AccessLog.WAL do
   @doc """
   Tracks a new log message for delayed writing.
   """
-  @spec log(String.t, String.t) :: :ok
+  @spec log(String.t(), String.t()) :: :ok
   def log(message, logfile) do
-    Agent.update __MODULE__, fn (messages) ->
-      Map.put(messages, logfile, [ message | messages[logfile] || [] ])
-    end
+    Agent.update(__MODULE__, fn messages ->
+      Map.put(messages, logfile, [message | messages[logfile] || []])
+    end)
   end
 
   @doc """
@@ -35,6 +35,6 @@ defmodule Plug.AccessLog.WAL do
   """
   @spec logfiles() :: list
   def logfiles() do
-    Agent.get __MODULE__, &Map.keys/1
+    Agent.get(__MODULE__, &Map.keys/1)
   end
 end

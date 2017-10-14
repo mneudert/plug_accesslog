@@ -8,15 +8,16 @@ defmodule Plug.AccessLog.DefaultFormatter.ResponseBytes do
   @doc """
   Formats the log output.
   """
-  @spec format(Plug.Conn.t, String.t) :: iodata
+  @spec format(Plug.Conn.t(), String.t()) :: iodata
   def format(conn, fallback) do
-    bytes = case get_resp_header(conn, "content-length") do
-      [ length ] -> length
-      _          -> conn.resp_body |> body_length() |> to_string()
-    end
+    bytes =
+      case get_resp_header(conn, "content-length") do
+        [length] -> length
+        _ -> conn.resp_body |> body_length() |> to_string()
+      end
 
     case bytes do
-      "0"   -> fallback
+      "0" -> fallback
       bytes -> to_string(bytes)
     end
   end

@@ -8,7 +8,7 @@ defmodule Plug.AccessLog.DefaultFormatter.RequestTime do
   @doc """
   Formats the log output.
   """
-  @spec format(Plug.Conn.t) :: iodata
+  @spec format(Plug.Conn.t()) :: iodata
   def format(conn) do
     format_string = "[%d/%b/%Y:%H:%M:%S %z]"
 

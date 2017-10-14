@@ -6,11 +6,11 @@ defmodule Plug.AccessLog.DefaultFormatter.QueryString do
   @doc """
   Formats the log output.
   """
-  @spec format(Plug.Conn.t) :: iodata
+  @spec format(Plug.Conn.t()) :: iodata
   def format(conn) do
     case conn.query_string do
-      ""    -> ""
-      query -> [ "?", query ]
+      "" -> ""
+      query -> ["?", query]
     end
   end
 end

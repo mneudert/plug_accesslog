@@ -16,28 +16,25 @@ defmodule Plug.AccessLog do
     opts |> Enum.into(%{}) |> init_file()
   end
 
-  defp init_file(%{ file: { :system, var, default }} = opts) do
-    %{ opts | file: System.get_env(var) || default }
+  defp init_file(%{file: {:system, var, default}} = opts) do
+    %{opts | file: System.get_env(var) || default}
   end
 
-  defp init_file(%{ file: { :system, var }} = opts) do
-    %{ opts | file: System.get_env(var) }
+  defp init_file(%{file: {:system, var}} = opts) do
+    %{opts | file: System.get_env(var)}
   end
 
   defp init_file(opts), do: opts
 
-
   def call(conn, opts) do
     conn
     |> put_private(:plug_accesslog, private_data())
-    |> register_before_send( &log(&1, opts) )
+    |> register_before_send(&log(&1, opts))
   end
 
   defp private_data do
-    %{ local_time: Timex.local(),
-       timestamp:  :os.timestamp() }
+    %{local_time: Timex.local(), timestamp: :os.timestamp()}
   end
-
 
   @doc """
   Logs the request.
@@ -45,15 +42,15 @@ defmodule Plug.AccessLog do
   If the target logfile could not be openend the message
   will be silently ignored.
   """
-  @spec log(Plug.Conn.t, map) :: Plug.Conn.t
-  def log(conn, %{ dontlog: dontlogfun } = opts) do
+  @spec log(Plug.Conn.t(), map) :: Plug.Conn.t()
+  def log(conn, %{dontlog: dontlogfun} = opts) do
     case dontlogfun.(conn) do
-      true  -> conn
+      true -> conn
       false -> log(conn, Map.delete(opts, :dontlog))
     end
   end
 
-  def log(conn, %{ fun: logfun } = opts) do
+  def log(conn, %{fun: logfun} = opts) do
     opts[:format]
     |> Formatter.format(conn, opts[:formatters])
     |> logfun.()
@@ -61,7 +58,7 @@ defmodule Plug.AccessLog do
     conn
   end
 
-  def log(conn, %{ file: logfile } = opts) do
+  def log(conn, %{file: logfile} = opts) do
     opts[:format]
     |> Formatter.format(conn, opts[:formatters])
     |> WAL.log(logfile)

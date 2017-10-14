@@ -6,7 +6,7 @@ defmodule Plug.AccessLog.DefaultFormatter.RemoteIPAddress do
   @doc """
   Formats the log output.
   """
-  @spec format(Plug.Conn.t) :: iodata
+  @spec format(Plug.Conn.t()) :: iodata
   def format(conn) do
     conn.remote_ip
     |> :inet_parse.ntoa()

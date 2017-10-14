@@ -5,7 +5,7 @@ defmodule Plug.AccessLog.LogfilesTest do
 
   test "get implicitly opens logfile" do
     logfile =
-         [ __DIR__, "../../logs/plug_accesslog_logfiles_implicit.log" ]
+      [__DIR__, "../../logs/plug_accesslog_logfiles_implicit.log"]
       |> Path.join()
       |> Path.expand()
 
@@ -14,7 +14,7 @@ defmodule Plug.AccessLog.LogfilesTest do
 
   test "logfile opened only once" do
     logfile =
-         [ __DIR__, "../../logs/plug_accesslog_logfiles_once.log" ]
+      [__DIR__, "../../logs/plug_accesslog_logfiles_once.log"]
       |> Path.join()
       |> Path.expand()
 
@@ -27,7 +27,7 @@ defmodule Plug.AccessLog.LogfilesTest do
 
   test "replacement of logfiles" do
     logfile =
-         [ __DIR__, "../../logs/plug_accesslog_logfiles_replace.log" ]
+      [__DIR__, "../../logs/plug_accesslog_logfiles_replace.log"]
       |> Path.join()
       |> Path.expand()
 
@@ -41,7 +41,7 @@ defmodule Plug.AccessLog.LogfilesTest do
 
   test "logfile device automatically restored in case of crash" do
     logfile =
-         [ __DIR__, "../../logs/plug_accesslog_logfiles_restore.log" ]
+      [__DIR__, "../../logs/plug_accesslog_logfiles_restore.log"]
       |> Path.join()
       |> Path.expand()
 

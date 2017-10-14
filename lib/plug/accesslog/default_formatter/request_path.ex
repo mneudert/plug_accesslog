@@ -6,6 +6,6 @@ defmodule Plug.AccessLog.DefaultFormatter.RequestPath do
   @doc """
   Formats the log output.
   """
-  @spec format(Plug.Conn.t) :: iodata
+  @spec format(Plug.Conn.t()) :: iodata
   def format(conn), do: conn.request_path
 end
