@@ -27,7 +27,7 @@ defmodule Plug.AccessLog.Mixfile do
   def application do
     [
       applications: [:logger, :timex],
-      mod: {Plug.AccessLog.Application, []}
+      mod: {Plug.AccessLog.App, []}
     ]
   end
 
