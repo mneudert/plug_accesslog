@@ -2,7 +2,7 @@ defmodule Plug.AccessLog.DontlogTest do
   use ExUnit.Case, async: false
   use Plug.Test
 
-  import ExUnit.CaptureIO
+  import ExUnit.CaptureLog
 
   defmodule DontLog do
     require Logger
@@ -31,9 +31,8 @@ defmodule Plug.AccessLog.DontlogTest do
 
   test "dontlog true" do
     log =
-      capture_io(:user, fn ->
+      capture_log(fn ->
         conn(:get, "/dontlog") |> Router.call([])
-        Logger.flush()
       end)
 
     assert "" == log
@@ -41,9 +40,8 @@ defmodule Plug.AccessLog.DontlogTest do
 
   test "dontlog false" do
     log =
-      capture_io(:user, fn ->
+      capture_log(fn ->
         conn(:get, "/") |> Router.call([])
-        Logger.flush()
       end)
 
     assert String.contains?(log, "dontlog equals false")

@@ -2,7 +2,7 @@ defmodule Plug.AccessLog.FileHandling.UnopenableTest do
   use ExUnit.Case, async: false
   use Plug.Test
 
-  import ExUnit.CaptureIO
+  import ExUnit.CaptureLog
 
   alias Plug.AccessLog.Logfiles
 
@@ -19,13 +19,11 @@ defmodule Plug.AccessLog.FileHandling.UnopenableTest do
 
   test "unopenable files are ignored" do
     log =
-      capture_io(:user, fn ->
+      capture_log(fn ->
         conn(:get, "/") |> Router.call([])
         :timer.sleep(50)
 
         assert nil == Logfiles.get("..")
-
-        Logger.flush()
       end)
 
     assert String.contains?(log, ":eisdir")
@@ -46,10 +44,8 @@ defmodule Plug.AccessLog.FileHandling.UnopenableTest do
     logfile |> Path.dirname() |> File.rm_rf!()
 
     log =
-      capture_io(:user, fn ->
+      capture_log(fn ->
         assert nil == Logfiles.get(logfile)
-
-        Logger.flush()
       end)
 
     assert String.contains?(log, ":enoent")

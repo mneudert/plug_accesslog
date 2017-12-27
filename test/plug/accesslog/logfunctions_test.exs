@@ -2,7 +2,7 @@ defmodule Plug.AccessLog.LogfunctionsTest do
   use ExUnit.Case, async: false
   use Plug.Test
 
-  import ExUnit.CaptureIO
+  import ExUnit.CaptureLog
 
   defmodule LogProxy do
     require Logger
@@ -23,9 +23,8 @@ defmodule Plug.AccessLog.LogfunctionsTest do
 
   test "functions log requests" do
     log =
-      capture_io(:user, fn ->
+      capture_log(fn ->
         conn(:get, "/") |> Router.call([])
-        Logger.flush()
       end)
 
     assert String.contains?(log, "logger fun")
