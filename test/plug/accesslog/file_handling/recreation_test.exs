@@ -13,13 +13,13 @@ defmodule Plug.AccessLog.FileHandling.RecreationTest do
   defmodule Router do
     use Plug.Router
 
-    plug(Plug.AccessLog, file: Logfile.path())
+    plug Plug.AccessLog, file: Logfile.path()
 
-    plug(:match)
-    plug(:dispatch)
+    plug :match
+    plug :dispatch
 
-    get("/first", do: send_resp(conn, 200, "OK"))
-    get("/second", do: send_resp(conn, 200, "OK"))
+    get "/first", do: send_resp(conn, 200, "OK")
+    get "/second", do: send_resp(conn, 200, "OK")
   end
 
   test "log recreation" do

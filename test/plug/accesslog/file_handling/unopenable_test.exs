@@ -9,12 +9,12 @@ defmodule Plug.AccessLog.FileHandling.UnopenableTest do
   defmodule Router do
     use Plug.Router
 
-    plug(Plug.AccessLog, file: "..")
+    plug Plug.AccessLog, file: ".."
 
-    plug(:match)
-    plug(:dispatch)
+    plug :match
+    plug :dispatch
 
-    get("/", do: send_resp(conn, 200, "OK"))
+    get "/", do: send_resp(conn, 200, "OK")
   end
 
   test "unopenable files are ignored" do

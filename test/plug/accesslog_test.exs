@@ -43,17 +43,17 @@ defmodule Plug.AccessLogTest do
   defmodule Router do
     use Plug.Router
 
-    plug(Plug.AccessLog, format: :agent, file: Logfiles.logfile_agent())
-    plug(Plug.AccessLog, format: :clf, file: Logfiles.logfile_clf())
-    plug(Plug.AccessLog, format: :clf_vhost, file: Logfiles.logfile_clf_vhost())
-    plug(Plug.AccessLog, format: :combined, file: Logfiles.logfile_combined())
-    plug(Plug.AccessLog, format: :combined_vhost, file: Logfiles.logfile_combined_vhost())
-    plug(Plug.AccessLog, format: :referer, file: Logfiles.logfile_referer())
+    plug Plug.AccessLog, format: :agent, file: Logfiles.logfile_agent()
+    plug Plug.AccessLog, format: :clf, file: Logfiles.logfile_clf()
+    plug Plug.AccessLog, format: :clf_vhost, file: Logfiles.logfile_clf_vhost()
+    plug Plug.AccessLog, format: :combined, file: Logfiles.logfile_combined()
+    plug Plug.AccessLog, format: :combined_vhost, file: Logfiles.logfile_combined_vhost()
+    plug Plug.AccessLog, format: :referer, file: Logfiles.logfile_referer()
 
-    plug(:match)
-    plug(:dispatch)
+    plug :match
+    plug :dispatch
 
-    get("/", do: send_resp(conn, 200, "OK"))
+    get "/", do: send_resp(conn, 200, "OK")
   end
 
   @opts Router.init([])

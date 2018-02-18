@@ -19,12 +19,12 @@ defmodule Plug.AccessLog.FileHandling.SystemEnvTest do
     defmodule Router do
       use Plug.Router
 
-      plug(Plug.AccessLog, file: {:system, Logfiles.var()})
+      plug Plug.AccessLog, file: {:system, Logfiles.var()}
 
-      plug(:match)
-      plug(:dispatch)
+      plug :match
+      plug :dispatch
 
-      get("/", do: send_resp(conn, 200, "OK"))
+      get "/", do: send_resp(conn, 200, "OK")
     end
 
     # actual test
@@ -42,12 +42,12 @@ defmodule Plug.AccessLog.FileHandling.SystemEnvTest do
     defmodule RouterDefaults do
       use Plug.Router
 
-      plug(Plug.AccessLog, file: {:system, Logfiles.var(), Logfiles.path()})
+      plug Plug.AccessLog, file: {:system, Logfiles.var(), Logfiles.path()}
 
-      plug(:match)
-      plug(:dispatch)
+      plug :match
+      plug :dispatch
 
-      get("/", do: send_resp(conn, 200, "OK"))
+      get "/", do: send_resp(conn, 200, "OK")
     end
 
     # actual test

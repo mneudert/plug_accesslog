@@ -35,30 +35,24 @@ defmodule Plug.AccessLog.FormatterTest do
   defmodule Router do
     use Plug.Router
 
-    plug(
-      Plug.AccessLog,
+    plug Plug.AccessLog,
       format: "%U",
       file: Logfiles.formatter_default()
-    )
 
-    plug(
-      Plug.AccessLog,
+    plug Plug.AccessLog,
       format: "%U",
       formatters: [],
       file: Logfiles.formatter_nil()
-    )
 
-    plug(
-      Plug.AccessLog,
+    plug Plug.AccessLog,
       format: "%U",
       formatters: [CustomFormatter, DefaultFormatter],
       file: Logfiles.formatter_override()
-    )
 
-    plug(:match)
-    plug(:dispatch)
+    plug :match
+    plug :dispatch
 
-    get("/format_me", do: send_resp(conn, 200, "OK"))
+    get "/format_me", do: send_resp(conn, 200, "OK")
   end
 
   test "no format means default format" do

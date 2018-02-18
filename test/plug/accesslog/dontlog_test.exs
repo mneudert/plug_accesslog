@@ -15,18 +15,16 @@ defmodule Plug.AccessLog.DontlogTest do
   defmodule Router do
     use Plug.Router
 
-    plug(
-      Plug.AccessLog,
+    plug Plug.AccessLog,
       dontlog: &DontLog.maybe_skip/1,
       format: "dontlog equals false",
       fun: &DontLog.log/1
-    )
 
-    plug(:match)
-    plug(:dispatch)
+    plug :match
+    plug :dispatch
 
-    get("/", do: send_resp(conn, 200, "OK"))
-    get("/dontlog", do: send_resp(conn, 200, "OK"))
+    get "/", do: send_resp(conn, 200, "OK")
+    get "/dontlog", do: send_resp(conn, 200, "OK")
   end
 
   test "dontlog true" do
