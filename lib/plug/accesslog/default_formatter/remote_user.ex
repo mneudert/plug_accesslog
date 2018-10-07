@@ -11,7 +11,7 @@ defmodule Plug.AccessLog.DefaultFormatter.RemoteUser do
   @spec format(Plug.Conn.t()) :: iodata
   def format(conn) do
     case get_req_header(conn, "authorization") do
-      [<<"Basic ", credentials::binary>>] -> get_user(credentials)
+      [<<"Basic ", credentials::binary>> | _] -> get_user(credentials)
       _ -> "-"
     end
   end
