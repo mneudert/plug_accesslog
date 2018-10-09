@@ -6,6 +6,9 @@
     - System environment configuration can set an optional default value
       to be used if the environment variable is unset
 
+- Backwards incompatible changes
+    - Minimum required elixir version is now "~> 1.5"
+
 ## v0.14.0 (2016-11-25)
 
 - Additional formatting directives
