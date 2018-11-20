@@ -2,15 +2,17 @@
 
 Plug for writing access logs.
 
-
 ## Setup
 
-To use the plug in your projects, edit your mix.exs file and add the project
-as a dependency:
+To use the plug in your projects, edit your mix.exs file and add the project as a dependency:
 
 ```elixir
 defp deps do
-  [ { :plug_accesslog, "~> 0.14" } ]
+  [
+    # ...
+    {:plug_accesslog, "~> 0.14"},
+    # ...
+  ]
 end
 ```
 
@@ -18,10 +20,15 @@ You should also update your applications to start the plug:
 
 ```elixir
 def application do
-  [ applications: [ :plug_accesslog ] ]
+  [
+    applications: [
+      # ...
+      :plug_accesslog,
+      # ...
+    ]
+  ]
 end
 ```
-
 
 ## Usage
 
@@ -48,10 +55,7 @@ defmodule AppRouter do
 end
 ```
 
-__Note__: The usage examples apply to a usecase where your are using `plug`
-directly without any framework. Using the `plug Plug.AccessLog` line in a
-framework based on `plug` should be no problem. Please refer to your frameworks
-individual documentation or source to find a suitable place.
+__Note__: The usage examples apply to a usecase where your are using `plug` directly without any framework. Using the `plug Plug.AccessLog` line in a framework based on `plug` should be no problem. Please refer to your frameworks individual documentation or source to find a suitable place.
 
 ### WAL Configuration
 
@@ -65,13 +69,11 @@ config :plug_accesslog,
     flush_interval: 100
 ```
 
-The time is configured as "milliseconds between writing and flushing".
-The default value is `100` milliseconds.
+The time is configured as "milliseconds between writing and flushing". The default value is `100` milliseconds.
 
 ### Custom Formatters
 
-If you want to extend the formatting capabilities or replace existing ones
-you can define a custom formatter pipeline to use:
+If you want to extend the formatting capabilities or replace existing ones you can define a custom formatter pipeline to use:
 
 ```elixir
 defmodule CustomFormatter do
@@ -88,16 +90,14 @@ defmodule Router do
 
   plug Plug.AccessLog,
     format: :clf,
-    formatters: [ CustomFormatter, Plug.AccessLog.DefaultFormatter ],
+    formatters: [CustomFormatter, Plug.AccessLog.DefaultFormatter],
     file: "/path/to/your/logs/access.log"
 end
 ```
 
-If you do not configure a list of formatters only the `DefaultFormatter` will
-be used. If you define an empty list then no formatting will take place.
+If you do not configure a list of formatters only the `DefaultFormatter` will be used. If you define an empty list then no formatting will take place.
 
 All formatters are called in the order they are defined in.
-
 
 ### File Configuration
 
@@ -108,15 +108,14 @@ defmodule Router do
   use Plug.Router
 
   plug Plug.AccessLog, file: "/static/configuration.log"
-  plug Plug.AccessLog, file: { :system, "SYS_ENV_VAR_WITH_FILE_PATH" }
-  plug Plug.AccessLog, file: { :system, "SYS_ENV_VAR", "/path/to/default.log" }
+  plug Plug.AccessLog, file: {:system, "SYS_ENV_VAR_WITH_FILE_PATH"}
+  plug Plug.AccessLog, file: {:system, "SYS_ENV_VAR", "/path/to/default.log"}
 end
 ```
 
 ### Do Not Log Filter
 
-To filter the requests before logging you can configure a "do not log" filter
-function:
+To filter the requests before logging you can configure a "do not log" filter function:
 
 ```elixir
 defmodule LogFilter do
@@ -133,13 +132,11 @@ defmodule Router do
 end
 ```
 
-If the function you pass to the plug returns `true` the request will not be
-logged.
+If the function you pass to the plug returns `true` the request will not be logged.
 
 ### Logging Functions
 
-To have the parsed log message sent to a logging function instead of writing
-it to a file you can configure a logging function:
+To have the parsed log message sent to a logging function instead of writing it to a file you can configure a logging function:
 
 ```elixir
 defmodule InfoLogger do
@@ -155,9 +152,7 @@ defmodule Router do
 end
 ```
 
-If a logging function is configured the configured file (if any) will be
-ignored.
-
+If a logging function is configured the configured file (if any) will be ignored.
 
 ## Log Format
 
@@ -222,43 +217,31 @@ The following formatting directives are available:
 - `%v` - Server name
 - `%V` - Server name (canonical)
 
-**Note for %b and %B**: To determine the size of the response the
-"Content-Length" will be inspected and, if available, returned
-unverified. If the header is not present the response body will be
-inspected using `byte_size/1`.
+**Note for %b and %B**: To determine the size of the response the "Content-Length" will be inspected and, if available, returned unverified. If the header is not present the response body will be inspected using `byte_size/1`.
 
 **Note for %h**: The hostname will always be the ip of the client (same as `%a`).
 
 **Note for %l**: Always a dash ("-").
 
-**Note for %r**: For now the http version is always logged as "HTTP/1.1",
-regardless of the true http version.
+**Note for %r**: For now the http version is always logged as "HTTP/1.1", regardless of the true http version.
 
 **Note for %T**: Rounding happens, so "0.6 seconds" will be reported as "1 second".
 
-**Note for %{UNIT}T**: Available units are `s` for seconds (same as `%T`),
-`ms` for milliseconds (same as `M`) and `us` for microseconds (same as `%D`).
+**Note for %{UNIT}T**: Available units are `s` for seconds (same as `%T`), `ms` for milliseconds (same as `M`) and `us` for microseconds (same as `%D`).
 
 **Note for %V**: Alias for `%v`.
 
-
 ## Benchmarking
 
-A small utility script is provided to check how long it might take to process
-requests and write the log messages to your disk:
+A small utility script is provided to check how long it might take to process requests and write the log messages to your disk:
 
 ```shell
 mix run utils/bench.exs
 ```
 
-This call will send of a total of 10k requests and wait for them to be written
-to the disk.
+This call will send of a total of 10k requests and wait for them to be written to the disk.
 
-Looking at the data written to `utils/bench.log` might give a hint at what
-overhead the log writing is introducing. As with all "benchmarks" of any kind:
-take the measurements with a pinch of salt and run them in dozens of different
-conditions yourself.
-
+Looking at the data written to `utils/bench.log` might give a hint at what overhead the log writing is introducing. As with all "benchmarks" of any kind: take the measurements with a pinch of salt and run them in dozens of different conditions yourself.
 
 ## License
 

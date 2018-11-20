@@ -3,11 +3,10 @@
 ## v0.15.0-dev
 
 - Enhancements
-    - System environment configuration can set an optional default value
-      to be used if the environment variable is unset
+    - System environment configuration can set an optional default value to be used if the environment variable is unset
 
 - Backwards incompatible changes
-    - Minimum required elixir version is now "~> 1.5"
+    - Minimum required elixir version is now `~> 1.5`
 
 ## v0.14.0 (2016-11-25)
 
@@ -15,21 +14,19 @@
     - `%{VARNAME}e` - Environment variable contents
 
 - Backwards incompatible changes
-    - All modules of the `DefaultFormatter` have been changed to not append to
-      a passed message anymore but return `iodata`. The public method has been
-      renamed from `append` to `format` to reflect this change.
+    - All modules of the `DefaultFormatter` have been changed to not append to a passed message anymore but return `iodata`. The public method has been renamed from `append` to `format` to reflect this change.
 
 ## v0.13.0 (2016-07-13)
 
 - Backwards incompatible changes
-    - Minimum required elixir version is now "~> 1.3"
-    - Minimum required version of :timex raised to "~> 3.0"
+    - Minimum required elixir version is now `~> 1.3`
+    - Minimum required version of :timex raised to `~> 3.0`
 
 ## v0.12.0 (2016-06-25)
 
 - Backwards incompatible changes
-    - Minimum required elixir version is now "~> 1.2"
-    - Minimum required erlang version is now "~> 18.0"
+    - Minimum required elixir version is now `~> 1.2`
+    - Minimum required erlang version is now `~> 18.0`
 
 ## v0.11.0 (2016-03-25)
 
@@ -39,7 +36,7 @@
 
 - Backwards incompatible changes
     - `:local_time` is now internally stored as a `Timex.DateTime` struct
-    - Minimum required version of :timex raised to "~> 2.0" ([#12](https://github.com/mneudert/plug_accesslog/pull/12))
+    - Minimum required version of :timex raised to `~> 2.0` ([#12](https://github.com/mneudert/plug_accesslog/pull/12))
 
 ## v0.10.0 (2016-01-06)
 
@@ -48,7 +45,7 @@
     - `%{UNIT}T` - Time taken to serve the request in the given UNIT
 
 - Backwards incompatible changes
-    - Minimum required version of :timex raised to "~> 1.0"
+    - Minimum required version of :timex raised to `~> 1.0`
 
 ## v0.9.1 (2015-09-29)
 
@@ -56,18 +53,18 @@
     - Application :tzdata (for recent :timex/:tzdata versions) is started automatically
 
 - Backwards incompatible changes
-    - Minimum required version of :timex raised to "~> 0.19"
-    - Minimum required version of :tzdata raised to "=> 0.5.1"
+    - Minimum required version of :timex raised to `~> 0.19`
+    - Minimum required version of :tzdata raised to `=> 0.5.1`
 
 ## v0.9.0 (2015-08-15)
 
 - Backwards incompatible changes
-    - Minimum required version of :plug raised to "~> 1.0"
+    - Minimum required version of :plug raised to `~> 1.0`
 
 ## v0.8.0 (2015-08-08)
 
 - Backwards incompatible changes
-    - Minimum required version of :plug raised to "~> 0.14"
+    - Minimum required version of :plug raised to `~> 0.14`
 
 ## v0.7.0 (2015-07-19)
 
@@ -133,7 +130,7 @@
 - Enhancements
     - Logs username from basic authentication
     - Provides access to vhost (domain) for logging
-    - Raises plug version requirement to "~> 0.10"
+    - Raises plug version requirement to `~> 0.10`
 
 ## v0.2.0 (2015-01-18)
 
