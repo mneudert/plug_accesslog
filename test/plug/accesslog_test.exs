@@ -3,41 +3,15 @@ defmodule Plug.AccessLogTest do
   use Plug.Test
 
   defmodule Logfiles do
-    def logfile_agent do
-      [__DIR__, "../logs/plug_accesslog_agent.log"]
-      |> Path.join()
-      |> Path.expand()
-    end
+    def logfile_agent, do: Path.expand("../logs/plug_accesslog_agent.log", __DIR__)
+    def logfile_clf, do: Path.expand("../logs/plug_accesslog_clf.log", __DIR__)
+    def logfile_clf_vhost, do: Path.expand("../logs/plug_accesslog_clf_vhost.log", __DIR__)
+    def logfile_combined, do: Path.expand("../logs/plug_accesslog_combined.log", __DIR__)
 
-    def logfile_clf do
-      [__DIR__, "../logs/plug_accesslog_clf.log"]
-      |> Path.join()
-      |> Path.expand()
-    end
+    def logfile_combined_vhost,
+      do: Path.expand("../logs/plug_accesslog_combined_vhost.log", __DIR__)
 
-    def logfile_clf_vhost do
-      [__DIR__, "../logs/plug_accesslog_clf_vhost.log"]
-      |> Path.join()
-      |> Path.expand()
-    end
-
-    def logfile_combined do
-      [__DIR__, "../logs/plug_accesslog_combined.log"]
-      |> Path.join()
-      |> Path.expand()
-    end
-
-    def logfile_combined_vhost do
-      [__DIR__, "../logs/plug_accesslog_combined_vhost.log"]
-      |> Path.join()
-      |> Path.expand()
-    end
-
-    def logfile_referer do
-      [__DIR__, "../logs/plug_accesslog_referer.log"]
-      |> Path.join()
-      |> Path.expand()
-    end
+    def logfile_referer, do: Path.expand("../logs/plug_accesslog_referer.log", __DIR__)
   end
 
   defmodule Router do

@@ -3,12 +3,7 @@ defmodule Plug.AccessLog.FileHandling.SystemEnvTest do
   use Plug.Test
 
   defmodule Logfiles do
-    def path do
-      [__DIR__, "../../../logs/plug_filehandling_system_env.log"]
-      |> Path.join()
-      |> Path.expand()
-    end
-
+    def path, do: Path.expand("../../../logs/plug_filehandling_system_env.log", __DIR__)
     def var, do: "PLUG_ACCESSLOG_TEST_PATH"
   end
 

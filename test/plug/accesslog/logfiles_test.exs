@@ -4,19 +4,13 @@ defmodule Plug.AccessLog.LogfilesTest do
   alias Plug.AccessLog.Logfiles
 
   test "get implicitly opens logfile" do
-    logfile =
-      [__DIR__, "../../logs/plug_accesslog_logfiles_implicit.log"]
-      |> Path.join()
-      |> Path.expand()
+    logfile = Path.expand("../../logs/plug_accesslog_logfiles_implicit.log", __DIR__)
 
     assert logfile |> Logfiles.get() |> is_pid()
   end
 
   test "logfile opened only once" do
-    logfile =
-      [__DIR__, "../../logs/plug_accesslog_logfiles_once.log"]
-      |> Path.join()
-      |> Path.expand()
+    logfile = Path.expand("../../logs/plug_accesslog_logfiles_once.log", __DIR__)
 
     log_device = Logfiles.open(logfile)
     new_device = Logfiles.open(logfile)
@@ -26,10 +20,7 @@ defmodule Plug.AccessLog.LogfilesTest do
   end
 
   test "replacement of logfiles" do
-    logfile =
-      [__DIR__, "../../logs/plug_accesslog_logfiles_replace.log"]
-      |> Path.join()
-      |> Path.expand()
+    logfile = Path.expand("../../logs/plug_accesslog_logfiles_replace.log", __DIR__)
 
     log_device = Logfiles.open(logfile)
     new_device = Logfiles.replace(logfile, :stdio)
@@ -40,10 +31,7 @@ defmodule Plug.AccessLog.LogfilesTest do
   end
 
   test "logfile device automatically restored in case of crash" do
-    logfile =
-      [__DIR__, "../../logs/plug_accesslog_logfiles_restore.log"]
-      |> Path.join()
-      |> Path.expand()
+    logfile = Path.expand("../../logs/plug_accesslog_logfiles_restore.log", __DIR__)
 
     old_pid = logfile |> Logfiles.get()
 

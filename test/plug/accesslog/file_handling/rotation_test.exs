@@ -3,12 +3,7 @@ defmodule Plug.AccessLog.FileHandling.RotationTest do
   use Plug.Test
 
   defmodule Logfiles do
-    def original do
-      [__DIR__, "../../../logs/plug_filehandling_rotation.log"]
-      |> Path.join()
-      |> Path.expand()
-    end
-
+    def original, do: Path.expand("../../../logs/plug_filehandling_rotation.log", __DIR__)
     def rotated, do: original() <> ".rotated.log"
   end
 

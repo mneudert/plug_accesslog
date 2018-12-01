@@ -30,10 +30,7 @@ defmodule Plug.AccessLog.FileHandling.UnopenableTest do
   end
 
   test "replacement with unopenable logfile" do
-    logfile =
-      [__DIR__, "../../../logs/logfiles_replacement/error.log"]
-      |> Path.join()
-      |> Path.expand()
+    logfile = Path.expand("../../../logs/logfiles_replacement/error.log", __DIR__)
 
     logfile |> Path.dirname() |> File.rm_rf!()
     logfile |> Path.dirname() |> File.mkdir!()

@@ -13,23 +13,13 @@ defmodule Plug.AccessLog.FormatterTest do
   end
 
   defmodule Logfiles do
-    def formatter_default do
-      [__DIR__, "../../logs/plug_accesslog_formatter_default.log"]
-      |> Path.join()
-      |> Path.expand()
-    end
+    def formatter_default,
+      do: Path.expand("../../logs/plug_accesslog_formatter_default.log", __DIR__)
 
-    def formatter_nil do
-      [__DIR__, "../../logs/plug_accesslog_formatter_nil.log"]
-      |> Path.join()
-      |> Path.expand()
-    end
+    def formatter_nil, do: Path.expand("../../logs/plug_accesslog_formatter_nil.log", __DIR__)
 
-    def formatter_override do
-      [__DIR__, "../../logs/plug_accesslog_formatter_override.log"]
-      |> Path.join()
-      |> Path.expand()
-    end
+    def formatter_override,
+      do: Path.expand("../../logs/plug_accesslog_formatter_override.log", __DIR__)
   end
 
   defmodule Router do
