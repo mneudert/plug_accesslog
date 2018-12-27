@@ -33,7 +33,7 @@ defmodule Plug.AccessLog.Mixfile do
     [
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
       {:excoveralls, "~> 0.10", only: :test, runtime: false},
-      {:plug, "~> 1.0", optional: true},
+      {:plug, "~> 1.0"},
       {:timex, "~> 3.0"}
     ]
   end
