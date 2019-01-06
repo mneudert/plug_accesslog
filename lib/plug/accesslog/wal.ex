@@ -7,14 +7,15 @@ defmodule Plug.AccessLog.WAL do
   Starts the agent.
   """
   @spec start_link() :: Agent.on_start()
-  def start_link(), do: Agent.start_link(fn -> %{} end, name: __MODULE__)
+  def start_link, do: Agent.start_link(fn -> %{} end, name: __MODULE__)
 
   @doc """
   Flushes (returns and clears) all log messages.
   """
   @spec flush(String.t()) :: list
   def flush(logfile) do
-    Agent.get_and_update(__MODULE__, fn messages ->
+    __MODULE__
+    |> Agent.get_and_update(fn messages ->
       {messages[logfile] || [], Map.put(messages, logfile, [])}
     end)
     |> Enum.reverse()
@@ -34,7 +35,7 @@ defmodule Plug.AccessLog.WAL do
   Returns the list of logfiles with entries.
   """
   @spec logfiles() :: list
-  def logfiles() do
+  def logfiles do
     Agent.get(__MODULE__, &Map.keys/1)
   end
 end

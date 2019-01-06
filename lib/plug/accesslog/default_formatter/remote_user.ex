@@ -17,14 +17,12 @@ defmodule Plug.AccessLog.DefaultFormatter.RemoteUser do
   end
 
   defp get_user(credentials) do
-    try do
-      case parse_credentials(credentials) do
-        [user, _pass] -> user
-        _ -> "-"
-      end
-    rescue
+    case parse_credentials(credentials) do
+      [user, _pass] -> user
       _ -> "-"
     end
+  rescue
+    _ -> "-"
   end
 
   defp parse_credentials(credentials) do
