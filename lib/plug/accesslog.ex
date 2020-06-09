@@ -39,7 +39,7 @@ defmodule Plug.AccessLog do
   @doc """
   Logs the request.
 
-  If the target logfile could not be openend the message
+  If the target logfile could not be opened the message
   will be silently ignored.
   """
   @spec log(Plug.Conn.t(), map) :: Plug.Conn.t()
