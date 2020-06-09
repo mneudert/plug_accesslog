@@ -1,14 +1,10 @@
 defmodule Plug.AccessLog.Writer do
-  @moduledoc """
-  Log message writer.
-  """
+  @moduledoc false
 
   use GenServer
 
   alias Plug.AccessLog.Logfiles
   alias Plug.AccessLog.WAL
-
-  # GenServer lifecycle
 
   @doc """
   Starts the message writer.
@@ -36,8 +32,6 @@ defmodule Plug.AccessLog.Writer do
     :ok
   end
 
-  # GenServer callbacks
-
   def handle_info(:trigger, state) do
     Enum.each(WAL.logfiles(), &write/1)
 
@@ -46,8 +40,6 @@ defmodule Plug.AccessLog.Writer do
 
     {:noreply, state}
   end
-
-  # Internal methods
 
   defp write(logfile) do
     case WAL.flush(logfile) do

@@ -5,8 +5,6 @@ defmodule Plug.AccessLog.Formatter do
 
   alias Plug.AccessLog.DefaultFormatter
 
-  # Pipeline interface
-
   @formats [
     agent: "%{User-Agent}i",
     clf: "%h %l %u %t \"%r\" %>s %b",
@@ -38,8 +36,6 @@ defmodule Plug.AccessLog.Formatter do
     |> formatter.format(conn)
     |> format(conn, formatters)
   end
-
-  # Behaviour callbacks
 
   @doc """
   Formats a log message.

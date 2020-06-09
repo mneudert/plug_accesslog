@@ -1,7 +1,5 @@
 defmodule Plug.AccessLog.WAL do
-  @moduledoc """
-  Write-Ahead-Log agent.
-  """
+  @moduledoc false
 
   @doc """
   Starts the agent.

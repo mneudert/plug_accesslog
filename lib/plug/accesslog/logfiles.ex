@@ -1,7 +1,5 @@
 defmodule Plug.AccessLog.Logfiles do
-  @moduledoc """
-  Logfile agent.
-  """
+  @moduledoc false
 
   require Logger
 

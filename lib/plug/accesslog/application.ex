@@ -1,9 +1,5 @@
 defmodule Plug.AccessLog.Application do
-  @moduledoc """
-  AccessLog Application.
-
-  Takes care of starting the state agent.
-  """
+  @moduledoc false
 
   use Application
 
