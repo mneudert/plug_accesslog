@@ -1,4 +1,4 @@
-defmodule Plug.AccessLog.App do
+defmodule Plug.AccessLog.Application do
   @moduledoc """
   AccessLog Application.
 
