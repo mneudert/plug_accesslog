@@ -10,11 +10,9 @@ defmodule Plug.AccessLog.DefaultFormatter.RequestCookie do
   """
   @spec format(Plug.Conn.t(), String.t()) :: iodata
   def format(conn, cookie) do
-    conn = conn |> fetch_cookies()
-
-    case Map.get(conn.cookies, cookie) do
-      nil -> "-"
-      value -> value
+    case fetch_cookies(conn) do
+      %{cookies: %{^cookie => value}} -> value
+      _ -> "-"
     end
   end
 end

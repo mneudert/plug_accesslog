@@ -10,7 +10,9 @@ defmodule Plug.AccessLog.DefaultFormatter.ResponseHeader do
   """
   @spec format(Plug.Conn.t(), String.t()) :: iodata
   def format(conn, header) do
-    case get_resp_header(conn, header |> String.downcase()) do
+    header = String.downcase(header)
+
+    case get_resp_header(conn, header) do
       [value] -> value
       _ -> "-"
     end
