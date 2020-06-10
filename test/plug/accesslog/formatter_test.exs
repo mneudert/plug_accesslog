@@ -46,11 +46,9 @@ defmodule Plug.AccessLog.FormatterTest do
   end
 
   test "no format means default format" do
-    datetime = Timex.local()
-
     conn =
       conn(:get, "/")
-      |> put_private(:plug_accesslog, %{local_time: datetime})
+      |> put_private(:plug_accesslog_localtime, Timex.local())
 
     msg_def = Formatter.format(:default, conn, nil)
     msg_nil = Formatter.format(nil, conn, nil)

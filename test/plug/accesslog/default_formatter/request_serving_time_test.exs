@@ -7,11 +7,9 @@ defmodule Plug.AccessLog.DefaultFormatter.RequestServingTimeTest do
   alias Plug.AccessLog.DefaultFormatter
 
   test "%D == %{us}T" do
-    timestamp = :os.timestamp()
-
     conn =
       conn(:get, "/")
-      |> put_private(:plug_accesslog, %{timestamp: timestamp})
+      |> put_private(:plug_accesslog_timestamp, :os.timestamp())
 
     # relying on microsecond testing precision is flaky.
     # check done using "microseconds taken < 1 second"
@@ -23,11 +21,9 @@ defmodule Plug.AccessLog.DefaultFormatter.RequestServingTimeTest do
   end
 
   test "%M == %{ms}T" do
-    timestamp = :os.timestamp()
-
     conn =
       conn(:get, "/")
-      |> put_private(:plug_accesslog, %{timestamp: timestamp})
+      |> put_private(:plug_accesslog_timestamp, :os.timestamp())
 
     # relying on millisecond testing precision is flaky.
     # check done using "milliseconds taken < 1 second"
@@ -39,11 +35,9 @@ defmodule Plug.AccessLog.DefaultFormatter.RequestServingTimeTest do
   end
 
   test "%T == %{s}T" do
-    timestamp = :os.timestamp()
-
     conn =
       conn(:get, "/")
-      |> put_private(:plug_accesslog, %{timestamp: timestamp})
+      |> put_private(:plug_accesslog_timestamp, :os.timestamp())
 
     assert "0" == DefaultFormatter.format("%T", conn)
     assert "0" == DefaultFormatter.format("%{s}T", conn)
@@ -55,7 +49,7 @@ defmodule Plug.AccessLog.DefaultFormatter.RequestServingTimeTest do
 
     conn =
       conn(:get, "/")
-      |> put_private(:plug_accesslog, %{timestamp: timestamp})
+      |> put_private(:plug_accesslog_timestamp, timestamp)
 
     assert "1" == DefaultFormatter.format("%T", conn)
     assert "1" == DefaultFormatter.format("%{s}T", conn)

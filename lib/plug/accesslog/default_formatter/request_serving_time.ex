@@ -15,9 +15,8 @@ defmodule Plug.AccessLog.DefaultFormatter.RequestServingTime do
   def format(conn, "ms"), do: format(conn, :milliseconds)
   def format(conn, "us"), do: format(conn, :microseconds)
 
-  def format(conn, format) do
-    conn.private[:plug_accesslog]
-    |> Map.get(:timestamp)
+  def format(%{private: %{plug_accesslog_timestamp: timestamp}}, format) do
+    timestamp
     |> Duration.from_erl()
     |> Duration.diff(Duration.now(), format)
     |> Kernel.*(-1)

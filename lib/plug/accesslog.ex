@@ -28,12 +28,9 @@ defmodule Plug.AccessLog do
 
   def call(conn, opts) do
     conn
-    |> put_private(:plug_accesslog, private_data())
+    |> put_private(:plug_accesslog_localtime, Timex.local())
+    |> put_private(:plug_accesslog_timestamp, :os.timestamp())
     |> register_before_send(&log(&1, opts))
-  end
-
-  defp private_data do
-    %{local_time: Timex.local(), timestamp: :os.timestamp()}
   end
 
   @doc """
