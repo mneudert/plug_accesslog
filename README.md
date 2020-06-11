@@ -223,8 +223,6 @@ The following formatting directives are available:
 
 **Note for %l**: Always a dash ("-").
 
-**Note for %r**: For now the http version is always logged as "HTTP/1.1", regardless of the true http version.
-
 **Note for %T**: Rounding happens, so "0.6 seconds" will be reported as "1 second".
 
 **Note for %{UNIT}T**: Available units are `s` for seconds (same as `%T`), `ms` for milliseconds (same as `M`) and `us` for microseconds (same as `%D`).

@@ -35,7 +35,7 @@ defmodule Plug.AccessLog.Mixfile do
       {:dialyxir, "~> 1.0", only: :dev, runtime: false},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
       {:excoveralls, "~> 0.13.0", only: :test, runtime: false},
-      {:plug, "~> 1.0"},
+      {:plug, "~> 1.6"},
       {:timex, "~> 3.0"}
     ]
   end

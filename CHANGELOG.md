@@ -3,6 +3,7 @@
 ## v0.15.0-dev
 
 - Enhancements
+    - Protocol for `%r` is now logged as reported by `Plug.Conn.get_http_protocol/1`
     - System environment configuration can set an optional default value to be used if the environment variable is unset
 
 - Backwards incompatible changes

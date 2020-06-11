@@ -3,11 +3,18 @@ defmodule Plug.AccessLog.DefaultFormatter.RequestLine do
   Recreates the first line of the original HTTP request.
   """
 
+  import Plug.Conn
+
   @doc """
   Formats the log output.
   """
   @spec format(Plug.Conn.t()) :: iodata
-  def format(%{method: method, request_path: request_path}) do
-    [method, " ", request_path, " HTTP/1.1"]
+  def format(%{method: method, request_path: request_path} = conn) do
+    protocol =
+      conn
+      |> get_http_protocol()
+      |> to_string()
+
+    [method, " ", request_path, " ", protocol]
   end
 end
