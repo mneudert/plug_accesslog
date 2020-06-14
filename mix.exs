@@ -1,4 +1,4 @@
-defmodule Plug.AccessLog.Mixfile do
+defmodule Plug.AccessLog.MixProject do
   use Mix.Project
 
   @url_github "https://github.com/mneudert/plug_accesslog"
