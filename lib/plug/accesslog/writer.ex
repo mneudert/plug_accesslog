@@ -26,16 +26,16 @@ defmodule Plug.AccessLog.Writer do
     {:ok, state}
   end
 
-  def terminate(_reason, state) do
-    Process.cancel_timer(state.flush_timer)
+  def terminate(_reason, %{flush_timer: timer}) do
+    Process.cancel_timer(timer)
 
     :ok
   end
 
-  def handle_info(:trigger, state) do
+  def handle_info(:trigger, %{flush_interval: interval} = state) do
     Enum.each(WAL.logfiles(), &write/1)
 
-    timer = Process.send_after(self(), :trigger, state.flush_interval)
+    timer = Process.send_after(self(), :trigger, interval)
     state = %{state | flush_timer: timer}
 
     {:noreply, state}
