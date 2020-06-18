@@ -1,13 +1,15 @@
 defmodule Plug.AccessLog.Logfiles do
   @moduledoc false
 
+  use Agent
+
   require Logger
 
   @doc """
   Starts the logfile agent.
   """
-  @spec start_link() :: Agent.on_start()
-  def start_link, do: Agent.start_link(fn -> %{} end, name: __MODULE__)
+  @spec start_link(any) :: Agent.on_start()
+  def start_link(_), do: Agent.start_link(fn -> %{} end, name: __MODULE__)
 
   @doc """
   Returns the logfile device for writing.

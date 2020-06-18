@@ -1,11 +1,13 @@
 defmodule Plug.AccessLog.WAL do
   @moduledoc false
 
+  use Agent
+
   @doc """
   Starts the agent.
   """
-  @spec start_link() :: Agent.on_start()
-  def start_link, do: Agent.start_link(fn -> %{} end, name: __MODULE__)
+  @spec start_link(any) :: Agent.on_start()
+  def start_link(_), do: Agent.start_link(fn -> %{} end, name: __MODULE__)
 
   @doc """
   Flushes (returns and clears) all log messages.
