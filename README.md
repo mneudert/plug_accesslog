@@ -16,20 +16,6 @@ defp deps do
 end
 ```
 
-You should also update your applications to start the plug:
-
-```elixir
-def application do
-  [
-    applications: [
-      # ...
-      :plug_accesslog,
-      # ...
-    ]
-  ]
-end
-```
-
 ## Usage
 
 The easiest way to use the plug is to add it to your existing router:
