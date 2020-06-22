@@ -7,12 +7,12 @@ defmodule Plug.AccessLog.DefaultFormatter.RemoteIPAddressTest do
   test "%a" do
     conn = conn(:get, "/")
 
-    assert "127.0.0.1" == DefaultFormatter.format("%a", conn)
+    assert "127.0.0.1" = DefaultFormatter.format("%a", conn)
   end
 
   test "%h" do
     conn = conn(:get, "/")
 
-    assert "127.0.0.1" == DefaultFormatter.format("%h", conn)
+    assert "127.0.0.1" = DefaultFormatter.format("%h", conn)
   end
 end

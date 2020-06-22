@@ -23,7 +23,7 @@ defmodule Plug.AccessLog.FileHandling.UnopenableTest do
         conn(:get, "/") |> Router.call([])
         :timer.sleep(50)
 
-        assert nil == Logfiles.get("..")
+        refute Logfiles.get("..")
       end)
 
     assert String.contains?(log, ":eisdir")
@@ -42,7 +42,7 @@ defmodule Plug.AccessLog.FileHandling.UnopenableTest do
 
     log =
       capture_log(fn ->
-        assert nil == Logfiles.get(logfile)
+        refute Logfiles.get(logfile)
       end)
 
     assert String.contains?(log, ":enoent")

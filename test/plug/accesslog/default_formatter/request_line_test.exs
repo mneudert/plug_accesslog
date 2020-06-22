@@ -7,6 +7,6 @@ defmodule Plug.AccessLog.DefaultFormatter.RequestLineTest do
   test "%r" do
     conn = conn(:get, "/plug/path")
 
-    assert "GET /plug/path HTTP/1.1" == DefaultFormatter.format("%r", conn)
+    assert "GET /plug/path HTTP/1.1" = DefaultFormatter.format("%r", conn)
   end
 end

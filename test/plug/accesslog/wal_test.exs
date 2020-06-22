@@ -12,6 +12,6 @@ defmodule Plug.AccessLog.WALTest do
     :ok = WAL.log(msg_1, logfile)
     :ok = WAL.log(msg_2, logfile)
 
-    assert [msg_1, msg_2] == WAL.flush(logfile)
+    assert [^msg_1, ^msg_2] = WAL.flush(logfile)
   end
 end

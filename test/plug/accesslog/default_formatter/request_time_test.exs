@@ -13,6 +13,6 @@ defmodule Plug.AccessLog.DefaultFormatter.RequestTimeTest do
       conn(:get, "/")
       |> put_private(:plug_accesslog_localtime, datetime)
 
-    assert "[10/Jan/2015:14:46:18 -0600]" == DefaultFormatter.format("%t", conn)
+    assert "[10/Jan/2015:14:46:18 -0600]" = DefaultFormatter.format("%t", conn)
   end
 end

@@ -39,8 +39,8 @@ defmodule Plug.AccessLog.DefaultFormatter.RequestServingTimeTest do
       conn(:get, "/")
       |> put_private(:plug_accesslog_timestamp, :os.timestamp())
 
-    assert "0" == DefaultFormatter.format("%T", conn)
-    assert "0" == DefaultFormatter.format("%{s}T", conn)
+    assert "0" = DefaultFormatter.format("%T", conn)
+    assert "0" = DefaultFormatter.format("%{s}T", conn)
   end
 
   test "%T rounding" do
@@ -51,7 +51,7 @@ defmodule Plug.AccessLog.DefaultFormatter.RequestServingTimeTest do
       conn(:get, "/")
       |> put_private(:plug_accesslog_timestamp, timestamp)
 
-    assert "1" == DefaultFormatter.format("%T", conn)
-    assert "1" == DefaultFormatter.format("%{s}T", conn)
+    assert "1" = DefaultFormatter.format("%T", conn)
+    assert "1" = DefaultFormatter.format("%{s}T", conn)
   end
 end

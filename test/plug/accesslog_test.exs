@@ -45,7 +45,7 @@ defmodule Plug.AccessLogTest do
   end
 
   test ":agent format" do
-    assert @test_ua == Logfiles.logfile_agent() |> File.read!() |> String.trim()
+    assert @test_ua = Logfiles.logfile_agent() |> File.read!() |> String.trim()
   end
 
   test ":clf format" do
@@ -82,6 +82,6 @@ defmodule Plug.AccessLogTest do
     log = Logfiles.logfile_referer() |> File.read!() |> String.split("\n") |> List.first()
     res = "#{@test_ref} -> /"
 
-    assert res == log
+    assert ^res = log
   end
 end

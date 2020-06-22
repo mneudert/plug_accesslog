@@ -13,7 +13,7 @@ defmodule Plug.AccessLog.DefaultFormatter.EnvironmentTest do
 
     System.put_env(var, value)
 
-    assert value == DefaultFormatter.format("%{#{var}}e", conn)
-    assert "" == DefaultFormatter.format("%{#{unknown}}e", conn)
+    assert ^value = DefaultFormatter.format("%{#{var}}e", conn)
+    assert "" = DefaultFormatter.format("%{#{unknown}}e", conn)
   end
 end

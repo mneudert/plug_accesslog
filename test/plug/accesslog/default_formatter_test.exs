@@ -5,11 +5,11 @@ defmodule Plug.AccessLog.DefaultFormatterTest do
   alias Plug.AccessLog.DefaultFormatter
 
   test "%%" do
-    assert "%" == DefaultFormatter.format("%%", nil)
+    assert "%" = DefaultFormatter.format("%%", nil)
   end
 
   test "%l" do
-    assert "-" == DefaultFormatter.format("%l", nil)
+    assert "-" = DefaultFormatter.format("%l", nil)
   end
 
   test "%m" do
@@ -17,39 +17,40 @@ defmodule Plug.AccessLog.DefaultFormatterTest do
     head = conn(:head, "/")
     post = conn(:post, "/")
 
-    assert "GET" == DefaultFormatter.format("%m", get)
-    assert "HEAD" == DefaultFormatter.format("%m", head)
-    assert "POST" == DefaultFormatter.format("%m", post)
+    assert "GET" = DefaultFormatter.format("%m", get)
+    assert "HEAD" = DefaultFormatter.format("%m", head)
+    assert "POST" = DefaultFormatter.format("%m", post)
   end
 
   test "%P" do
     conn = conn(:get, "/")
+    owner = inspect(conn.owner)
 
-    assert inspect(conn.owner) == DefaultFormatter.format("%P", conn)
+    assert ^owner = DefaultFormatter.format("%P", conn)
   end
 
   test "%>s" do
     conn = conn(:get, "/")
     conn = %{conn | status: 200}
 
-    assert "200" == DefaultFormatter.format("%>s", conn)
+    assert "200" = DefaultFormatter.format("%>s", conn)
   end
 
   test "%v" do
     host = "plug.access.log"
     conn = conn(:get, "/") |> Map.put(:host, host)
 
-    assert host == DefaultFormatter.format("%v", conn)
+    assert ^host = DefaultFormatter.format("%v", conn)
   end
 
   test "%V" do
     host = "plug.log.access"
     conn = conn(:get, "/") |> Map.put(:host, host)
 
-    assert host == DefaultFormatter.format("%V", conn)
+    assert ^host = DefaultFormatter.format("%V", conn)
   end
 
   test "invalid configurable type" do
-    assert "-" == DefaultFormatter.format("%{ignored}_", nil)
+    assert "-" = DefaultFormatter.format("%{ignored}_", nil)
   end
 end

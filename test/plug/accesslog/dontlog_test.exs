@@ -33,7 +33,7 @@ defmodule Plug.AccessLog.DontlogTest do
         conn(:get, "/dontlog") |> Router.call([])
       end)
 
-    assert "" == log
+    assert "" = log
   end
 
   test "dontlog false" do

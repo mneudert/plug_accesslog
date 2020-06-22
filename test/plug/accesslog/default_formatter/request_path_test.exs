@@ -7,6 +7,6 @@ defmodule Plug.AccessLog.DefaultFormatter.RequestPathTest do
   test "%U" do
     conn = conn(:get, "/plug/path")
 
-    assert "/plug/path" == DefaultFormatter.format("%U", conn)
+    assert "/plug/path" = DefaultFormatter.format("%U", conn)
   end
 end

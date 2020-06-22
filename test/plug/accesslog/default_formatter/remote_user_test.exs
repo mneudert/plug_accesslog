@@ -13,9 +13,9 @@ defmodule Plug.AccessLog.DefaultFormatter.RemoteUserTest do
     incomplete = empty |> put_req_header("authorization", "Basic #{Base.encode64(user)}")
     garbage = empty |> put_req_header("authorization", "Basic garbage")
 
-    assert "-" == DefaultFormatter.format("%u", empty)
-    assert user == DefaultFormatter.format("%u", valid)
-    assert "-" == DefaultFormatter.format("%u", incomplete)
-    assert "-" == DefaultFormatter.format("%u", garbage)
+    assert "-" = DefaultFormatter.format("%u", empty)
+    assert ^user = DefaultFormatter.format("%u", valid)
+    assert "-" = DefaultFormatter.format("%u", incomplete)
+    assert "-" = DefaultFormatter.format("%u", garbage)
   end
 end
