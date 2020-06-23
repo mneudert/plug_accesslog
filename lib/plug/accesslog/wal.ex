@@ -12,7 +12,7 @@ defmodule Plug.AccessLog.WAL do
   @doc """
   Flushes (returns and clears) all log messages.
   """
-  @spec flush(String.t()) :: list
+  @spec flush(String.t()) :: [String.t()]
   def flush(logfile) do
     __MODULE__
     |> Agent.get_and_update(fn messages ->
@@ -34,7 +34,7 @@ defmodule Plug.AccessLog.WAL do
   @doc """
   Returns the list of logfiles with entries.
   """
-  @spec logfiles() :: list
+  @spec logfiles() :: [String.t()]
   def logfiles do
     Agent.get(__MODULE__, &Map.keys/1)
   end

@@ -19,7 +19,7 @@ defmodule Plug.AccessLog.Formatter do
 
   The `:default` format is `:clf`.
   """
-  @spec format(atom | String.t(), Plug.Conn.t(), list) :: String.t()
+  @spec format(nil | atom | String.t(), Plug.Conn.t(), nil | [module]) :: String.t()
   def format(nil, conn, formatters), do: format(:clf, conn, formatters)
   def format(:default, conn, formatters), do: format(:clf, conn, formatters)
 
