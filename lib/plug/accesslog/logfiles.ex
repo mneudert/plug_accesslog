@@ -89,8 +89,6 @@ defmodule Plug.AccessLog.Logfiles do
     end
   end
 
-  # Internal utility methods
-
   defp get_device(logfile) do
     Agent.get(__MODULE__, &Map.get(&1, logfile, {nil, nil}))
   end

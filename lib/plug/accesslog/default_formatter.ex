@@ -4,8 +4,9 @@ defmodule Plug.AccessLog.DefaultFormatter do
   """
 
   alias Plug.AccessLog.DefaultFormatter
+  alias Plug.AccessLog.Formatter
 
-  @behaviour Plug.AccessLog.Formatter
+  @behaviour Formatter
 
   @doc """
   Formats a log message.
@@ -53,9 +54,8 @@ defmodule Plug.AccessLog.DefaultFormatter do
 
   **Note for %V**: Alias for `%v`.
   """
+  @impl Formatter
   def format(format, conn), do: log([], conn, format)
-
-  # Internal construction methods
 
   defp log(message, _conn, ""), do: message |> Enum.reverse() |> IO.iodata_to_binary()
 
@@ -155,7 +155,7 @@ defmodule Plug.AccessLog.DefaultFormatter do
   end
 
   defp log(message, conn, <<"%{", rest::binary>>) do
-    [var, rest] = rest |> String.split("}", parts: 2)
+    [var, rest] = String.split(rest, "}", parts: 2)
 
     <<vartype::binary-1, rest::binary>> = rest
 

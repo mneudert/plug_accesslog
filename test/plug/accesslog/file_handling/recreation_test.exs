@@ -23,19 +23,26 @@ defmodule Plug.AccessLog.FileHandling.RecreationTest do
     conn(:get, "/first") |> Router.call([])
     :timer.sleep(50)
 
-    assert Logfile.path() |> File.exists?()
-    assert Logfile.path() |> File.read!() |> String.contains?("first")
-    refute Logfile.path() |> File.read!() |> String.contains?("second")
+    logfile = Logfile.path()
+
+    assert File.exists?(logfile)
+
+    logcontents = File.read!(logfile)
+
+    assert String.contains?(logcontents, "first")
+    refute String.contains?(logcontents, "second")
 
     # recreate file
-    File.rm!(Logfile.path())
-    File.touch!(Logfile.path())
+    File.rm!(logfile)
+    File.touch!(logfile)
 
     # second request
     conn(:get, "/second") |> Router.call([])
     :timer.sleep(50)
 
-    refute Logfile.path() |> File.read!() |> String.contains?("first")
-    assert Logfile.path() |> File.read!() |> String.contains?("second")
+    logcontents = File.read!(logfile)
+
+    refute String.contains?(logcontents, "first")
+    assert String.contains?(logcontents, "second")
   end
 end

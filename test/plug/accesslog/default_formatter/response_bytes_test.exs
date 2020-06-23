@@ -21,7 +21,7 @@ defmodule Plug.AccessLog.DefaultFormatter.ResponseBytesTest do
     assert "13" = DefaultFormatter.format("%b", conn)
 
     # content length header
-    conn = conn |> put_resp_header("content-length", "227")
+    conn = put_resp_header(conn, "content-length", "227")
 
     assert "227" = DefaultFormatter.format("%b", conn)
   end
@@ -43,7 +43,7 @@ defmodule Plug.AccessLog.DefaultFormatter.ResponseBytesTest do
     assert "13" = DefaultFormatter.format("%B", conn)
 
     # content length header (binary)
-    conn = conn |> put_resp_header("content-length", "227")
+    conn = put_resp_header(conn, "content-length", "227")
 
     assert "227" = DefaultFormatter.format("%B", conn)
   end

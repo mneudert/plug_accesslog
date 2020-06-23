@@ -5,8 +5,9 @@ defmodule Plug.AccessLog.LogfilesTest do
 
   test "get implicitly opens logfile" do
     logfile = Path.expand("../../logs/plug_accesslog_logfiles_implicit.log", __DIR__)
+    logpid = Logfiles.get(logfile)
 
-    assert logfile |> Logfiles.get() |> is_pid()
+    assert is_pid(logpid)
   end
 
   test "logfile opened only once" do
@@ -32,13 +33,12 @@ defmodule Plug.AccessLog.LogfilesTest do
 
   test "logfile device automatically restored in case of crash" do
     logfile = Path.expand("../../logs/plug_accesslog_logfiles_restore.log", __DIR__)
-
-    old_pid = logfile |> Logfiles.get()
+    old_pid = Logfiles.get(logfile)
 
     assert Process.exit(old_pid, :kill)
     refute Process.alive?(old_pid)
 
-    new_pid = logfile |> Logfiles.get()
+    new_pid = Logfiles.get(logfile)
 
     assert Process.alive?(new_pid)
     refute old_pid == new_pid

@@ -30,8 +30,7 @@ defmodule Plug.AccessLog.DefaultFormatterTest do
   end
 
   test "%>s" do
-    conn = conn(:get, "/")
-    conn = %{conn | status: 200}
+    conn = conn(:get, "/") |> Map.put(:status, 200)
 
     assert "200" = DefaultFormatter.format("%>s", conn)
   end

@@ -11,10 +11,10 @@ defmodule Plug.AccessLog.DefaultFormatter.RequestCookieTest do
     conn =
       conn(:get, "/")
       |> put_req_cookie(cookie, value)
-      |> put_req_cookie(cookie |> String.downcase(), value)
+      |> put_req_cookie(String.downcase(cookie), value)
 
     assert ^value = DefaultFormatter.format("%{#{cookie}}C", conn)
-    assert ^value = DefaultFormatter.format("%{#{cookie |> String.downcase()}}C", conn)
-    assert "-" = DefaultFormatter.format("%{#{cookie |> String.upcase()}}C", conn)
+    assert ^value = DefaultFormatter.format("%{#{String.downcase(cookie)}}C", conn)
+    assert "-" = DefaultFormatter.format("%{#{String.upcase(cookie)}}C", conn)
   end
 end

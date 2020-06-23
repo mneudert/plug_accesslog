@@ -10,7 +10,7 @@ defmodule Plug.AccessLog.DefaultFormatter.ResponseHeaderTest do
 
     conn =
       conn(:get, "/")
-      |> put_resp_header(header |> String.downcase(), value)
+      |> put_resp_header(String.downcase(header), value)
 
     assert ^value = DefaultFormatter.format("%{#{header}}o", conn)
     assert "-" = DefaultFormatter.format("%{X-Unknown-Header}o", conn)

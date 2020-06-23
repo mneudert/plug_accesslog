@@ -31,14 +31,15 @@ defmodule Plug.AccessLog.FileHandling.UnopenableTest do
 
   test "replacement with unopenable logfile" do
     logfile = Path.expand("../../../logs/logfiles_replacement/error.log", __DIR__)
+    logdir = Path.dirname(logfile)
 
-    logfile |> Path.dirname() |> File.rm_rf!()
-    logfile |> Path.dirname() |> File.mkdir!()
-    logfile |> File.touch!()
+    File.rm_rf!(logdir)
+    File.mkdir!(logdir)
+    File.touch!(logfile)
 
     assert self() == Logfiles.set(logfile, self())
 
-    logfile |> Path.dirname() |> File.rm_rf!()
+    File.rm_rf!(logdir)
 
     log =
       capture_log(fn ->
