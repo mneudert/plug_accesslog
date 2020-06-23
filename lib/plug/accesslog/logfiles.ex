@@ -118,6 +118,6 @@ defmodule Plug.AccessLog.Logfiles do
   end
 
   defp log_open_error(logfile, error) do
-    Logger.error("Failed to open logfile #{inspect(logfile)} for writing: #{inspect(error)}")
+    Logger.error(["Failed to open logfile ", inspect(logfile), " for writing: ", inspect(error)])
   end
 end
