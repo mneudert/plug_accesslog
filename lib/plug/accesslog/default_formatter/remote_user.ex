@@ -10,24 +10,12 @@ defmodule Plug.AccessLog.DefaultFormatter.RemoteUser do
   """
   @spec format(Plug.Conn.t()) :: iodata
   def format(conn) do
-    case get_req_header(conn, "authorization") do
-      [<<"Basic ", credentials::binary>> | _] -> get_user(credentials)
+    with [<<"Basic ", credentials::binary>> | _] <- get_req_header(conn, "authorization"),
+         {:ok, user_pass} <- Base.decode64(credentials),
+         [user, _] <- String.split(user_pass, ":") do
+        user
+    else
       _ -> "-"
     end
-  end
-
-  defp get_user(credentials) do
-    case parse_credentials(credentials) do
-      [user, _pass] -> user
-      _ -> "-"
-    end
-  rescue
-    _ -> "-"
-  end
-
-  defp parse_credentials(credentials) do
-    credentials
-    |> Base.decode64!()
-    |> String.split(":")
   end
 end
