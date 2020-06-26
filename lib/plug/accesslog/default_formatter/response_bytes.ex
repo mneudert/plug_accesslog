@@ -12,17 +12,17 @@ defmodule Plug.AccessLog.DefaultFormatter.ResponseBytes do
   def format(conn, fallback) do
     bytes =
       case get_resp_header(conn, "content-length") do
-        [length] -> length
-        _ -> conn.resp_body |> body_length() |> to_string()
+        [length | _] -> length
+        _ -> conn |> body_length() |> to_string()
       end
 
     case bytes do
       "0" -> fallback
-      bytes -> to_string(bytes)
+      bytes -> bytes
     end
   end
 
-  defp body_length(nil), do: 0
-  defp body_length(body) when is_binary(body), do: body |> byte_size()
-  defp body_length(body), do: body |> to_string() |> byte_size()
+  defp body_length(%{resp_body: nil}), do: 0
+  defp body_length(%{resp_body: body}) when is_binary(body), do: body |> byte_size()
+  defp body_length(%{resp_body: body}), do: body |> to_string() |> byte_size()
 end
