@@ -13,7 +13,7 @@ defmodule Plug.AccessLog.DefaultFormatter.RemoteUser do
     with [<<"Basic ", credentials::binary>> | _] <- get_req_header(conn, "authorization"),
          {:ok, user_pass} <- Base.decode64(credentials),
          [user, _] <- String.split(user_pass, ":") do
-        user
+      user
     else
       _ -> "-"
     end
