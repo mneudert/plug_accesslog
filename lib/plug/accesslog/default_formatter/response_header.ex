@@ -13,8 +13,8 @@ defmodule Plug.AccessLog.DefaultFormatter.ResponseHeader do
     header = String.downcase(header)
 
     case get_resp_header(conn, header) do
-      [value] -> value
-      _ -> "-"
+      [] -> "-"
+      [value | _] -> value
     end
   end
 end
