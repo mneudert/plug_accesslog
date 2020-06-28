@@ -42,18 +42,11 @@ defmodule Plug.AccessLog.Writer do
   end
 
   defp write(logfile) do
-    case WAL.flush(logfile) do
-      [] -> :ok
-      messages -> messages |> Enum.intersperse("\n") |> write_log(logfile)
-    end
-  end
-
-  defp write_log([], _), do: :ok
-
-  defp write_log(msg, file) do
-    case Logfiles.get(file) do
-      nil -> :ok
-      io -> IO.puts(io, msg)
+    with [_ | _] = messages <- logfile |> WAL.flush() |> Enum.intersperse("\n"),
+         io when not is_nil(io) <- Logfiles.get(logfile) do
+      IO.puts(io, messages)
+    else
+      _ -> :ok
     end
   end
 end
