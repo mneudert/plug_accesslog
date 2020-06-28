@@ -44,11 +44,11 @@ defmodule Plug.AccessLog.Writer do
   defp write(logfile) do
     case WAL.flush(logfile) do
       [] -> :ok
-      messages -> messages |> Enum.join("\n") |> write_log(logfile)
+      messages -> messages |> Enum.intersperse("\n") |> write_log(logfile)
     end
   end
 
-  defp write_log("", _), do: :ok
+  defp write_log([], _), do: :ok
 
   defp write_log(msg, file) do
     case Logfiles.get(file) do
