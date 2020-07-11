@@ -10,7 +10,7 @@ To use the plug in your projects, edit your mix.exs file and add the project as 
 defp deps do
   [
     # ...
-    {:plug_accesslog, "~> 0.14"},
+    {:plug_accesslog, "~> 0.14.0"},
     # ...
   ]
 end
