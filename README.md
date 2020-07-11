@@ -18,7 +18,7 @@ end
 
 ## Usage
 
-The easiest way to use the plug is to add it to your existing router:
+Add the plug to your plug pipeline/router:
 
 ```elixir
 defmodule AppRouter do
@@ -105,7 +105,8 @@ To filter the requests before logging you can configure a "do not log" filter fu
 
 ```elixir
 defmodule LogFilter do
-  def dontlog?(conn), do: "/favicon.ico" == full_path(conn)
+  def dontlog?(%{request_path: "/favicon.ico"}), do: true
+  def dontlog?(_conn), do: false
 end
 
 defmodule Router do
