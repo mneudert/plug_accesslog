@@ -7,7 +7,7 @@ defmodule Plug.AccessLog.MixProject do
     [
       app: :plug_accesslog,
       name: "Plug.AccessLog",
-      version: "0.15.0-dev",
+      version: "0.15.0",
       elixir: "~> 1.7",
       deps: deps(),
       description: "Plug for writing access logs",

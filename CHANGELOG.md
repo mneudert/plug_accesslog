@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.15.0-dev
+## v0.15.0 (2020-07-12)
 
 - Enhancements
     - Protocol for `%r` is now logged as reported by `Plug.Conn.get_http_protocol/1`
