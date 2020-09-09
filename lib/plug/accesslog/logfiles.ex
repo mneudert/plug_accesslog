@@ -112,7 +112,7 @@ defmodule Plug.AccessLog.Logfiles do
 
   defp inode(logpath) do
     case File.stat(logpath) do
-      {:ok, stat} -> stat.inode
+      {:ok, %{inode: inode}} -> inode
       _ -> nil
     end
   end
