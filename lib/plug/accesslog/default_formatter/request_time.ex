@@ -8,7 +8,7 @@ defmodule Plug.AccessLog.DefaultFormatter.RequestTime do
   @doc """
   Formats the log output.
   """
-  @spec format(Plug.Conn.t()) :: iodata
+  @spec format(Plug.Conn.t()) :: binary
   def format(%{private: %{plug_accesslog_localtime: localtime}}) do
     Timex.format!(localtime, "[%d/%b/%Y:%H:%M:%S %z]", :strftime)
   end

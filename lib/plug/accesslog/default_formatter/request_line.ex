@@ -8,7 +8,7 @@ defmodule Plug.AccessLog.DefaultFormatter.RequestLine do
   @doc """
   Formats the log output.
   """
-  @spec format(Plug.Conn.t()) :: iodata
+  @spec format(Plug.Conn.t()) :: [binary]
   def format(%{method: method, request_path: request_path} = conn) do
     protocol =
       conn

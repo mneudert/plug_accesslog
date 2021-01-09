@@ -6,6 +6,6 @@ defmodule Plug.AccessLog.DefaultFormatter.Environment do
   @doc """
   Formats the log output.
   """
-  @spec format(Plug.Conn.t(), String.t()) :: iodata
+  @spec format(Plug.Conn.t(), String.t()) :: binary
   def format(_conn, var), do: System.get_env(var) || ""
 end

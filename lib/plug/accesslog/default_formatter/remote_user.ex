@@ -8,7 +8,7 @@ defmodule Plug.AccessLog.DefaultFormatter.RemoteUser do
   @doc """
   Formats the log output.
   """
-  @spec format(Plug.Conn.t()) :: iodata
+  @spec format(Plug.Conn.t()) :: binary
   def format(conn) do
     with [<<"Basic ", credentials::binary>> | _] <- get_req_header(conn, "authorization"),
          {:ok, user_pass} <- Base.decode64(credentials),

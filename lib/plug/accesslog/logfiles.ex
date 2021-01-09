@@ -53,10 +53,11 @@ defmodule Plug.AccessLog.Logfiles do
   """
   @spec replace(String.t(), File.io_device()) :: File.io_device()
   def replace(logfile, new_device) do
-    case get_device(logfile) do
-      {nil, nil} -> nil
-      {old_device, _} -> File.close(old_device)
-    end
+    _ =
+      case get_device(logfile) do
+        {nil, nil} -> nil
+        {old_device, _} -> File.close(old_device)
+      end
 
     logstate = {new_device, inode(logfile)}
 
@@ -77,14 +78,14 @@ defmodule Plug.AccessLog.Logfiles do
   def set(logfile, new_device) do
     logstate = {new_device, inode(logfile)}
 
-    Agent.update(__MODULE__, &Map.put_new(&1, logfile, logstate))
+    _ = Agent.update(__MODULE__, &Map.put_new(&1, logfile, logstate))
 
     case get_device(logfile) do
       {^new_device, _} ->
         new_device
 
       {old_device, _} ->
-        File.close(new_device)
+        _ = File.close(new_device)
         old_device
     end
   end
@@ -104,7 +105,7 @@ defmodule Plug.AccessLog.Logfiles do
             replace(logfile, device)
 
           {:error, error} ->
-            log_open_error(logfile, error)
+            _ = log_open_error(logfile, error)
             nil
         end
     end

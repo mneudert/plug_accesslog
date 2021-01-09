@@ -10,7 +10,7 @@ defmodule Plug.AccessLog.DefaultFormatter.RequestServingTime do
   @doc """
   Formats the log output.
   """
-  @spec format(Plug.Conn.t(), time_format) :: iodata
+  @spec format(Plug.Conn.t(), time_format) :: binary
   def format(conn, "s"), do: format(conn, :seconds)
   def format(conn, "ms"), do: format(conn, :milliseconds)
   def format(conn, "us"), do: format(conn, :microseconds)

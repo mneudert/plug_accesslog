@@ -27,7 +27,7 @@ defmodule Plug.AccessLog.Writer do
   end
 
   def terminate(_reason, %{flush_timer: timer}) do
-    Process.cancel_timer(timer)
+    _ = Process.cancel_timer(timer)
 
     :ok
   end
