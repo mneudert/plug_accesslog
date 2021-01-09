@@ -11,6 +11,7 @@ defmodule Plug.AccessLog.MixProject do
       elixir: "~> 1.7",
       deps: deps(),
       description: "Plug for writing access logs",
+      dialyzer: dialyzer(),
       docs: docs(),
       package: package(),
       preferred_cli_env: [
@@ -26,6 +27,17 @@ defmodule Plug.AccessLog.MixProject do
     [
       extra_applications: [:logger, :plug],
       mod: {Plug.AccessLog.Application, []}
+    ]
+  end
+
+  defp dialyzer do
+    [
+      flags: [
+        :error_handling,
+        :race_conditions,
+        :underspecs,
+        :unmatched_returns
+      ]
     ]
   end
 
