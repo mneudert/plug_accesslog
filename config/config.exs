@@ -1,7 +1,7 @@
 use Mix.Config
 
-env_config = Path.expand("#{Mix.env()}.exs", __DIR__)
+if Mix.env() == :test do
+  config :plug_accesslog, :wal, flush_interval: 10
 
-if File.exists?(env_config) do
-  import_config(env_config)
+  config :plug, :validate_header_keys_during_test, true
 end
