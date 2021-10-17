@@ -15,6 +15,8 @@ jobs:
             otp: '22.3'
           - elixir: '1.11.4'
             otp: '23.0'
+          - elixir: '1.12.3'
+            otp: '24.0'
 
     runs-on: ubuntu-20.04
 
