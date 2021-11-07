@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 if Mix.env() == :test do
   config :plug_accesslog, :wal, flush_interval: 10
