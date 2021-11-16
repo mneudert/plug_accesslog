@@ -3,7 +3,7 @@
 ## v0.16.0-dev
 
 - Backwards incompatible changes
-    - Minimum required elixir version is now `~> 1.8`
+    - Minimum required elixir version is now `~> 1.9`
 
 ## v0.15.0 (2020-07-12)
 
